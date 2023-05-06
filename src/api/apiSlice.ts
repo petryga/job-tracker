@@ -18,6 +18,7 @@ export const apiSlice = createApi({
       }
       return headers;
     },
+    credentials: "include",
   }),
   tagTypes: [BOARD_TAG, JOB_TAG, CONTACT],
   endpoints: () => ({}),
