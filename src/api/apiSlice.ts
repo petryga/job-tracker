@@ -13,6 +13,8 @@ export const apiSlice = createApi({
       const token = localStorage.getItem("token");
       if (token) {
         headers.set("authorization", `Bearer ${token}`);
+        headers.set("Access-Control-Allow-Origin", "*");
+        headers.set("Content-Type", "application/json");
       }
       return headers;
     },
