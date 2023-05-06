@@ -1,0 +1,43 @@
+.listContainer {
+  width: 260px;
+  padding: 8px;
+  min-height: 92vh;
+  max-height: fit-content;
+  background-color: var(--background-color);
+  border-right: 0.5px solid var(--border-color);
+  border-left: 0.5px solid var(--border-color);
+  border-top: 1px solid var(--border-color);
+}
+
+.styledInput {
+  width: 100%;
+  border: none;
+  outline-color: black;
+  margin-bottom: 3px;
+  padding: 5px;
+}
+
+.titleContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.number {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  color: rgba(25, 4, 69, 0.5);
+  font-size: 14px;
+}
+
+.listTitle {
+  text-transform: uppercase;
+}
+
+.dotsIcon {
+  font-size: 18px !important;
+  cursor: pointer;
+  color: rgba(25, 4, 69, 0.5);
+  margin-left: 5px;
+}

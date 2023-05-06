@@ -1,0 +1,47 @@
+.tabContainer {
+  display: flex;
+  align-items: center;
+}
+
+.inputContainer {
+  width: 50%;
+}
+
+.input {
+  display: flex;
+}
+
+.inputDescription {
+  width: 50%;
+}
+
+.titleContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: fit-content;
+}
+
+.titleContainer p {
+  margin-right: 10px;
+}
+
+.tabs {
+  margin-bottom: 30px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.contactsContainer {
+  display: flex;
+  /* width: 50%; */
+}
+
+.contactsInput {
+  margin: 5px !important;
+  display: flex;
+  flex-direction: column;
+}
+
+.deleteContainer {
+  height: 20px;
+}

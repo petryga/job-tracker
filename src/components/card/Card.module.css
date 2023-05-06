@@ -1,0 +1,42 @@
+.cardContainer {
+  margin: 0 0 8px 0;
+  max-width: 100%;
+  word-wrap: break-word;
+  position: relative;
+}
+
+.group {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.deleteButton {
+  opacity: 0.5;
+}
+
+.text {
+  color: white;
+  font-weight: 500;
+}
+
+.subtext {
+  color: white;
+  margin-top: 5px;
+  font-size: 14px;
+}
+
+.cardContent {
+  height: 70px;
+  padding-bottom: 16px !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.likeButton {
+  opacity: 0.5;
+  cursor: default;
+  z-index: 999;
+}

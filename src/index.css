@@ -1,0 +1,21 @@
+:root {
+  --font-family: "Roboto", "Helvetica Neue", sans-serif;
+  --background-color: #fdfdff;
+  --border-color: rgba(25, 4, 69, 0.1);
+  --text-color: #180045;
+}
+
+html {
+  background-color: var(--background-color);
+  /* overflow-y: hidden !important; */
+  color: var(--text-color);
+}
+
+* {
+  box-sizing: border-box;
+  font-family: var(--font-family);
+}
+
+ul {
+  padding: 0;
+}

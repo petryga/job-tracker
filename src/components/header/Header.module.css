@@ -1,0 +1,28 @@
+.header {
+  padding: 0 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 7vh;
+}
+
+.goBackLink {
+  text-decoration: none;
+}
+
+h2 {
+  text-transform: uppercase;
+  font-size: 20px;
+}
+
+.dotsIcon {
+  color: gray;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.titleGroup {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

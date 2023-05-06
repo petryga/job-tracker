@@ -1,0 +1,38 @@
+.root {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.card {
+  height: 200px;
+  width: 300px;
+  padding: 10px;
+  margin: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  /* border-radius: 3px; */
+  background-color: #dfe3e6;
+  box-shadow: 0 0.5px 1px gray;
+  border: rgb(128, 128, 128, 0.5) 1px solid;
+}
+
+.contactsInput {
+  margin: 5px !important;
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+}
+
+.contactContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+}

@@ -1,0 +1,23 @@
+.root {
+  width: 50%;
+  margin: 0 auto;
+  background-color: #ffffff;
+  height: 55vh;
+  text-align: center;
+  margin-top: 20vh;
+  width: 30vw;
+  border: 1px solid #89949f;
+}
+
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 34vh;
+}
+
+.input {
+  margin-top: 20px !important;
+  width: 80%;
+}

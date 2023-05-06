@@ -1,0 +1,35 @@
+.modalContent {
+  max-width: 80vw;
+  background-color: #fff;
+  margin: 0 auto;
+  padding: 20px 50px 40px;
+  position: relative;
+  height: 90vh;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 40px;
+}
+
+.buttonContainer button:first-child {
+  margin-right: 10px;
+}
+
+.deleteIcon {
+  cursor: pointer;
+  color: gray;
+}
+
+.children {
+  height: 60vh;
+}
+
+.headerWithDelete {
+  display: flex;
+  justify-content: space-between !important;
+  align-items: center !important;
+  height: 50px;
+  margin-top: 30px;
+}

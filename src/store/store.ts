@@ -1,0 +1,47 @@
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import {
+  persistStore,
+  persistReducer,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from "redux-persist";
+import storage from "redux-persist/lib/storage";
+import { boardApi } from "../api/boardApi";
+import modalSlice from "../reducers/modalSlice";
+import appSlice from "../reducers/appSlice";
+import { apiSlice } from "../api/apiSlice";
+
+const persistConfig = {
+  key: "root",
+  storage,
+  blacklist: [apiSlice.reducerPath, "modal"],
+};
+
+const rootReducer = combineReducers({
+  modal: modalSlice,
+  app: appSlice,
+  [apiSlice.reducerPath]: apiSlice.reducer,
+});
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+const store = configureStore({
+  reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }).concat(boardApi.middleware),
+  devTools: false,
+});
+
+export let persistor = persistStore(store);
+export default store;
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

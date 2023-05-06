@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "paths": {
+      "utils/*": ["utils/*"],
+      "reducers/*": ["reducers/*"],
+      "features/*": ["features/*"],
+      "components/*": ["components/*"]
+    }
+  }
+}
