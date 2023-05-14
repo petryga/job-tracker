@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
+// export const BACKEND_URL = "http://localhost:3000";
 export const BACKEND_URL = "https://job-board-backend.onrender.com";
 export const BOARD_TAG = "Board";
 export const JOB_TAG = "Job";
@@ -9,16 +10,6 @@ export const CONTACT = "CONTACT";
 export const apiSlice = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: BACKEND_URL,
-    prepareHeaders: (headers) => {
-      const token = localStorage.getItem("token");
-      if (token) {
-        headers.set("authorization", `Bearer ${token}`);
-        headers.set("Access-Control-Allow-Origin", "*");
-        headers.set("Content-Type", "application/json");
-      }
-      return headers;
-    },
-    credentials: "include",
   }),
   tagTypes: [BOARD_TAG, JOB_TAG, CONTACT],
   endpoints: () => ({}),
