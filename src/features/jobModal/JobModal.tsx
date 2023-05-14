@@ -60,7 +60,7 @@ export const JobModal = () => {
 
   useEffect(() => {
     if (job) {
-      setFormData(job);
+      setFormData({ ...INITIAL_VALUES, ...job });
       setLiked(job.isFavorite);
     } else {
       setFormData(INITIAL_VALUES);
