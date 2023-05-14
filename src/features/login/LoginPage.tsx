@@ -17,14 +17,15 @@ import toast from "react-hot-toast";
 
 import styles from "./LoginPage.module.css";
 
-const user = localStorage.getItem("token");
-
 export const LoginPage = () => {
-  if (user && window.location.pathname === "/") {
-    window.location.replace("/home");
-  }
-
+  const user = localStorage.getItem("token");
   const navigate = useNavigate();
+  useEffect(() => {
+    if (user && window.location.pathname === "/") {
+      navigate("/home");
+    }
+  }, [navigate, user]);
+
   const [tabIndex, setTabIndex] = useState(0);
   const [visible, setVisible] = useState(false);
   const [registerUser] = useRegisterUserMutation();
@@ -55,7 +56,7 @@ export const LoginPage = () => {
     }
 
     if (tabIndex === 0) {
-      loginUser({ data: formData })
+      return loginUser({ data: formData })
         .unwrap()
         .then((res) => {
           if (res) {
@@ -69,7 +70,7 @@ export const LoginPage = () => {
           toast.error(error.data.message);
         });
     } else {
-      registerUser({ data: formData })
+      return registerUser({ data: formData })
         .unwrap()
         .then((res) => {
           toast.success(res.message);
@@ -109,7 +110,7 @@ export const LoginPage = () => {
                   InputLabelProps={{ shrink: true }}
                   margin="dense"
                   variant="outlined"
-                  autoComplete="on"
+                  autoComplete={type === "email" ? "email" : "password"} // TODO name field
                   key={name}
                   className={styles.input}
                   label={label}

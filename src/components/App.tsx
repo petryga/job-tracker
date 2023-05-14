@@ -2,9 +2,8 @@ import { Route, Routes } from "react-router-dom";
 import Board from "../features/boardPage/Board";
 import HomePage from "../features/homePage/HomePage";
 
-const user = localStorage.getItem("token");
-
 function App() {
+  const user = localStorage.getItem("token");
   if (!user) {
     window.location.replace("/");
   }

@@ -4,15 +4,16 @@ import { useGetBoardsQuery } from "api/boardApi";
 import styles from "./HomePage.module.css";
 import Button from "@material-ui/core/Button";
 
-const userId = localStorage.getItem("userId") || "";
 
 const HomePage = () => {
-  const { data: boards, isFetching, isLoading } = useGetBoardsQuery({ userId });
+  const userId = localStorage.getItem("userId") || "";
+  const { data: boards, isFetching, isLoading } = useGetBoardsQuery({ userId }, { skip: !userId });
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("userId");
     window.location.reload();
+    // Navigate()
   };
 
   if (boards) {
