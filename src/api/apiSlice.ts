@@ -10,6 +10,10 @@ export const CONTACT = "CONTACT";
 export const apiSlice = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: BACKEND_URL,
+    headers:{
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+    }
   }),
   tagTypes: [BOARD_TAG, JOB_TAG, CONTACT],
   endpoints: () => ({}),
