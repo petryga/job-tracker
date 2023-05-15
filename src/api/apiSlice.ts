@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-export const BACKEND_URL = "http://localhost:3000";
-// export const BACKEND_URL = "https://job-board-backend.onrender.com";
+// export const BACKEND_URL = "http://localhost:3000";
+export const BACKEND_URL = "https://job-board-backend.onrender.com";
 export const BOARD_TAG = "Board";
 export const JOB_TAG = "Job";
 export const LIST = "LIST";
