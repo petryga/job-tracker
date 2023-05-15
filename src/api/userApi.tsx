@@ -1,4 +1,4 @@
-import { apiSlice } from "./apiSlice";
+import { BACKEND_URL, apiSlice } from "./apiSlice";
 
 export const userApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -15,6 +15,10 @@ export const userApi = apiSlice.injectEndpoints({
         url: "/api/users/login",
         method: "POST",
         body: data,
+        headers: {
+          "Content-Type": "application/json",
+          "allow-access-control-origin": BACKEND_URL,
+        },
       }),
     }),
   }),
