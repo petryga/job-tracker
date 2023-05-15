@@ -9,10 +9,10 @@ export const CONTACT = "CONTACT";
 
 export const apiSlice = createApi({
   baseQuery: fetchBaseQuery({
-    baseUrl: BACKEND_URL,
+    baseUrl: BACKEND_URL, // todo from env
     credentials: "include",
-    prepareHeaders: (headers) => {
-      const token = localStorage.getItem("token");
+    prepareHeaders: async (headers) => {
+      const token = await localStorage.getItem("token");
       if (token) {
         headers.set("authorization", `Bearer ${token}`);
       }
