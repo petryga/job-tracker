@@ -13,6 +13,8 @@ export const apiSlice = createApi({
     credentials: "include",
     prepareHeaders: async (headers) => {
       const token = await localStorage.getItem("token");
+      headers.set("content-type", "application/json");
+      headers.set("allow-access-control-origin", BACKEND_URL);
       if (token) {
         headers.set("authorization", `Bearer ${token}`);
       }
