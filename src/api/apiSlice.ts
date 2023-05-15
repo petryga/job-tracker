@@ -22,4 +22,3 @@ export const apiSlice = createApi({
   tagTypes: [BOARD_TAG, JOB_TAG, CONTACT],
   endpoints: () => ({}),
 });
-// TODO  change facebook to meta

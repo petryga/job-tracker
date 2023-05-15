@@ -10,7 +10,6 @@ export interface Contact {
 }
 
 export interface Job {
-  id: string;
   companyName: string;
   position: string;
   location: string;

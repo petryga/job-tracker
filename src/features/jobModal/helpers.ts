@@ -89,7 +89,6 @@ export const CONTACTS_FIELDS_INITIAL_VALUES = {
 };
 
 export const INITIAL_VALUES: Job = {
-  id: "",
   [Fields.companyName]: "",
   [Fields.position]: "",
   [Fields.location]: "",

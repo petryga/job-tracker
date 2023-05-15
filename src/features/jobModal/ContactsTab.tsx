@@ -68,7 +68,7 @@ export const ContactsTab = ({ formData, setFormData }: ContactsTabProps) => {
 
               return (
                 <TextField
-                  key={`${name}-${i}`}
+                  key={`${name}-${i}`} // TODO fix unique key
                   style={{ width }}
                   className={styles.contactsInput}
                   name={name}

@@ -31,6 +31,7 @@ import { useLazyGetJobQuery, useUpdateJobMutation } from "api/jobsApi";
 import { toast } from "react-hot-toast";
 import { Job } from "./types";
 import { useDeleteCardMutation } from "api/boardApi";
+import isEqual from "lodash/isEqual";
 
 export const JobModal = () => {
   const dispatch = useDispatch();
@@ -59,11 +60,10 @@ export const JobModal = () => {
   );
 
   useEffect(() => {
+    setFormData(INITIAL_VALUES);
     if (job) {
-      setFormData({ ...INITIAL_VALUES, ...job });
+      setFormData(job);
       setLiked(job.isFavorite);
-    } else {
-      setFormData(INITIAL_VALUES);
     }
   }, [job, modalProps]);
 

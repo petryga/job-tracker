@@ -4,23 +4,28 @@ import { useGetBoardsQuery } from "api/boardApi";
 import styles from "./HomePage.module.css";
 import Button from "@material-ui/core/Button";
 
-
 const HomePage = () => {
   const userId = localStorage.getItem("userId") || "";
-  const { data: boards, isFetching, isLoading } = useGetBoardsQuery({ userId }, { skip: !userId });
+  const {
+    data: boards,
+    isFetching,
+    isLoading,
+  } = useGetBoardsQuery({ userId }, { skip: !userId });
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("userId");
     window.location.reload();
-    // Navigate()
   };
+
+  if (isFetching || isLoading) {
+    return <div>Loading...</div>;
+  }
 
   if (boards) {
     return (
       <div className={styles.homeRoot}>
         <Nav boards={boards} handleLogout={handleLogout} />
-        {(isFetching || isLoading) && null}
         {!!boards.length ? (
           boards.map((board) => (
             <div className={styles.thumbnails} key={board._id}>

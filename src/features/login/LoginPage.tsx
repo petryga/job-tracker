@@ -110,7 +110,7 @@ export const LoginPage = () => {
                   InputLabelProps={{ shrink: true }}
                   margin="dense"
                   variant="outlined"
-                  autoComplete={type === "email" ? "email" : "password"} // TODO name field
+                  autoComplete="on" // TODO test password on login
                   key={name}
                   className={styles.input}
                   label={label}
