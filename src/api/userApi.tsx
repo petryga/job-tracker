@@ -20,7 +20,10 @@ export const userApi = apiSlice.injectEndpoints({
         body: data,
         headers: {
           "Content-Type": "application/json",
-          "allow-access-control-origin": process.env.REACT_APP_BACKEND_URL,
+          "access-control-allow-origin":
+            process.env.NODE_ENV === "development"
+              ? LOCAL_BACKEND_URL
+              : process.env.REACT_APP_BACKEND_URL,
         },
       }),
     }),
