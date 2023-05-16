@@ -1,4 +1,3 @@
-import { LoginInitialValues } from "features/login/types";
 
 const colors = [
   "#FACC00",
@@ -24,11 +23,3 @@ export const tabProps = {
   style: { background: getRandomColor() },
 };
 
-export const getErrorState = (formData: LoginInitialValues) => {
-  return (
-    formData.email === "" ||
-    formData.password === "" ||
-    formData.confirm_password === "" ||
-    formData.password !== formData.confirm_password
-  );
-};

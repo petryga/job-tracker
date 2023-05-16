@@ -2,93 +2,33 @@ import {
   LOGIN_FIELDS,
   PasswordIcon,
   SIGN_UP_FORM,
-  loginInitialValues,
+  getAutocompleteProps,
   tabProps,
 } from "./helpers";
 import TextField from "@material-ui/core/TextField";
 import { Button, Tab, Tabs } from "@material-ui/core";
 import { TabPanel } from "components/tabPanel/TabPanel";
-import { ChangeEvent, FormEvent, useEffect, useReducer, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getErrorState } from "features/boardPage/helpers";
-import { LoginInitialValues } from "./types";
-import { useLoginUserMutation, useRegisterUserMutation } from "api/userApi";
-import toast from "react-hot-toast";
+import { useLoginSignUpForm } from "./hooks";
 
 import styles from "./LoginPage.module.css";
 
 export const LoginPage = () => {
   const user = localStorage.getItem("token");
   const navigate = useNavigate();
+  const [tabIndex, setTabIndex] = useState(0);
+  const [visible, setVisible] = useState(false);
+  const fields = tabIndex === 0 ? LOGIN_FIELDS : SIGN_UP_FORM;
+
+  const [handleSubmit, handleChange, buttonDisabled, formData] =
+    useLoginSignUpForm(tabIndex, setTabIndex);
+
   useEffect(() => {
     if (user && window.location.pathname === "/") {
       navigate("/home");
     }
   }, [navigate, user]);
-
-  const [tabIndex, setTabIndex] = useState(0);
-  const [visible, setVisible] = useState(false);
-  const [registerUser] = useRegisterUserMutation();
-  const [loginUser] = useLoginUserMutation();
-  const [formData, setFormData] = useReducer(
-    (state: LoginInitialValues, newState: LoginInitialValues) => ({
-      ...state,
-      ...newState,
-    }),
-    loginInitialValues
-  );
-
-  const error = getErrorState(formData);
-  const buttonDisabled = tabIndex === 0 ? error : error || formData.name === "";
-  const passwordLengthError =
-    formData.password.length < 9 || formData.confirm_password.length < 9;
-  const fields = tabIndex === 0 ? LOGIN_FIELDS : SIGN_UP_FORM;
-
-  useEffect(() => {
-    setFormData(loginInitialValues);
-  }, [tabIndex]);
-
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-    if (passwordLengthError) {
-      toast.error("Password must be at least 9 characters long");
-      return;
-    }
-
-    if (tabIndex === 0) {
-      return loginUser({ data: formData })
-        .unwrap()
-        .then((res) => {
-          if (res) {
-            localStorage.setItem("token", res.token);
-            localStorage.setItem("userId", res._id);
-            navigate("/home");
-            toast.success(`Hi ${res.name}`);
-          }
-        })
-        .catch((error) => {
-          toast.error(error.data.message);
-        });
-    } else {
-      return registerUser({ data: formData })
-        .unwrap()
-        .then((res) => {
-          toast.success(res.message);
-          setTabIndex(0);
-        })
-        .catch((error) => {
-          toast.error(error.data.message);
-        });
-    }
-  };
-
-  const handleChange = (e: ChangeEvent<any>) => {
-    const { name, value } = e.target;
-    setFormData({ [name]: value } as Pick<
-      LoginInitialValues,
-      keyof LoginInitialValues
-    >);
-  };
 
   return (
     <div className={styles.root}>
@@ -105,12 +45,14 @@ export const LoginPage = () => {
                 (name === "confirm_password" && formData.confirm_password);
 
               const passwordType = visible ? "text" : "password";
+              const autocomplete = getAutocompleteProps(name, tabIndex);
+
               return (
                 <TextField
                   InputLabelProps={{ shrink: true }}
                   margin="dense"
                   variant="outlined"
-                  autoComplete="on" // TODO test password on login
+                  autoComplete={autocomplete}
                   key={name}
                   className={styles.input}
                   label={label}

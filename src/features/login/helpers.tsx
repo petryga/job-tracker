@@ -1,6 +1,7 @@
 import Icon from "@material-ui/core/Icon";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import { Dispatch } from "react";
+import { LoginInitialValues } from "./types";
 
 export const LOGIN_FIELDS = [
   {
@@ -15,12 +16,6 @@ export const LOGIN_FIELDS = [
     required: true,
     type: "password",
   },
-  {
-    name: "confirm_password",
-    label: "Confirm Password",
-    required: true,
-    type: "password",
-  },
 ];
 
 export const SIGN_UP_FORM = [
@@ -31,6 +26,12 @@ export const SIGN_UP_FORM = [
     type: "text",
   },
   ...LOGIN_FIELDS,
+  {
+    name: "confirm_password",
+    label: "Confirm Password",
+    required: true,
+    type: "password",
+  },
 ];
 
 export const PasswordIcon = (
@@ -57,4 +58,42 @@ export const loginInitialValues = {
   password: "",
   confirm_password: "",
   name: "",
+};
+
+export const getAutocompleteProps = (
+  name: string,
+  tabIndex: number
+): string => {
+  if (tabIndex === 0) {
+    return name === "email" ? "username" : "password";
+  } else {
+    return name === "email" ? "email" : "new-password";
+  }
+};
+
+export const getErrorState = (
+  formData: LoginInitialValues,
+  tabIndex: number
+) => {
+  if (tabIndex === 0) {
+    return formData.email === "" || formData.password === "";
+  } else {
+    return (
+      formData.email === "" ||
+      formData.password === "" ||
+      formData.confirm_password === "" ||
+      formData.password !== formData.confirm_password
+    );
+  }
+};
+
+export const getPasswordLengthError = (
+  formData: LoginInitialValues,
+  tabIndex: number
+) => {
+  if (tabIndex === 0) {
+    return formData.password.length < 9;
+  } else {
+    return formData.password.length < 9 || formData.confirm_password.length < 9;
+  }
 };
