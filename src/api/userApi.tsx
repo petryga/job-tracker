@@ -1,4 +1,4 @@
-import { apiSlice } from "./apiSlice";
+import { LOCAL_BACKEND_URL, apiSlice } from "./apiSlice";
 
 export const userApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -7,6 +7,9 @@ export const userApi = apiSlice.injectEndpoints({
         url: "/api/users/register",
         method: "POST",
         body: data,
+        // headers: {
+        //   "Content-Type": "application/json",
+        // },
       }),
     }),
 
@@ -15,6 +18,10 @@ export const userApi = apiSlice.injectEndpoints({
         url: "/api/users/login",
         method: "POST",
         body: data,
+        headers: {
+          "Content-Type": "application/json",
+          "allow-access-control-origin": process.env.REACT_APP_BACKEND_URL,
+        },
       }),
     }),
   }),
