@@ -53,6 +53,7 @@ export const useLoginSignUpForm = (
           }
         })
         .catch((error) => {
+          console.log(error)
           toast.error(error.data.message);
         });
     } else {

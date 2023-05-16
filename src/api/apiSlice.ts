@@ -10,7 +10,7 @@ export const CONTACT = "CONTACT";
 export const apiSlice = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.REACT_APP_BACKEND_URL || LOCAL_BACKEND_URL,
-    credentials: "include",
+    // credentials: "include",
     prepareHeaders: async (headers) => {
       const token = await localStorage.getItem("token");
 
