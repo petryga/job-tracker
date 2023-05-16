@@ -6,11 +6,13 @@ export const BOARD_TAG = "Board";
 export const JOB_TAG = "Job";
 export const LIST = "LIST";
 export const CONTACT = "CONTACT";
-
+console.log(process.env);
 export const apiSlice = createApi({
   baseQuery: fetchBaseQuery({
-    baseUrl: process.env.REACT_APP_BACKEND_URL || LOCAL_BACKEND_URL,
-    // credentials: "include",
+    baseUrl:
+      process.env.NODE_ENV === "development"
+        ? LOCAL_BACKEND_URL
+        : process.env.REACT_APP_BACKEND_URL,
     prepareHeaders: async (headers) => {
       const token = await localStorage.getItem("token");
 

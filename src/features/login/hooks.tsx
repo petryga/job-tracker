@@ -53,8 +53,8 @@ export const useLoginSignUpForm = (
           }
         })
         .catch((error) => {
-          console.log(error)
-          toast.error(error.data.message);
+          // console.log(error)
+          toast.error(error.error);
         });
     } else {
       return registerUser({ data: formData })
