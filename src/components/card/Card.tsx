@@ -11,7 +11,6 @@ import { useUpdateCardMutation } from "api/boardApi";
 import { useDispatch } from "react-redux";
 import { openModal, setModalProps } from "reducers/modalSlice";
 import { JOB_SEARCH } from "utils/constants";
-import { isDragging } from "reducers/appSlice";
 
 const RenderCard = ({
   card,
@@ -32,46 +31,42 @@ const RenderCard = ({
 
   return (
     <Draggable draggableId={id} index={index}>
-      {(provided, snapshot) => {
-        dispatch(isDragging(snapshot.isDragging));
-
-        return (
-          <div
-            {...provided.draggableProps}
-            {...provided.dragHandleProps}
-            className={styles.cardContainer}
-            ref={provided.innerRef}
-          >
-            <Card style={{ backgroundColor: color }}>
-              <CardContent
-                className={styles.cardContent}
-                onDoubleClick={() => {
-                  if (isJobSearchBoard) {
-                    dispatch(setModalProps({ name: JOB_SEARCH }));
-                    openTheModal(JOB_SEARCH);
-                  } else {
-                    setIsEditing(true);
-                  }
-                }}
-              >
-                <div className={styles.group}>
-                  <div className={styles.text}>{title}</div>
-                  <IconsComponent
-                    isJobSearchBoard={isJobSearchBoard}
-                    setLiked={setLiked}
-                    liked={liked}
-                    openDeleteModal={openTheModal}
-                    isFavorite={isFavorite}
-                  />
-                </div>
-                {isJobSearchBoard && position && (
-                  <div className={styles.subtext}>{position}</div>
-                )}
-              </CardContent>
-            </Card>
-          </div>
-        );
-      }}
+      {(provided) => (
+        <div
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+          className={styles.cardContainer}
+          ref={provided.innerRef}
+        >
+          <Card style={{ backgroundColor: color }}>
+            <CardContent
+              className={styles.cardContent}
+              onDoubleClick={() => {
+                if (isJobSearchBoard) {
+                  dispatch(setModalProps({ name: JOB_SEARCH }));
+                  openTheModal(JOB_SEARCH);
+                } else {
+                  setIsEditing(true);
+                }
+              }}
+            >
+              <div className={styles.group}>
+                <div className={styles.text}>{title}</div>
+                <IconsComponent
+                  isJobSearchBoard={isJobSearchBoard}
+                  setLiked={setLiked}
+                  liked={liked}
+                  openDeleteModal={openTheModal}
+                  isFavorite={isFavorite}
+                />
+              </div>
+              {isJobSearchBoard && position && (
+                <div className={styles.subtext}>{position}</div>
+              )}
+            </CardContent>
+          </Card>
+        </div>
+      )}
     </Draggable>
   );
 };

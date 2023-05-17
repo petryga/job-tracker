@@ -103,7 +103,7 @@ const FormList = ({ list, index, board, cards }: ListComponentProps) => {
                   <CreateNewEntry listID={listID} board={board} />
                 )}
 
-                <div ref={provided.innerRef} {...provided.droppableProps}>
+                <div {...provided.droppableProps} ref={provided.innerRef}>
                   <div
                     className={
                       isDragging

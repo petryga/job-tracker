@@ -10,13 +10,14 @@ import { DeleteModal } from "components/deleteModal/DeleteModal";
 import { useDispatch, useSelector } from "react-redux";
 import { dragHappened, selectApp, updateState } from "reducers/appSlice";
 import { Header } from "components/header/Header";
-import styles from "./Board.module.css";
 import { tabProps } from "./helpers";
 import { Tab, Tabs } from "@material-ui/core";
 import { TabPanel } from "components/tabPanel/TabPanel";
 import { useState } from "react";
 import ContactsPage from "features/contactsPage/ContactsPage";
 import { useGetContactsQuery } from "api/contactsApi";
+import { isDragging } from "reducers/appSlice";
+import styles from "./Board.module.css";
 
 export const Board = (): JSX.Element => {
   const { boardID = "" } = useParams();
@@ -51,6 +52,8 @@ export const Board = (): JSX.Element => {
   }, [boardID, boardState, isDragFinished, updateBoard]);
 
   const onDragEnd = ({ destination, source, type }: DropResult) => {
+    dispatch(isDragging(false));
+
     if (source && type && boardID && destination) {
       dispatch(
         dragHappened({
@@ -61,6 +64,10 @@ export const Board = (): JSX.Element => {
         })
       );
     }
+  };
+
+  const onDragStart = () => {
+    dispatch(isDragging(true));
   };
 
   if (boardState && board) {
@@ -82,7 +89,7 @@ export const Board = (): JSX.Element => {
           </Tabs>
         )}
         <TabPanel value={tabIndex} index={0}>
-          <DragDropContext onDragEnd={onDragEnd}>
+          <DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart}>
             <Droppable
               droppableId="all-lists"
               direction="horizontal"
