@@ -70,7 +70,8 @@ export const ContactsTab = ({ formData, setFormData }: ContactsTabProps) => {
 
                 return (
                   <TextField
-                    key={`${name}-${i}`} // TODO fix unique key
+                    InputLabelProps={{ shrink: true }}
+                    key={i}
                     style={{ width }}
                     className={styles.contactsInput}
                     name={name}
@@ -103,3 +104,5 @@ export const ContactsTab = ({ formData, setFormData }: ContactsTabProps) => {
     </>
   );
 };
+
+// TODO Fix long notes and icons

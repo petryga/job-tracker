@@ -1,9 +1,9 @@
 import TextField from "@material-ui/core/TextField";
-import {
-  useGetContactQuery,
-  useUpdateContactMutation,
-  useDeleteContactMutation,
-} from "api/contactsApi";
+// import {
+//   useGetContactQuery,
+//   useUpdateContactMutation,
+//   useDeleteContactMutation,
+// } from "api/contactsApi";
 import { ModalComponent } from "components/modal/Modal";
 import { Contact } from "features/jobModal/types";
 import { CONTACTS_FIELDS } from "features/jobModal/helpers";
@@ -20,48 +20,48 @@ const style = { height: "550px", marginTop: "150px", width: "550px" };
 export const ContactModal = () => {
   const dispatch = useDispatch();
   const { modalProps } = useSelector(selectModal);
-  const [deleteContact] = useDeleteContactMutation();
-  const [updateContact] = useUpdateContactMutation();
+  // const [deleteContact] = useDeleteContactMutation();
+  // const [updateContact] = useUpdateContactMutation();
   const { id, name: contactName } = modalProps || {};
-  const {
-    data: contact,
-    isFetching,
-    isLoading,
-  } = useGetContactQuery({ id }, { skip: !id });
+  // const {
+  //   data: contact,
+  //   isFetching,
+  //   isLoading,
+  // } = useGetContactQuery({ id }, { skip: !id });
   const [formData, setFormData] = useState<Contact>();
 
-  useEffect(() => {
-    if (contact) {
-      setFormData(contact);
-    } else {
-      setFormData(undefined);
-    }
-  }, [contact]);
+  // useEffect(() => {
+  //   if (contact) {
+  //     setFormData(contact);
+  //   } else {
+  //     setFormData(undefined);
+  //   }
+  // }, [contact]);
 
   const handleUpdate = () => {
     if (id) {
-      updateContact({ id, contact: formData })
-        .unwrap()
-        .then((res) => {
-          toast.success(res.message);
-          dispatch(closeModal());
-        })
-        .catch((err) => {
-          toast.error(err.message);
-        });
+      // updateContact({ id, contact: formData })
+      //   .unwrap()
+      //   .then((res) => {
+      //     toast.success(res.message);
+      //     dispatch(closeModal());
+      //   })
+      //   .catch((err) => {
+      //     toast.error(err.message);
+      //   });
     }
   };
 
   const handleDeleteContact = () => {
     if (id) {
-      deleteContact({ id })
-        .unwrap()
-        .then((res) => {
-          toast.success(res.message);
-        })
-        .catch((err) => {
-          toast.error(err.message);
-        });
+      // deleteContact({ id })
+      //   .unwrap()
+      //   .then((res) => {
+      //     toast.success(res.message);
+      //   })
+      //   .catch((err) => {
+      //     toast.error(err.message);
+      //   });
     }
   };
 
@@ -74,7 +74,8 @@ export const ContactModal = () => {
     return (
       <ModalComponent
         name={CONTACT_MODAL}
-        isButtonDisabled={isFetching || isLoading}
+        isButtonDisabled={false}
+        // isButtonDisabled={isFetching || isLoading}
         title={contactName}
         handleSubmit={handleUpdate}
         stylesWrapper={style}
@@ -86,7 +87,7 @@ export const ContactModal = () => {
         <div className={styles.contactContainer}>
           {Object.keys(formData).map((field) => (
             <div key={field}>
-              {CONTACTS_FIELDS.map(({ name, label, type = "text" }, i) => {
+              {/* {CONTACTS_FIELDS.map(({ name, label, type = "text" }, i) => {
                 if (name === field) {
                   const isTextArea = type === "textarea";
 
@@ -107,7 +108,7 @@ export const ContactModal = () => {
                   );
                 }
                 return null;
-              })}
+              })} */}
             </div>
           ))}
         </div>

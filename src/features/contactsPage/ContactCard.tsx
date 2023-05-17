@@ -2,11 +2,14 @@ import { Contact } from "features/jobModal/types";
 import styles from "./ContactsPage.module.css";
 import { useDispatch } from "react-redux";
 import { openModal, setModalProps } from "reducers/modalSlice";
-import { JOB_SEARCH } from "utils/constants";
-import { Icon } from "@material-ui/core";
+import { CONFIRM_DELETE, DELETE_CONTACT } from "utils/constants";
+import { Icon, Menu, MenuItem } from "@material-ui/core";
+import { useState } from "react";
 
 const ContactCard = ({ contact }: { contact: Contact }) => {
   const dispatch = useDispatch();
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
   const {
     contactName,
     contactEmail,
@@ -17,17 +20,43 @@ const ContactCard = ({ contact }: { contact: Contact }) => {
     position,
   } = contact;
 
-  const openContactModal = () => {
-    dispatch(openModal(JOB_SEARCH));
-    dispatch(setModalProps({ contactID: _id }));
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  // const openContactModal = () => {
+  //   dispatch(openModal(JOB_SEARCH));
+  //   dispatch(setModalProps({ contactID: _id }));
+  // };
+
+  const openDeleteModal = () => {
+    console.log("open delete modal");
+    dispatch(openModal(CONFIRM_DELETE));
+    dispatch(setModalProps({ contactID: _id, name: DELETE_CONTACT }));
+    handleClose();
+  };
+
+  const handleClick = (e: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(e.currentTarget);
   };
 
   if (!contactName) return null;
 
   return (
-    <div className={styles.card} onClick={openContactModal}>
+    <div className={styles.card}>
       <div className={styles.personalInfo}>
-        <h3>{contactName}</h3>
+        <div className={styles.nameGroup}>
+          <h3>{contactName}</h3>
+          <Icon onClick={handleClick}>more_horiz</Icon>
+          <Menu
+            id="basic-menu"
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+          >
+            <MenuItem onClick={openDeleteModal}>Delete Contact</MenuItem>
+          </Menu>
+        </div>
         <p>{companyName}</p>
         <p>{position}</p>
       </div>

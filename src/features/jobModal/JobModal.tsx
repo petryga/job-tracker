@@ -42,7 +42,7 @@ export const JobModal = () => {
   const [tabIndex, setTabIndex] = useState(0);
   const [updateJob] = useUpdateJobMutation();
   const [getJob, { data: job }] = useLazyGetJobQuery();
-
+  
   useEffect(() => {
     setTabIndex(0);
     if (cardID) {
@@ -80,7 +80,7 @@ export const JobModal = () => {
       isFavorite: liked,
     };
 
-    if (cardID && job) {
+    if (cardID && job && boardID) {
       updateJob({
         ...newFormData,
         id: job._id,

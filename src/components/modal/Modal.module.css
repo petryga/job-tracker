@@ -4,13 +4,13 @@
   margin: 0 auto;
   padding: 20px 50px 40px;
   position: relative;
-  height: 90vh;
+  /* height: 90%; */
 }
 
 .buttonContainer {
   display: flex;
   justify-content: flex-end;
-  margin-top: 40px;
+  margin-top: 20px;
 }
 
 .buttonContainer button:first-child {

@@ -29,5 +29,5 @@ export const appInitialState: InitialState = {
 export const modalInitialState: ModalState = {
 
   openModal: null,
-  modalProps: { id: "", listID: "", name: ""  },
+  modalProps: { id: "", listID: "", name: "", contactID: ""  },
 };

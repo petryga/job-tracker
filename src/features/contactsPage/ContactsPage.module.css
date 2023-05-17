@@ -11,13 +11,15 @@
   color: gray;
   height: 200px;
   width: 300px;
-  padding: 15px;
+  padding: 18px;
   margin: 8px;
-
   border-radius: 4px;
   border: 1px solid var(--border-color);
   box-shadow: rgba(25, 4, 69, 0.05) 0px 3px 7px -1px;
   background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 /* .contactsInput {
@@ -39,23 +41,33 @@
   height: 40%;
 }
 
-.personalInfo p:last-child  {
-  padding-top: 3px ;
+.personalInfo h3 {
+  margin: 0;
+}
+
+.personalInfo p:last-child {
+  padding-top: 3px;
+}
+
+.nameGroup {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 10px;
+  /* padding-top: 5px;  */
 }
 
 .contactInfo {
-  padding-top: 15px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  height: 60%;
 }
 
 .contactInfo p {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-bottom: 7px;
+  padding-top: 7px;
 }
 
 p {

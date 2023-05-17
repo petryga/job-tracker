@@ -41,7 +41,6 @@ export const CONTACTS_FIELDS = [
     name: ContactFields.phone,
     label: "Phone",
   },
-
   {
     name: ContactFields.notes,
     label: "Notes",
@@ -138,7 +137,7 @@ export const getStyle = (isTextArea: boolean, name: Fields) => {
 
 export const getWidth = ({ length }: { length: number }) => {
   if (length === 1) {
-    return "49%";
+    return "50%";
   }
 
   return "95%";
