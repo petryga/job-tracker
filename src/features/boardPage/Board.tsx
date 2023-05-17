@@ -24,7 +24,7 @@ export const Board = (): JSX.Element => {
   const boardState = boards[boardID as keyof typeof boards];
   const dispatch = useDispatch();
   const [updateBoard] = useUpdateBoardMutation();
-  const [tabIndex, setTabIndex] = useState(1);
+  const [tabIndex, setTabIndex] = useState(0);
 
   const {
     data: board,
