@@ -31,7 +31,6 @@ import { useLazyGetJobQuery, useUpdateJobMutation } from "api/jobsApi";
 import { toast } from "react-hot-toast";
 import { Job } from "./types";
 import { useDeleteCardMutation } from "api/boardApi";
-import isEqual from "lodash/isEqual";
 
 export const JobModal = () => {
   const dispatch = useDispatch();

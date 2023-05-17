@@ -26,7 +26,7 @@ export const Header = ({
     setAnchorEl(null);
   };
 
-  const openTheModal = () => {
+  const openDeleteModal = () => {
     dispatch(openModal(CONFIRM_DELETE));
     dispatch(setModalProps({ name: DELETE_BOARD }));
     handleClose();
@@ -65,7 +65,7 @@ export const Header = ({
               >
                 Edit Name
               </MenuItem>
-              <MenuItem onClick={openTheModal}>Delete Board</MenuItem>
+              <MenuItem onClick={openDeleteModal}>Delete Board</MenuItem>
             </Menu>
           </div>
         )}

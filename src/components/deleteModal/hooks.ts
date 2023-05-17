@@ -3,41 +3,57 @@ import {
   useDeleteCardMutation,
   useDeleteListMutation,
 } from "api/boardApi";
+import { useDeleteUserMutation } from "api/userApi";
+import { handleLogout } from "features/homePage/helpers";
 import { Dispatch, useCallback } from "react";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { closeModal, selectModal } from "reducers/modalSlice";
-import { DELETE_BOARD } from "utils/constants";
+import { DELETE_BOARD, DELETE_USER } from "utils/constants";
 
 const useHandleSubmit = ({
   setButtonDisabled,
 }: {
   setButtonDisabled: Dispatch<React.SetStateAction<boolean>>;
 }) => {
+  const userId = localStorage.getItem("userId") || "";
   const { boardID = "" } = useParams();
   const { modalProps } = useSelector(selectModal);
   const { id: cardID, listID, name } = modalProps || {};
   const [deleteCard] = useDeleteCardMutation();
   const [deleteBoard] = useDeleteBoardMutation();
   const [deleteList] = useDeleteListMutation();
+  const [deleteUser] = useDeleteUserMutation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleSubmit = useCallback(() => {
     setButtonDisabled(true);
+    console.log(userId, name);
+    if (name === DELETE_USER && userId) {
+      return deleteUser({ userId })
+        .unwrap()
+        .then((res) => {
+          dispatch(closeModal());
+          handleLogout();
+          toast.success("User deleted successfully");
+        })
+        .catch((err) => {
+          toast.error(err.data.message);
+        });
+    }
+
     if (boardID) {
       if (name === DELETE_BOARD) {
         return deleteBoard(boardID)
           .unwrap()
           .then((res) => {
-            setButtonDisabled(false);
             dispatch(closeModal());
             toast.success(res.message);
             navigate("/home");
           })
           .catch((err) => {
-            setButtonDisabled(false);
             toast.error(err.data.message);
           });
       }
@@ -46,12 +62,10 @@ const useHandleSubmit = ({
         return deleteCard({ id: cardID, listID, boardID })
           .unwrap()
           .then((res) => {
-            setButtonDisabled(false);
             dispatch(closeModal());
             toast.success(res.message);
           })
           .catch((err) => {
-            setButtonDisabled(false);
             toast.error(err.data.message);
           });
       }
@@ -60,27 +74,28 @@ const useHandleSubmit = ({
         return deleteList({ id: listID, boardID })
           .unwrap()
           .then((res) => {
-            setButtonDisabled(false);
             dispatch(closeModal());
             toast.success(res.message);
           })
           .catch((err) => {
-            setButtonDisabled(false);
             toast.error(err.data.message);
           });
       }
     }
+    setButtonDisabled(false);
   }, [
     boardID,
     cardID,
     deleteBoard,
     deleteCard,
     deleteList,
+    deleteUser,
     dispatch,
     listID,
     name,
     navigate,
     setButtonDisabled,
+    userId,
   ]);
 
   return handleSubmit;

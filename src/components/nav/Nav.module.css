@@ -29,6 +29,10 @@
   margin-top: 70px;
 }
 
-.suggestions{
+.suggestions {
   margin: 30px 0;
+}
+
+.dotsIcon {
+  margin-right: 10px;
 }

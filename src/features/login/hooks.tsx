@@ -1,5 +1,5 @@
 import { useLoginUserMutation, useRegisterUserMutation } from "api/userApi";
-import { ChangeEvent, FormEvent, useReducer } from "react";
+import { ChangeEvent, FormEvent, useEffect, useReducer } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import {
@@ -32,9 +32,9 @@ export const useLoginSignUpForm = (
   const error = getErrorState(formData, tabIndex);
   const buttonDisabled = tabIndex === 0 ? error : error || formData.name === "";
 
-  // useEffect(() => {
-  //   setFormData(loginInitialValues);
-  // }, [setFormData, tabIndex]);
+  useEffect(() => {
+    setFormData(loginInitialValues);
+  }, [setFormData, tabIndex]);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -53,8 +53,7 @@ export const useLoginSignUpForm = (
           }
         })
         .catch((error) => {
-          // console.log(error)
-          toast.error(error.error);
+          toast.error(error.data.message);
         });
     } else {
       return registerUser({ data: formData })

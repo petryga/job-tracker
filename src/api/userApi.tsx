@@ -1,4 +1,4 @@
-import { LOCAL_BACKEND_URL, apiSlice } from "./apiSlice";
+import { apiSlice } from "./apiSlice";
 
 export const userApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -7,9 +7,6 @@ export const userApi = apiSlice.injectEndpoints({
         url: "/api/users/register",
         method: "POST",
         body: data,
-        // headers: {
-        //   "Content-Type": "application/json",
-        // },
       }),
     }),
 
@@ -18,17 +15,20 @@ export const userApi = apiSlice.injectEndpoints({
         url: "/api/users/login",
         method: "POST",
         body: data,
-        headers: {
-          "Content-Type": "application/json",
-          "access-control-allow-origin":
-            process.env.NODE_ENV === "development"
-              ? LOCAL_BACKEND_URL
-              : process.env.REACT_APP_BACKEND_URL,
-        },
+      }),
+    }),
+
+    deleteUser: builder.mutation({
+      query: ({ userId }) => ({
+        url: `/api/users/delete/${userId}`,
+        method: "DELETE",
       }),
     }),
   }),
 });
 
-export const { useRegisterUserMutation, useLoginUserMutation } = userApi;
-///example\.com$/ 
+export const {
+  useRegisterUserMutation,
+  useLoginUserMutation,
+  useDeleteUserMutation,
+} = userApi;

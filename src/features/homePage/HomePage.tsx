@@ -3,6 +3,7 @@ import { Nav } from "components/nav/Nav";
 import { useGetBoardsQuery } from "api/boardApi";
 import styles from "./HomePage.module.css";
 import Button from "@material-ui/core/Button";
+import { handleLogout } from "./helpers";
 
 const HomePage = () => {
   const userId = localStorage.getItem("userId") || "";
@@ -11,12 +12,6 @@ const HomePage = () => {
     isFetching,
     isLoading,
   } = useGetBoardsQuery({ userId }, { skip: !userId });
-
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("userId");
-    window.location.reload();
-  };
 
   if (isFetching || isLoading) {
     return <div>Loading...</div>;

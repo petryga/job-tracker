@@ -13,9 +13,9 @@ import { SUGGESTIONS } from "features/homePage/helpers";
 import { closeModal } from "reducers/modalSlice";
 
 const style = { height: "450px", marginTop: "150px", width: "550px" };
-const userId = localStorage.getItem("userId");
 
 export const CreateBoardModal = () => {
+  const userId = localStorage.getItem("userId");
   const [boardTitle, setBoardTitle] = useState("");
   const [createBoard] = useCreateBoardMutation();
   const dispatch = useDispatch();

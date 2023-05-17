@@ -20,7 +20,6 @@ export const LoginPage = () => {
   const [tabIndex, setTabIndex] = useState(0);
   const [visible, setVisible] = useState(false);
   const fields = tabIndex === 0 ? LOGIN_FIELDS : SIGN_UP_FORM;
-
   const [handleSubmit, handleChange, buttonDisabled, formData] =
     useLoginSignUpForm(tabIndex, setTabIndex);
 
