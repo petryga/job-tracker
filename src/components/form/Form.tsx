@@ -1,4 +1,4 @@
-import { ChangeEvent, memo } from "react";
+import { memo } from "react";
 import Icon from "@material-ui/core/Icon";
 import Textarea from "react-textarea-autosize";
 import Card from "@material-ui/core/Card";
@@ -14,6 +14,7 @@ const Form = memo(
     closeForm,
     children,
     board,
+    addCard,
   }: FormProps) => {
     const { isJobSearchBoard } = board;
     const placeholder = getPlaceholder(list, isJobSearchBoard);
@@ -21,6 +22,13 @@ const Form = memo(
     const handleFocus = (e: FocusEvent) => {
       if (e.target) {
         (e.target as HTMLInputElement).select();
+      }
+    };
+
+    const handleKeyPress = (e: KeyboardEvent) => {
+      if (isJobSearchBoard && addCard && e.key === "Enter") {
+        addCard();
+        closeForm();
       }
     };
 
@@ -33,8 +41,9 @@ const Form = memo(
             autoFocus
             onFocus={handleFocus}
             value={text}
-            onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e)}
+            onChange={onChange}
             onBlur={closeForm}
+            onKeyPress={handleKeyPress}
           />
         </Card>
         <div className={styles.buttonContainer}>

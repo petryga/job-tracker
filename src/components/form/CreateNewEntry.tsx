@@ -59,6 +59,7 @@ export const CreateNewEntry = ({ list, listID, board }: CreateProps) => {
       onChange={handleInputChange}
       closeForm={closeForm}
       board={board}
+      addCard={handleAddCard}
     >
       <FormButton onClick={list ? handleAddList : handleAddCard}>
         {list ? "Add List" : "Add Card"}

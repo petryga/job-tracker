@@ -13,6 +13,7 @@ export interface FormProps {
   closeForm: () => void;
   children?: React.ReactNode;
   board: BoardApi;
+  addCard?: () => void;
 }
 
 export interface OpenFormProps {
