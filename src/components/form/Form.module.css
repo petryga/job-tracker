@@ -41,6 +41,7 @@
   background-color: #fff;
   box-shadow: 0px 2px 7px rgba(25, 4, 69, 0.05);
   border: 1px solid rgba(25, 4, 69, 0.1);
+  /* margin-bottom: 55px; */
 }
 
 .openFormButtonList p {
@@ -62,6 +63,7 @@
   border: 1px solid rgba(25, 4, 69, 0.1);
   font-size: 14px;
   justify-content: center;
+  margin-bottom: 8px;
 }
 
 .openFormButtonCard span {

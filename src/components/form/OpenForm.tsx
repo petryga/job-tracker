@@ -12,7 +12,7 @@ const OpenForm = ({ list, children, onClick }: OpenFormProps) => {
       className={list ? styles.openFormButtonList : styles.openFormButtonCard}
       onClick={onClick}
     >
-      <Icon>{isDragging ? "keyboard_arrow_up" : "add"}</Icon>
+      <Icon>{isDragging ? "keyboard_arrow_down" : "add"}</Icon>
       <p className={styles.openFormButtonText}>{children}</p>
     </div>
   );

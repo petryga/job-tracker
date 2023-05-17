@@ -66,14 +66,21 @@ export const Board = (): JSX.Element => {
   if (boardState && board) {
     const { lists, title } = boardState;
     const isCreateLimit = lists && lists.length >= 6;
+    const { isJobSearchBoard } = board;
 
     return (
       <>
         <Header title={title} board={board} />
-        <Tabs variant="fullWidth" value={tabIndex} TabIndicatorProps={tabProps}>
-          <Tab label="Boards" onClick={() => setTabIndex(0)} />
-          <Tab label="Contacts" onClick={() => setTabIndex(1)} />
-        </Tabs>
+        {isJobSearchBoard && (
+          <Tabs
+            variant="fullWidth"
+            value={tabIndex}
+            TabIndicatorProps={tabProps}
+          >
+            <Tab label="Board" onClick={() => setTabIndex(0)} />
+            <Tab label="Contacts" onClick={() => setTabIndex(1)} />
+          </Tabs>
+        )}
         <TabPanel value={tabIndex} index={0}>
           <DragDropContext onDragEnd={onDragEnd}>
             <Droppable

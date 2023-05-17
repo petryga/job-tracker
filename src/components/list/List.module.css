@@ -1,7 +1,18 @@
 .listContainer {
   width: 260px;
   padding: 8px;
-  min-height: 92vh;
+  min-height: 79.3vh;
+  max-height: fit-content;
+  background-color: var(--background-color);
+  border-right: 0.5px solid var(--border-color);
+  border-left: 0.5px solid var(--border-color);
+  border-top: 1px solid var(--border-color);
+}
+
+.listContainerToDo {
+  width: 260px;
+  padding: 8px;
+  min-height: 85vh;
   max-height: fit-content;
   background-color: var(--background-color);
   border-right: 0.5px solid var(--border-color);
@@ -40,4 +51,13 @@
   cursor: pointer;
   color: rgba(25, 4, 69, 0.5);
   margin-left: 5px;
+}
+
+.cardsContainer {
+  min-height: 49vh;
+  max-height: fit-content;
+}
+
+.cardsContainerDragging {
+  min-height: 50vh;
 }

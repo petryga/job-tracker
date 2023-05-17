@@ -7,10 +7,11 @@ import { ListComponentProps } from "./types";
 import { useParams } from "react-router-dom";
 import { EditInput } from "./EditInput";
 import { CONFIRM_DELETE } from "utils/constants";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { openModal, setModalProps } from "reducers/modalSlice";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
+import { selectApp } from "reducers/appSlice";
 
 import styles from "./List.module.css";
 
@@ -24,6 +25,7 @@ const FormList = ({ list, index, board, cards }: ListComponentProps) => {
   const open = Boolean(anchorEl);
   const { isJobSearchBoard } = board;
   const jobsNumberTitle = cards.length === 1 ? "JOB" : "JOBS";
+  const { isDragging } = useSelector(selectApp);
 
   const handleClose = () => {
     setAnchorEl(null);
@@ -45,7 +47,9 @@ const FormList = ({ list, index, board, cards }: ListComponentProps) => {
         <div
           {...provided.draggableProps}
           {...provided.dragHandleProps}
-          className={styles.listContainer}
+          className={
+            isJobSearchBoard ? styles.listContainer : styles.listContainerToDo
+          }
           ref={provided.innerRef}
         >
           <Droppable droppableId={listID} type="card">
@@ -95,20 +99,29 @@ const FormList = ({ list, index, board, cards }: ListComponentProps) => {
                   </>
                 )}
 
-                <div {...provided.droppableProps} ref={provided.innerRef}>
-                  {cards.map((card, index) => (
-                    <FormCard
-                      key={card._id}
-                      card={card}
-                      index={index}
-                      listID={listID}
-                      board={board}
-                    />
-                  ))}
+                {cards.length < 20 && (
+                  <CreateNewEntry listID={listID} board={board} />
+                )}
+
+                <div ref={provided.innerRef} {...provided.droppableProps}>
+                  <div
+                    className={
+                      isDragging
+                        ? styles.cardsContainerDragging
+                        : styles.cardsContainer
+                    }
+                  >
+                    {cards.map((card, index) => (
+                      <FormCard
+                        key={card._id}
+                        card={card}
+                        index={index}
+                        listID={listID}
+                        board={board}
+                      />
+                    ))}
+                  </div>
                   {provided.placeholder}
-                  {cards.length < 20 && (
-                    <CreateNewEntry listID={listID} board={board} />
-                  )}
                 </div>
               </>
             )}

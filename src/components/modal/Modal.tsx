@@ -47,7 +47,7 @@ export const ModalComponent = ({
               onClick={handleSecondaryAction}
               title="DELETE"
             >
-              delete
+              delete_outline
             </Icon>
           )}
         </div>

@@ -52,7 +52,7 @@ export const IconsComponent = ({
       fontSize="small"
       onClick={() => openDeleteModal(CONFIRM_DELETE)}
     >
-      delete
+      delete_outline
     </Icon>
   );
 };
