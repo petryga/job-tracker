@@ -82,7 +82,6 @@ export const CreateBoardModal = () => {
         </form>
 
         <div className={styles.suggestions}>
-          {/* <h4>SUGGESTIONS:</h4> */}
           {SUGGESTIONS.map(({ id, text, icon }) => (
             <Button
               key={id}

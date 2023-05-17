@@ -1,15 +1,15 @@
 import { Contact } from "features/jobModal/types";
-import { CONTACT, JOB_TAG, LIST, apiSlice } from "../api/apiSlice";
-import { providesList } from "../api/helpers";
+import { CONTACT, JOB_TAG, LIST, apiSlice } from "./apiSlice";
+import { providesList } from "./helpers";
 
 export const contactsApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getContacts: builder.query<Contact[], any>({
-      query: () => ({
-        url: `/api/contacts/getAll`,
+      query: ({ boardID }) => ({
+        url: `/api/contacts/getAll/${boardID}`,
         method: "GET",
       }),
-      providesTags: (result: any) => providesList(result, CONTACT),
+      providesTags: (result) => providesList(result, CONTACT),
     }),
 
     getContact: builder.query<Contact, any>({

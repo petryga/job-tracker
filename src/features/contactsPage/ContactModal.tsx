@@ -3,7 +3,7 @@ import {
   useGetContactQuery,
   useUpdateContactMutation,
   useDeleteContactMutation,
-} from "TODO/contactsApi";
+} from "api/contactsApi";
 import { ModalComponent } from "components/modal/Modal";
 import { Contact } from "features/jobModal/types";
 import { CONTACTS_FIELDS } from "features/jobModal/helpers";

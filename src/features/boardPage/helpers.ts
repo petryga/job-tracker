@@ -1,4 +1,3 @@
-
 const colors = [
   "#FACC00",
   "#FC8025",
@@ -22,4 +21,3 @@ export const getRandomColor = () => {
 export const tabProps = {
   style: { background: getRandomColor() },
 };
-

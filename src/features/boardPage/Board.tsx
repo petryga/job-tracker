@@ -11,6 +11,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { dragHappened, selectApp, updateState } from "reducers/appSlice";
 import { Header } from "components/header/Header";
 import styles from "./Board.module.css";
+import { tabProps } from "./helpers";
+import { Tab, Tabs } from "@material-ui/core";
+import { TabPanel } from "components/tabPanel/TabPanel";
+import { useState } from "react";
+import ContactsPage from "features/contactsPage/ContactsPage";
+import { useGetContactsQuery } from "api/contactsApi";
 
 export const Board = (): JSX.Element => {
   const { boardID = "" } = useParams();
@@ -18,11 +24,19 @@ export const Board = (): JSX.Element => {
   const boardState = boards[boardID as keyof typeof boards];
   const dispatch = useDispatch();
   const [updateBoard] = useUpdateBoardMutation();
+  const [tabIndex, setTabIndex] = useState(0);
+
   const {
     data: board,
     isFetching,
     isLoading,
   } = useGetBoardByIdQuery({ id: boardID });
+
+  const {
+    data: contacts,
+    isFetching: isContactsFetching,
+    isLoading: isContactsLoading,
+  } = useGetContactsQuery({ boardID }, { skip: !boardID });
 
   useEffect(() => {
     if (board) {
@@ -56,31 +70,54 @@ export const Board = (): JSX.Element => {
     return (
       <>
         <Header title={title} board={board} />
+        <Tabs variant="fullWidth" value={tabIndex} TabIndicatorProps={tabProps}>
+          <Tab label="Boards" onClick={() => setTabIndex(0)} />
+          <Tab label="Contacts" onClick={() => setTabIndex(1)} />
+        </Tabs>
+        <TabPanel value={tabIndex} index={0}>
+          <DragDropContext onDragEnd={onDragEnd}>
+            <Droppable
+              droppableId="all-lists"
+              direction="horizontal"
+              type="list"
+            >
+              {(provided) => (
+                <div
+                  {...provided.droppableProps}
+                  ref={provided.innerRef}
+                  className={
+                    lists.length
+                      ? styles.listsContainer
+                      : styles.listsContainerEmpty
+                  }
+                >
+                  {lists.map((list, index) => (
+                    <FormList
+                      list={list}
+                      key={list._id}
+                      index={index}
+                      board={board}
+                      cards={list.cards}
+                    />
+                  ))}
+                  {provided.placeholder}
 
-        <DragDropContext onDragEnd={onDragEnd}>
-          <Droppable droppableId="all-lists" direction="horizontal" type="list">
-            {(provided) => (
-              <div
-                {...provided.droppableProps}
-                ref={provided.innerRef}
-                className={lists.length ?  styles.listsContainer: styles.listsContainerEmpty}
-              >
-                {lists.map((list, index) => (
-                  <FormList
-                    list={list}
-                    key={list._id}
-                    index={index}
-                    board={board}
-                    cards={list.cards}
-                  />
-                ))}
-                {provided.placeholder}
+                  {!isCreateLimit && (
+                    <CreateNewEntry list={true} board={board} />
+                  )}
+                </div>
+              )}
+            </Droppable>
+          </DragDropContext>
+        </TabPanel>
 
-                {!isCreateLimit && <CreateNewEntry list={true} board={board} />}
-              </div>
-            )}
-          </Droppable>
-        </DragDropContext>
+        <TabPanel value={tabIndex} index={1}>
+          {contacts ? (
+            <ContactsPage contacts={contacts} />
+          ) : (
+            <div>no contacts</div>
+          )}
+        </TabPanel>
 
         <JobModal />
         <DeleteModal />
@@ -88,7 +125,7 @@ export const Board = (): JSX.Element => {
     );
   }
 
-  if (isFetching || isLoading) {
+  if (isFetching || isLoading || isContactsFetching || isContactsLoading) {
     return <div>Loading...</div>;
   }
 

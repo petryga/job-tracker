@@ -63,25 +63,30 @@ export const ContactsTab = ({ formData, setFormData }: ContactsTabProps) => {
       <div className={styles.contactsContainer}>
         {formData.contacts.map((contact, index) => (
           <div key={contact._id}>
-            {CONTACTS_FIELDS.map(({ name, label, type = "text" }, i) => {
-              const isTextArea = type === "textarea";
+            {CONTACTS_FIELDS.map(
+              ({ name, label, type = "text", required }, i) => {
+                const isTextArea = type === "textarea";
+                const isError = required && !contact[name as keyof Contact];
 
-              return (
-                <TextField
-                  key={`${name}-${i}`} // TODO fix unique key
-                  style={{ width }}
-                  className={styles.contactsInput}
-                  name={name}
-                  type={type}
-                  label={label}
-                  variant="outlined"
-                  value={contact[name as keyof Contact]}
-                  onChange={handleChangeContacts(index)}
-                  multiline={isTextArea}
-                  minRows={isTextArea ? 4 : 1}
-                />
-              );
-            })}
+                return (
+                  <TextField
+                    key={`${name}-${i}`} // TODO fix unique key
+                    style={{ width }}
+                    className={styles.contactsInput}
+                    name={name}
+                    type={type}
+                    label={label}
+                    variant="outlined"
+                    value={contact[name as keyof Contact]}
+                    onChange={handleChangeContacts(index)}
+                    multiline={isTextArea}
+                    minRows={isTextArea ? 4 : 1}
+                    required={required}
+                    error={isError}
+                  />
+                );
+              }
+            )}
             <div className={styles.deleteContainer}>
               {index > 0 && (
                 <Button onClick={() => handleDeleteContact(index)}>

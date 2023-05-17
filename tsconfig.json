@@ -18,6 +18,6 @@
     "noEmit": true,
     "jsx": "preserve"
   },
-  "include": ["src/**/*", "src/TODO/contactsPage"],
+  "include": ["src/**/*", "src/features/contactsPage"],
   "exclude": ["node_modules", "src/**/*.test.ts", "src/**/*.spec.ts"]
 }

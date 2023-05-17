@@ -5,6 +5,7 @@ export const SUGGESTIONS = [
     text: "To Do List",
   },
 ];
+
 export const handleLogout = () => {
   localStorage.removeItem("token");
   localStorage.removeItem("userId");

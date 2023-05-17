@@ -20,12 +20,18 @@ export enum ContactFields {
   phone = "contactPhone",
   notes = "contactNotes",
   companyName = "companyName",
+  position = "position",
 }
 
 export const CONTACTS_FIELDS = [
   {
     name: ContactFields.name,
     label: "Name",
+    required: true,
+  },
+  {
+    name: ContactFields.position,
+    label: "Position",
   },
   {
     name: ContactFields.email,
@@ -79,9 +85,10 @@ export const JOB_DETAILS_FIELDS = [
 ];
 
 export const CONTACTS_FIELDS_INITIAL_VALUES = {
-  id: "",
+  _id: "",
   jobID: "",
   [ContactFields.name]: "",
+  [ContactFields.position]: "",
   [ContactFields.email]: "",
   [ContactFields.phone]: "",
   [ContactFields.notes]: "",

@@ -34,6 +34,7 @@ import { useDeleteCardMutation } from "api/boardApi";
 
 export const JobModal = () => {
   const dispatch = useDispatch();
+  const userId = localStorage.getItem("userId") || "";
   const { boardID = "" } = useParams();
   const { modalProps } = useSelector(selectModal);
   const { id: cardID, listID } = modalProps || {};
@@ -80,7 +81,14 @@ export const JobModal = () => {
     };
 
     if (cardID && job) {
-      updateJob({ ...newFormData, id: job._id, boardID, cardID, listID })
+      updateJob({
+        ...newFormData,
+        id: job._id,
+        boardID,
+        cardID,
+        listID,
+        userId,
+      })
         .unwrap()
         .then((res) => {
           toast.success(res.message);

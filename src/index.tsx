@@ -11,7 +11,7 @@ import { LoginPage } from "features/login/LoginPage";
 import { ToastBar, Toaster } from "react-hot-toast";
 import store, { persistor } from "./store/store";
 import { disableReactDevTools } from "@fvilers/disable-react-devtools";
-import { Icon } from "@material-ui/core";
+import Icon from "@material-ui/core/Icon";
 
 window.React = React;
 

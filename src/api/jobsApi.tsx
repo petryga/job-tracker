@@ -1,4 +1,4 @@
-import { BOARD_TAG, JOB_TAG, apiSlice } from "./apiSlice";
+import { BOARD_TAG, CONTACT, JOB_TAG, LIST, apiSlice } from "./apiSlice";
 
 export const jobApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -15,7 +15,10 @@ export const jobApi = apiSlice.injectEndpoints({
         method: "PUT",
         body: data,
       }),
-      invalidatesTags: (result) => [{ type: BOARD_TAG, id: result.boardID }],
+      invalidatesTags: (result) => [
+        { type: BOARD_TAG, id: result.boardID },
+        { type: CONTACT, id: LIST },
+      ],
     }),
   }),
 });

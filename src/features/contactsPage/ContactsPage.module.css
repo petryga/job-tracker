@@ -1,0 +1,72 @@
+.root {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.card {
+  font-size: 14px;
+  color: gray;
+  height: 200px;
+  width: 300px;
+  padding: 15px;
+  margin: 8px;
+
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+  box-shadow: rgba(25, 4, 69, 0.05) 0px 3px 7px -1px;
+  background-color: white;
+}
+
+/* .contactsInput {
+  margin: 5px !important;
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+}
+
+.contactContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+} */
+
+.personalInfo {
+  height: 40%;
+}
+
+.personalInfo p:last-child  {
+  padding-top: 3px ;
+}
+
+.contactInfo {
+  padding-top: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  height: 60%;
+}
+
+.contactInfo p {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 7px;
+}
+
+p {
+  margin: 0;
+}
+
+.contactInfo .icon {
+  font-size: 13px;
+  margin-right: 5px;
+}
+.contactInfo a {
+  text-decoration: none;
+  color: #180045;
+}

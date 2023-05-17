@@ -3,18 +3,7 @@
   align-items: center;
   justify-content: space-between;
   height: 100px;
-}
-
-.limitError {
-  font-size: 16px;
-}
-
-.actions {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  margin-bottom: 10px;
+  text-transform: uppercase;
 }
 
 .modalContainer,
@@ -34,5 +23,7 @@
 }
 
 .dotsIcon {
-  margin-right: 10px;
+  margin-left: 10px;
+  cursor: pointer;
+  color: #19044580;
 }

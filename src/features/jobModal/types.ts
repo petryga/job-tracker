@@ -1,7 +1,8 @@
 import { AnyAction, Dispatch } from "redux";
 
 export interface Contact {
-  _id?: string;
+  _id: string;
+  position: string;
   contactName: string;
   contactEmail: string;
   contactPhone: string;
