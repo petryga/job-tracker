@@ -7,7 +7,6 @@
 
 html {
   background-color: var(--background-color);
-  /* overflow-y: hidden !important; */
   color: var(--text-color);
 }
 

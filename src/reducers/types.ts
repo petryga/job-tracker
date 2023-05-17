@@ -9,6 +9,7 @@ export interface DragPayload {
 
 export interface InitialState {
   isDragFinished: boolean;
+  isDragging: boolean;
   boards: {
     [key: string]: {
       _id: string;

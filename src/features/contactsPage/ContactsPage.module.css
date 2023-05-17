@@ -9,9 +9,9 @@
 .card {
   font-size: 14px;
   color: gray;
-  height: 200px;
-  width: 300px;
-  padding: 18px;
+  min-height: 250px;
+  width: 400px;
+  padding: 25px 18px;
   margin: 8px;
   border-radius: 4px;
   border: 1px solid var(--border-color);
@@ -21,21 +21,6 @@
   flex-direction: column;
   justify-content: space-between;
 }
-
-/* .contactsInput {
-  margin: 5px !important;
-  display: flex;
-  flex-direction: column;
-  width: 300px;
-}
-
-.contactContainer {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin: 10px;
-} */
 
 .personalInfo {
   height: 40%;
@@ -54,7 +39,6 @@
   justify-content: space-between;
   align-items: center;
   padding-bottom: 10px;
-  /* padding-top: 5px;  */
 }
 
 .contactInfo {
@@ -81,4 +65,8 @@ p {
 .contactInfo a {
   text-decoration: none;
   color: #180045;
+}
+
+.card p {
+  max-width: 400px;
 }

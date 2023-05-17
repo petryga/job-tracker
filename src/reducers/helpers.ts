@@ -2,6 +2,7 @@ import { InitialState, ModalState } from "./types";
 
 export const appInitialState: InitialState = {
   isDragFinished: false,
+  isDragging: false,
   boards: {
     "board-0": {
       _id: "board-0",
@@ -27,7 +28,6 @@ export const appInitialState: InitialState = {
 };
 
 export const modalInitialState: ModalState = {
-
   openModal: null,
-  modalProps: { id: "", listID: "", name: "", contactID: ""  },
+  modalProps: { id: "", listID: "", name: "", contactID: "" },
 };

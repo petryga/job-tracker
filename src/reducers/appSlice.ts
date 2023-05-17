@@ -20,6 +20,10 @@ const appSlice = createSlice({
       };
     },
 
+    isDragging: (state, { payload }: PayloadAction<boolean>) => {
+      state.isDragging = payload;
+    },
+
     dragHappened: (state, { payload }: PayloadAction<DragPayload>) => {
       const { source, destination, type, boardID } = payload;
 
@@ -102,7 +106,7 @@ const appSlice = createSlice({
   },
 });
 
-export const { updateState, dragHappened } = appSlice.actions;
+export const { updateState, isDragging, dragHappened } = appSlice.actions;
 
 export const selectApp = (state: RootState) => state.app;
 

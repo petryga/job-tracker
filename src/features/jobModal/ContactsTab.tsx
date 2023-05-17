@@ -104,5 +104,3 @@ export const ContactsTab = ({ formData, setFormData }: ContactsTabProps) => {
     </>
   );
 };
-
-// TODO Fix long notes and icons

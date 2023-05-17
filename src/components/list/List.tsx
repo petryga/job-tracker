@@ -106,7 +106,7 @@ const FormList = ({ list, index, board, cards }: ListComponentProps) => {
                     />
                   ))}
                   {provided.placeholder}
-                  {cards.length < 10 && (
+                  {cards.length < 20 && (
                     <CreateNewEntry listID={listID} board={board} />
                   )}
                 </div>

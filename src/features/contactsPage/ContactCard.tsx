@@ -24,13 +24,7 @@ const ContactCard = ({ contact }: { contact: Contact }) => {
     setAnchorEl(null);
   };
 
-  // const openContactModal = () => {
-  //   dispatch(openModal(JOB_SEARCH));
-  //   dispatch(setModalProps({ contactID: _id }));
-  // };
-
   const openDeleteModal = () => {
-    console.log("open delete modal");
     dispatch(openModal(CONFIRM_DELETE));
     dispatch(setModalProps({ contactID: _id, name: DELETE_CONTACT }));
     handleClose();
@@ -63,7 +57,7 @@ const ContactCard = ({ contact }: { contact: Contact }) => {
 
       <div className={styles.contactInfo}>
         <p>
-          <Icon className={styles.icon}>email</Icon>
+          <Icon className={styles.icon}>mail_outline</Icon>
           {contactEmail ? (
             <a href={`mailto:${contactEmail}`}>{contactEmail}</a>
           ) : (
@@ -71,11 +65,11 @@ const ContactCard = ({ contact }: { contact: Contact }) => {
           )}
         </p>
         <p>
-          <Icon className={styles.icon}>phone</Icon>
+          <Icon className={styles.icon}>phone_enabled</Icon>
           {contactPhone || "none"}
         </p>
         <p>
-          <Icon className={styles.icon}>note</Icon>
+          <Icon className={styles.icon}>notes</Icon>
           {contactNotes || "none"}
         </p>
       </div>

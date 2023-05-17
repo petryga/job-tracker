@@ -1,6 +1,7 @@
 import { Contact } from "features/jobModal/types";
 import ContactCard from "./ContactCard";
 import { DeleteModal } from "components/deleteModal/DeleteModal";
+import { JobModal } from "features/jobModal/JobModal";
 
 import styles from "./ContactsPage.module.css";
 
@@ -14,6 +15,7 @@ const ContactsPage = ({ contacts }: { contacts: Contact[] }) => {
           </div>
         ))}
       <DeleteModal />
+      <JobModal />
     </div>
   );
 };

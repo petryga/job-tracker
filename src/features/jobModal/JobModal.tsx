@@ -42,7 +42,7 @@ export const JobModal = () => {
   const [tabIndex, setTabIndex] = useState(0);
   const [updateJob] = useUpdateJobMutation();
   const [getJob, { data: job }] = useLazyGetJobQuery();
-  
+
   useEffect(() => {
     setTabIndex(0);
     if (cardID) {
