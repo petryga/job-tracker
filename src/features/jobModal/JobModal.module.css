@@ -7,10 +7,6 @@
   width: 50%;
 }
 
-.input {
-  display: flex;
-}
-
 .inputDescription {
   width: 50%;
 }
@@ -44,3 +40,10 @@
 .deleteContainer {
   height: 20px;
 }
+
+.linkInput input:disabled  {
+  color: rgb(127, 127, 127) !important;
+  text-decoration: underline;
+  cursor: pointer;
+}
+

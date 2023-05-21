@@ -8,7 +8,7 @@ export enum Fields {
   position = "position",
   location = "location",
   salary = "salary",
-  extras = "extras",
+  remoteOnsite = "remoteOnsite",
   link = "link",
   notes = "notes",
   description = "description",
@@ -63,13 +63,18 @@ export const JOB_DETAILS_FIELDS = [
     label: "Location",
   },
   {
-    name: Fields.salary,
-    label: "Base Salary",
-    icon: "$",
+    name: Fields.remoteOnsite,
+    label: "Remote / On-site",
+    options: [
+      { value: "Remote", label: "Remote" },
+      { value: "On-site", label: "On-site" },
+      { value: "Hybrid", label: "Hybrid" },
+    ],
   },
   {
-    name: Fields.extras,
-    label: "Extras",
+    name: Fields.salary,
+    label: "Salary",
+    icon: "$",
   },
   {
     name: Fields.link,
@@ -99,7 +104,7 @@ export const INITIAL_VALUES: Job = {
   [Fields.position]: "",
   [Fields.location]: "",
   [Fields.salary]: "",
-  [Fields.extras]: "",
+  [Fields.remoteOnsite]: "",
   [Fields.link]: "",
   [Fields.notes]: "",
   [Fields.description]: "",
@@ -107,7 +112,7 @@ export const INITIAL_VALUES: Job = {
   contacts: [CONTACTS_FIELDS_INITIAL_VALUES],
 };
 
-const wideFields = [Fields.link, Fields.extras];
+const wideFields = [Fields.link, Fields.salary];
 const MARGIN = "10px";
 const WIDTH = "44%";
 
@@ -128,7 +133,7 @@ export const getStyle = (isTextArea: boolean, name: Fields) => {
     return { width: WIDTH, marginRight: MARGIN };
   }
 
-  if (name === Fields.salary) {
+  if (name === Fields.remoteOnsite) {
     return { width: WIDTH, marginTop: MARGIN };
   }
 
@@ -156,4 +161,12 @@ export const handleFormatSalary = (
     const salary = withCommas(formData.salary);
     setFormData({ salary } as Pick<Job, keyof Job>);
   }
+};
+
+export const openLink = (link: string) => {
+  if (!link.includes("http")) {
+    link = `https://${link}`;
+  }
+
+  window.open(link, "_blank", "noopener noreferrer");
 };

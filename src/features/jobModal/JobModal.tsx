@@ -16,6 +16,7 @@ import {
   Fields,
   getIsButtonDisabled,
   handleFormatSalary,
+  openLink,
 } from "./helpers";
 import { closeModal, selectModal } from "reducers/modalSlice";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -31,6 +32,7 @@ import { useLazyGetJobQuery, useUpdateJobMutation } from "api/jobsApi";
 import { toast } from "react-hot-toast";
 import { Job } from "./types";
 import { useDeleteCardMutation } from "api/boardApi";
+import { Button, MenuItem } from "@material-ui/core";
 
 export const JobModal = () => {
   const dispatch = useDispatch();
@@ -40,6 +42,7 @@ export const JobModal = () => {
   const { id: cardID, listID } = modalProps || {};
   const [liked, setLiked] = useState(false);
   const [tabIndex, setTabIndex] = useState(0);
+  // const [edit, setEdit] = useState(false);
   const [updateJob] = useUpdateJobMutation();
   const [getJob, { data: job }] = useLazyGetJobQuery();
 
@@ -60,6 +63,7 @@ export const JobModal = () => {
   );
 
   useEffect(() => {
+    // setEdit(false);
     setFormData(INITIAL_VALUES);
     if (job) {
       setFormData(job);
@@ -153,6 +157,7 @@ export const JobModal = () => {
                   type = "text",
                   icon,
                   required,
+                  options,
                   placeholder,
                 }) => {
                   const isTextArea = type === "textarea";
@@ -160,42 +165,101 @@ export const JobModal = () => {
                   const isError =
                     required && !formData[name as keyof typeof formData];
 
+                  if (options) {
+                    return (
+                      <TextField
+                        InputLabelProps={{ shrink: true }}
+                        key={name}
+                        style={style}
+                        name={name}
+                        select
+                        label={label}
+                        variant="outlined"
+                        value={formData[name as keyof typeof formData]}
+                        onChange={handleChange}
+                        error={isError}
+                      >
+                        {options.map((option) => (
+                          <MenuItem key={option.value} value={option.value}>
+                            {option.label}
+                          </MenuItem>
+                        ))}
+                      </TextField>
+                    );
+                  }
+
+                  if (name !== Fields.link) {
+                    return (
+                      <TextField
+                        InputLabelProps={{ shrink: true }}
+                        key={name}
+                        style={style}
+                        name={name}
+                        type="text"
+                        label={label}
+                        variant="outlined"
+                        value={formData[name as keyof typeof formData]}
+                        onChange={handleChange}
+                        multiline={isTextArea}
+                        minRows={isTextArea ? 4 : 1}
+                        required={required}
+                        error={isError}
+                        onBlur={() =>
+                          handleFormatSalary(name, formData, setFormData)
+                        }
+                        InputProps={
+                          icon
+                            ? {
+                                startAdornment: (
+                                  <InputAdornment position="start">
+                                    {icon}
+                                  </InputAdornment>
+                                ),
+                              }
+                            : undefined
+                        }
+                      />
+                    );
+                  }
+
                   return (
                     <TextField
                       InputLabelProps={{ shrink: true }}
                       key={name}
-                      className={styles.input}
+                      className={styles.linkInput}
                       style={style}
                       name={name}
                       type="text"
                       label={label}
+                      placeholder={placeholder}
                       variant="outlined"
                       value={formData[name as keyof typeof formData]}
                       onChange={handleChange}
-                      multiline={isTextArea}
-                      minRows={isTextArea ? 4 : 1}
-                      required={required}
-                      placeholder={placeholder}
                       error={isError}
-                      onBlur={() =>
-                        handleFormatSalary(name, formData, setFormData)
-                      }
-                      InputProps={
-                        icon
-                          ? {
-                              startAdornment: (
-                                <InputAdornment position="start">
-                                  {icon}
-                                </InputAdornment>
-                              ),
-                            }
-                          : undefined
-                      }
+                      InputProps={{
+                        endAdornment: (
+                          <>
+                            {!!formData[Fields.link] ? (
+                              <InputAdornment position="end">
+                                <Button
+                                  onClick={(e: any) => {
+                                    e.preventDefault();
+                                    openLink(formData[Fields.link]);
+                                  }}
+                                >
+                                  visit
+                                </Button>
+                              </InputAdornment>
+                            ) : null}
+                          </>
+                        ),
+                      }}
                     />
                   );
                 }
               )}
             </div>
+
             <TextField
               className={styles.inputDescription}
               name={Fields.description}

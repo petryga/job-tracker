@@ -15,7 +15,7 @@ export interface Job {
   position: string;
   location: string;
   salary: string;
-  extras: string;
+  remoteOnsite: string;
   link: string;
   description: string;
   notes: string;
