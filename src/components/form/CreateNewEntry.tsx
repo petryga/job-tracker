@@ -60,6 +60,7 @@ export const CreateNewEntry = ({ list, listID, board }: CreateProps) => {
       closeForm={closeForm}
       board={board}
       addCard={handleAddCard}
+      addList={handleAddList}
     >
       <FormButton onClick={list ? handleAddList : handleAddCard}>
         {list ? "Add List" : "Add Card"}

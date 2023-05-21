@@ -14,6 +14,7 @@ export interface FormProps {
   children?: React.ReactNode;
   board: BoardApi;
   addCard?: () => void;
+  addList?: () => void;
 }
 
 export interface OpenFormProps {

@@ -15,6 +15,7 @@ const Form = memo(
     children,
     board,
     addCard,
+    addList,
   }: FormProps) => {
     const { isJobSearchBoard } = board;
     const placeholder = getPlaceholder(list, isJobSearchBoard);
@@ -26,10 +27,13 @@ const Form = memo(
     };
 
     const handleKeyPress = (e: KeyboardEvent) => {
-      if (isJobSearchBoard && addCard && e.key === "Enter") {
+      if (addCard && e.key === "Enter") {
         addCard();
-        closeForm();
       }
+      if (addList && e.key === "Enter") {
+        addList();
+      }
+      closeForm();
     };
 
     return (
