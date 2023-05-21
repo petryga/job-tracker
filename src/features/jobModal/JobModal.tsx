@@ -42,7 +42,6 @@ export const JobModal = () => {
   const { id: cardID, listID } = modalProps || {};
   const [liked, setLiked] = useState(false);
   const [tabIndex, setTabIndex] = useState(0);
-  // const [edit, setEdit] = useState(false);
   const [updateJob] = useUpdateJobMutation();
   const [getJob, { data: job }] = useLazyGetJobQuery();
 
@@ -63,7 +62,6 @@ export const JobModal = () => {
   );
 
   useEffect(() => {
-    // setEdit(false);
     setFormData(INITIAL_VALUES);
     if (job) {
       setFormData(job);
