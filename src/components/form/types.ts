@@ -15,6 +15,7 @@ export interface FormProps {
   board: BoardApi;
   addCard?: () => void;
   addList?: () => void;
+  saveCard?: () => void;
 }
 
 export interface OpenFormProps {

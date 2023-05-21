@@ -86,8 +86,11 @@ const EditForm = ({
     setIsEditing(false);
   };
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setText(e.target.value);
+  const handleChange = (e: ChangeEvent<HTMLInputElement> | KeyboardEvent) => {
+    setText((e.target as HTMLInputElement).value);
+    // if ((e as KeyboardEvent).key === "Enter") {
+    //   saveCard();
+    // }
   };
 
   const saveCard = () => {
@@ -109,6 +112,7 @@ const EditForm = ({
       text={cardText}
       onChange={handleChange}
       closeForm={closeForm}
+      saveCard={saveCard}
     >
       <FormButton onClick={saveCard}>Save</FormButton>
     </Form>

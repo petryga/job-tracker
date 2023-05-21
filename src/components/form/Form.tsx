@@ -16,24 +16,28 @@ const Form = memo(
     board,
     addCard,
     addList,
+    saveCard,
   }: FormProps) => {
     const { isJobSearchBoard } = board;
     const placeholder = getPlaceholder(list, isJobSearchBoard);
 
-    const handleFocus = (e: FocusEvent) => {
-      if (e.target) {
-        (e.target as HTMLInputElement).select();
-      }
-    };
-
     const handleKeyPress = (e: KeyboardEvent) => {
-      if (addCard && e.key === "Enter") {
-        addCard();
+      if (e.key === "Enter") {
+        e.preventDefault();
+
+        if (addCard) {
+          addCard();
+        }
+
+        if (addList) {
+          addList();
+        }
+
+        if (saveCard) {
+          saveCard();
+        }
+        closeForm();
       }
-      if (addList && e.key === "Enter") {
-        addList();
-      }
-      closeForm();
     };
 
     return (
@@ -43,11 +47,10 @@ const Form = memo(
             className={styles.textarea}
             placeholder={placeholder}
             autoFocus
-            onFocus={handleFocus}
             value={text}
             onChange={onChange}
             onBlur={closeForm}
-            onKeyPress={handleKeyPress}
+            onKeyDown={handleKeyPress}
           />
         </Card>
         <div className={styles.buttonContainer}>

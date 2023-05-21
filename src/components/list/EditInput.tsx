@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent } from "react";
+import { ChangeEvent } from "react";
 import { EditInputProps } from "./types";
 import { useUpdateListMutation } from "api/boardApi";
 import styles from "./List.module.css";
@@ -14,20 +14,12 @@ export const EditInput = ({
 }: EditInputProps) => {
   const [updateList] = useUpdateListMutation();
 
-  const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    if (e.target) {
-      (e.target as HTMLInputElement).select();
-    }
-  };
-
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     setListTitle(e.target.value);
   };
 
-  const handleFinishEditing = (e: FormEvent) => {
-    e.preventDefault();
+  const handleFinishEditing = () => {
     if (listID && listTitle && boardID && listTitle !== title) {
       updateList({ id: listID, boardID, title: listTitle })
         .unwrap()
@@ -44,6 +36,13 @@ export const EditInput = ({
     }
   };
 
+  const handleKeyPress = (e: any) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      handleFinishEditing();
+    }
+  };
+
   return (
     <form onSubmit={handleFinishEditing}>
       <input
@@ -52,8 +51,8 @@ export const EditInput = ({
         value={listTitle}
         onChange={handleChange}
         autoFocus
-        onFocus={handleFocus}
         onBlur={handleFinishEditing}
+        onKeyDown={handleKeyPress}
       />
     </form>
   );
