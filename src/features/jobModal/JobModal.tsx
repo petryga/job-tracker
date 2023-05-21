@@ -236,24 +236,24 @@ export const JobModal = () => {
                       value={formData[name as keyof typeof formData]}
                       onChange={handleChange}
                       error={isError}
-                      InputProps={{
-                        endAdornment: (
-                          <>
-                            {!!formData[Fields.link] ? (
-                              <InputAdornment position="end">
-                                <Button
-                                  onClick={(e: any) => {
-                                    e.preventDefault();
-                                    openLink(formData[Fields.link]);
-                                  }}
-                                >
-                                  visit
-                                </Button>
-                              </InputAdornment>
-                            ) : null}
-                          </>
-                        ),
-                      }}
+                      InputProps={
+                        !!formData[Fields.link]
+                          ? {
+                              endAdornment: (
+                                <InputAdornment position="end">
+                                  <Button
+                                    onClick={(e: any) => {
+                                      e.preventDefault();
+                                      openLink(formData[Fields.link]);
+                                    }}
+                                  >
+                                    visit
+                                  </Button>
+                                </InputAdornment>
+                              ),
+                            }
+                          : undefined
+                      }
                     />
                   );
                 }
