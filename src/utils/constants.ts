@@ -5,3 +5,4 @@ export const CONTACT_MODAL = "contactModal";
 export const CREATE_BOARD = "createBoard";
 export const DELETE_USER = " deleteUser";
 export const DELETE_CONTACT = "deleteContact";
+export const CHART_MODAL = "chartModal";

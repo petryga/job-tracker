@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import styles from "./Header.module.css";
 import Icon from "@material-ui/core/Icon";
 import { openModal, setModalProps } from "reducers/modalSlice";
-import { CONFIRM_DELETE, DELETE_BOARD } from "utils/constants";
+import { CHART_MODAL, CONFIRM_DELETE, DELETE_BOARD } from "utils/constants";
 import { useDispatch } from "react-redux";
 import { EditableInput } from "components/editableInput/EditableInput";
 import { useState } from "react";
@@ -32,6 +32,12 @@ export const Header = ({
     handleClose();
   };
 
+  const openChartModal = () => {
+    dispatch(openModal(CHART_MODAL));
+
+    handleClose();
+  };
+
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(e.currentTarget);
   };
@@ -57,6 +63,7 @@ export const Header = ({
               open={open}
               onClose={handleClose}
             >
+              <MenuItem onClick={openChartModal}>See Chart</MenuItem>
               <MenuItem
                 onClick={() => {
                   setEditTitle(true);

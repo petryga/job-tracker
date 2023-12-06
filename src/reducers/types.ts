@@ -7,26 +7,28 @@ export interface DragPayload {
   boardID: string;
 }
 
+export interface Board {
+  _id: string;
+  title: string;
+  lists: {
+    _id: string;
+    title: string;
+    cards: {
+      _id: string;
+      text: string;
+      isFavorite: boolean;
+      subtext: string;
+      color: string;
+    }[];
+  }[];
+  isJobSearchBoard: boolean;
+}
+
 export interface InitialState {
   isDragFinished: boolean;
   isDragging: boolean;
   boards: {
-    [key: string]: {
-      _id: string;
-      title: string;
-      lists: {
-        _id: string;
-        title: string;
-        cards: {
-          _id: string;
-          text: string;
-          isFavorite: boolean;
-          subtext: string;
-          color: string;
-        }[];
-      }[];
-      isJobSearchBoard: boolean;
-    };
+    [key: string]: Board;
   };
 }
 

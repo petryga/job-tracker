@@ -14,15 +14,16 @@ import { tabProps } from "./helpers";
 import { Tab, Tabs } from "@material-ui/core";
 import { TabPanel } from "components/tabPanel/TabPanel";
 import { useState } from "react";
-import ContactsPage from "features/contactsPage/ContactsPage";
+import { ContactsPage } from "features/contactsPage/ContactsPage";
 import { useGetContactsQuery } from "api/contactsApi";
 import { isDragging } from "reducers/appSlice";
+import { ChartModal } from "features/chartModal/ChartModal";
 import styles from "./Board.module.css";
 
 export const Board = (): JSX.Element => {
   const { boardID = "" } = useParams();
   const { boards, isDragFinished } = useSelector(selectApp);
-  const boardState = boards[boardID as keyof typeof boards];
+  const boardState = boards[boardID];
   const dispatch = useDispatch();
   const [updateBoard] = useUpdateBoardMutation();
   const [tabIndex, setTabIndex] = useState(0);
@@ -133,6 +134,7 @@ export const Board = (): JSX.Element => {
           )}
         </TabPanel>
 
+        <ChartModal boardState={boardState} />
         <JobModal />
         <DeleteModal />
       </>

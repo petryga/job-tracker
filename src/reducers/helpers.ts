@@ -1,4 +1,4 @@
-import { InitialState, ModalState } from "./types";
+import type { InitialState, ModalState } from "./types";
 
 export const appInitialState: InitialState = {
   isDragFinished: false,

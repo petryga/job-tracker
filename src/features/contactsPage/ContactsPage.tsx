@@ -1,11 +1,11 @@
-import { Contact } from "features/jobModal/types";
+import type { Contact } from "features/jobModal/types";
 import ContactCard from "./ContactCard";
 import { DeleteModal } from "components/deleteModal/DeleteModal";
 import { JobModal } from "features/jobModal/JobModal";
 
 import styles from "./ContactsPage.module.css";
 
-const ContactsPage = ({ contacts }: { contacts: Contact[] }) => {
+export const ContactsPage = ({ contacts }: { contacts: Contact[] }) => {
   return (
     <div className={styles.root}>
       {!!contacts.length &&
@@ -19,5 +19,3 @@ const ContactsPage = ({ contacts }: { contacts: Contact[] }) => {
     </div>
   );
 };
-
-export default ContactsPage;

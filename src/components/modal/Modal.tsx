@@ -9,12 +9,14 @@ import styles from "./Modal.module.css";
 export const ModalComponent = ({
   title,
   children,
-  isButtonDisabled,
+  isButtonDisabled = false,
   name,
   onClose,
   handleSubmit,
   secondaryAction = { hide: true },
   stylesWrapper,
+  hideSecondaryButton = false,
+  primaryButtonText = "Submit",
 }: ModalProps) => {
   const { openModal } = useSelector(selectModal);
   const dispatch = useDispatch();
@@ -37,7 +39,7 @@ export const ModalComponent = ({
   };
 
   return (
-    <Modal open={openModal === name} onClose={handleCloseModal} >
+    <Modal open={openModal === name} onClose={handleCloseModal}>
       <div className={styles.modalContent} style={stylesWrapper}>
         <div className={!secondaryAction.hide ? styles.headerWithDelete : ""}>
           {title && <h2>{title}</h2>}
@@ -55,13 +57,15 @@ export const ModalComponent = ({
           <div className={stylesWrapper ? "" : styles.children}>{children}</div>
         )}
         <div className={styles.buttonContainer}>
-          <Button
-            onClick={handleCloseModal}
-            variant="contained"
-            size={stylesWrapper ? "small" : "large"}
-          >
-            Cancel
-          </Button>
+          {!hideSecondaryButton && (
+            <Button
+              onClick={handleCloseModal}
+              variant="contained"
+              size={stylesWrapper ? "small" : "large"}
+            >
+              Cancel
+            </Button>
+          )}
 
           <Button
             onClick={handleSubmit}
@@ -69,7 +73,7 @@ export const ModalComponent = ({
             size={stylesWrapper ? "small" : "large"}
             disabled={isButtonDisabled}
           >
-            Submit
+            {primaryButtonText}
           </Button>
         </div>
       </div>

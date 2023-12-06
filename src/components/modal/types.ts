@@ -3,7 +3,7 @@ import { FormEvent } from "react";
 export interface ModalProps {
   title?: string | React.ReactNode;
   children?: React.ReactNode;
-  isButtonDisabled: boolean;
+  isButtonDisabled?: boolean;
   name: string;
   onClose?: () => void;
   handleSubmit: (e: FormEvent) => void;
@@ -12,4 +12,6 @@ export interface ModalProps {
     onSecondaryAction?: () => void;
   };
   stylesWrapper?: React.CSSProperties;
+  hideSecondaryButton?: boolean;
+  primaryButtonText?: string;
 }
