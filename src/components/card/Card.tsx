@@ -11,7 +11,7 @@ import { useUpdateCardMutation } from "api/boardApi";
 import { useDispatch } from "react-redux";
 import { openModal, setModalProps } from "reducers/modalSlice";
 import { JOB_SEARCH } from "utils/constants";
-import classnames from "classnames";
+import classNames from "classnames";
 
 const RenderCard = ({
   card,
@@ -55,7 +55,7 @@ const RenderCard = ({
             >
               <div className={styles.group}>
                 <div
-                  className={classnames(styles.text, {
+                  className={classNames(styles.text, {
                     [styles.longText]: isLongTitle,
                   })}
                 >
@@ -71,7 +71,7 @@ const RenderCard = ({
               </div>
               {isJobSearchBoard && position && (
                 <div
-                  className={classnames(styles.subtext, {
+                  className={classNames(styles.subtext, {
                     [styles.longSubtext]: isLongSubtext,
                   })}
                 >
