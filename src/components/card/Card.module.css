@@ -23,6 +23,8 @@
 }
 
 .longText {
+  color: white;
+  font-weight: 500;
   font-size: 12px;
 }
 
@@ -33,6 +35,8 @@
 }
 
 .longSubtext {
+  color: white;
+  margin-top: 5px;
   font-size: 12px;
 }
 

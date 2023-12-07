@@ -11,7 +11,6 @@ import { useUpdateCardMutation } from "api/boardApi";
 import { useDispatch } from "react-redux";
 import { openModal, setModalProps } from "reducers/modalSlice";
 import { JOB_SEARCH } from "utils/constants";
-import classNames from "classnames";
 
 const RenderCard = ({
   card,
@@ -54,11 +53,7 @@ const RenderCard = ({
               }}
             >
               <div className={styles.group}>
-                <div
-                  className={classNames(styles.text, {
-                    [styles.longText]: isLongTitle,
-                  })}
-                >
+                <div className={isLongTitle ? styles.longText : styles.text}>
                   {title}
                 </div>
                 <IconsComponent
@@ -71,9 +66,9 @@ const RenderCard = ({
               </div>
               {isJobSearchBoard && position && (
                 <div
-                  className={classNames(styles.subtext, {
-                    [styles.longSubtext]: isLongSubtext,
-                  })}
+                  className={
+                    isLongSubtext ? styles.longSubtext : styles.subtext
+                  }
                 >
                   {position}
                 </div>
