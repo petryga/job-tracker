@@ -6,18 +6,14 @@ import {
 import { useDeleteContactMutation } from "api/contactsApi";
 import { useDeleteUserMutation } from "api/userApi";
 import { handleLogout } from "features/homePage/helpers";
-import { Dispatch, useCallback } from "react";
+import { useCallback } from "react";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { closeModal, selectModal } from "reducers/modalSlice";
 import { DELETE_BOARD, DELETE_CONTACT, DELETE_USER } from "utils/constants";
 
-const useHandleSubmit = ({
-  setButtonDisabled,
-}: {
-  setButtonDisabled: Dispatch<React.SetStateAction<boolean>>;
-}) => {
+const useHandleSubmit = () => {
   const userId = localStorage.getItem("userId") || "";
   const { boardID = "" } = useParams();
   const { modalProps } = useSelector(selectModal);
@@ -32,11 +28,10 @@ const useHandleSubmit = ({
   const navigate = useNavigate();
 
   const handleSubmit = useCallback(() => {
-    setButtonDisabled(true);
     if (name === DELETE_USER && userId) {
       return deleteUser({ userId })
         .unwrap()
-        .then((res) => {
+        .then(() => {
           dispatch(closeModal());
           handleLogout();
           toast.success("User deleted successfully");
@@ -96,7 +91,6 @@ const useHandleSubmit = ({
           });
       }
     }
-    setButtonDisabled(false);
   }, [
     boardID,
     cardID,
@@ -110,7 +104,6 @@ const useHandleSubmit = ({
     listID,
     name,
     navigate,
-    setButtonDisabled,
     userId,
   ]);
 

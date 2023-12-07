@@ -14,31 +14,10 @@ const Form = memo(
     closeForm,
     children,
     board,
-    addCard,
-    addList,
-    saveCard,
+    handleKeyPress,
   }: FormProps) => {
     const { isJobSearchBoard } = board;
     const placeholder = getPlaceholder(list, isJobSearchBoard);
-
-    const handleKeyPress = (e: KeyboardEvent) => {
-      if (e.key === "Enter") {
-        e.preventDefault();
-
-        if (addCard) {
-          addCard();
-        }
-
-        if (addList) {
-          addList();
-        }
-
-        if (saveCard) {
-          saveCard();
-        }
-        closeForm();
-      }
-    };
 
     return (
       <div className={styles.container}>

@@ -52,6 +52,20 @@ export const CreateNewEntry = ({ list, listID, board }: CreateProps) => {
     }
   };
 
+  const handleKeyPress = (e: KeyboardEvent) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+
+      if (list) {
+        handleAddList();
+      } else {
+        handleAddCard();
+      }
+
+      closeForm();
+    }
+  };
+
   return formOpen ? (
     <Form
       list={list}
@@ -59,8 +73,7 @@ export const CreateNewEntry = ({ list, listID, board }: CreateProps) => {
       onChange={handleInputChange}
       closeForm={closeForm}
       board={board}
-      addCard={handleAddCard}
-      addList={handleAddList}
+      handleKeyPress={handleKeyPress}
     >
       <FormButton onClick={list ? handleAddList : handleAddCard}>
         {list ? "Add List" : "Add Card"}

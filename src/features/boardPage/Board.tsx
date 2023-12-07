@@ -73,7 +73,7 @@ export const Board = (): JSX.Element => {
 
   if (boardState && board) {
     const { lists, title } = boardState;
-    const isCreateLimit = lists && lists.length >= 6;
+    const isCreateLimit = lists && lists.length >= 7;
     const { isJobSearchBoard } = board;
 
     return (
