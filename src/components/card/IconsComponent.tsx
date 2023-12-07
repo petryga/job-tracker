@@ -1,6 +1,6 @@
 import Icon from "@material-ui/core/Icon";
 import styles from "./Card.module.css";
-import { IconsComponentProps, LikedIconComponentProps } from "./types";
+import type { IconsComponentProps, LikedIconComponentProps } from "./types";
 import { CONFIRM_DELETE } from "utils/constants";
 
 export const LikeIcon = ({

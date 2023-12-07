@@ -1,7 +1,7 @@
 import Icon from "@material-ui/core/Icon";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import { Dispatch } from "react";
-import { LoginInitialValues } from "./types";
+import type { LoginInitialValues } from "./types";
 
 export const LOGIN_FIELDS = [
   {

@@ -7,47 +7,51 @@ import {
   isPointInSlice,
 } from "./helpers";
 import { Board } from "reducers/types";
+import type { TransformedData } from "./ChartModal.types";
+import styles from "./PieChart.module.css";
 
 export const PieChart = ({ boardState }: { boardState: Board }) => {
   const data = getTransformedData(boardState);
   const canvasRef = useRef(null);
-  const [hoveredSlice, setHoveredSlice] = useState(null);
+  const [hoveredSlice, setHoveredSlice] = useState<TransformedData | null>(
+    null
+  );
   const total = getTotal(data);
 
   useEffect(() => {
     let startAngle = 0;
-    const canvas = canvasRef.current as any;
-    const ctx = canvas.getContext("2d");
+    const canvas = canvasRef.current as unknown as HTMLCanvasElement;
+    const ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
 
     data.forEach((item) => {
       const percentage = ((item.value / total) * 100).toFixed(2) + "%";
       const sliceAngle = (2 * Math.PI * item.value) / total;
-      drawPieSlice(
+      drawPieSlice({
         ctx,
-        canvas.width / 2,
-        canvas.height / 2,
-        Math.min(canvas.width / 2, canvas.height / 2),
+        centerX: canvas.width / 2,
+        centerY: canvas.height / 2,
+        radius: Math.min(canvas.width / 2, canvas.height / 2),
         startAngle,
-        startAngle + sliceAngle,
-        item.color,
-        "#fff",
-        5
-      );
+        endAngle: startAngle + sliceAngle,
+        color: item.color,
+        borderColor: "#fff",
+        borderWidth: 5,
+      });
 
-      drawText(
+      drawText({
         ctx,
-        canvas.width / 2,
-        canvas.height / 2,
-        Math.min(canvas.width / 2, canvas.height / 2),
+        centerX: canvas.width / 2,
+        centerY: canvas.height / 2,
+        radius: Math.min(canvas.width / 2, canvas.height / 2),
         startAngle,
-        startAngle + sliceAngle,
-        percentage,
-        item.title
-      );
+        endAngle: startAngle + sliceAngle,
+        text: percentage,
+        title: item.title,
+      });
       startAngle += sliceAngle;
     });
 
-    const onMouseMove = (e: any) => {
+    const onMouseMove = (e: MouseEvent) => {
       const rect = canvas.getBoundingClientRect();
       const mouseX = e.clientX - rect.left;
       const mouseY = e.clientY - rect.top;
@@ -58,16 +62,16 @@ export const PieChart = ({ boardState }: { boardState: Board }) => {
         const sliceAngle = (2 * Math.PI * data[i].value) / total;
 
         if (
-          isPointInSlice(
+          isPointInSlice({
             mouseX,
             mouseY,
-            currentAngle,
-            currentAngle + sliceAngle,
-            canvas.width / 2,
-            canvas
-          )
+            sliceStartAngle: currentAngle,
+            sliceEndAngle: currentAngle + sliceAngle,
+            sliceRadius: canvas.width / 2,
+            canvas,
+          })
         ) {
-          setHoveredSlice(data[i] as any);
+          setHoveredSlice(data[i]);
           isInSlice = true;
           break;
         }
@@ -86,29 +90,27 @@ export const PieChart = ({ boardState }: { boardState: Board }) => {
     };
   }, [data, total]);
 
-  const Tooltip = ({ slice }: any) => {
+  const Tooltip = ({ slice }: { slice: TransformedData | null }) => {
     if (!slice) return null;
+
     return (
       <div
+        className={styles.tooltip}
         style={{
-          position: "absolute",
-          left: "50%",
-          transform: "translateX(-50%)",
-          bottom: "10%",
           color: slice.color,
-          fontSize: "18px",
-          fontWeight: "bold",
         }}
       >
-        {slice.companies.join(", ")}
+        {slice.companies.map((company, index) => (
+          <div key={index}>{company}</div>
+        ))}
       </div>
     );
   };
 
   return (
-    <>
-      <canvas ref={canvasRef} width={400} height={400} />
+    <div className={styles.container}>
+      <canvas ref={canvasRef} width={550} height={400} />
       <Tooltip slice={hoveredSlice} />
-    </>
+    </div>
   );
 };

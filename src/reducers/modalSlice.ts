@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "store/store";
 import { modalInitialState } from "./helpers";
-import { ModalState } from "./types";
+import type { ModalState } from "./types";
 
 const modalSlice = createSlice({
   name: "modal",

@@ -9,7 +9,7 @@ export const ContactsPage = ({ contacts }: { contacts: Contact[] }) => {
   return (
     <div className={styles.root}>
       {!!contacts.length &&
-        contacts.map((contact: any) => (
+        contacts.map((contact) => (
           <div key={contact._id}>
             <ContactCard contact={contact} />
           </div>

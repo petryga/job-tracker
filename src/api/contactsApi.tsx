@@ -4,7 +4,7 @@ import { providesList } from "./helpers";
 
 export const contactsApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getContacts: builder.query<Contact[], any>({
+    getContacts: builder.query<Contact[], { boardID: string }>({
       query: ({ boardID }) => ({
         url: `/api/contacts/getAll/${boardID}`,
         method: "GET",
@@ -12,7 +12,7 @@ export const contactsApi = apiSlice.injectEndpoints({
       providesTags: (result) => providesList(result, CONTACT),
     }),
 
-    // getContact: builder.query<Contact, any>({
+    // getContact: builder.query<Contact, { id: string }>({
     //   query: ({ id }) => ({
     //     url: `/api/contacts/getOne/${id}`,
     //     method: "GET",

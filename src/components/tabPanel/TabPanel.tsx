@@ -1,5 +1,5 @@
 import Box from "@material-ui/core/Box";
-import { TabPanelProps } from "../../features/jobModal/types";
+import type { TabPanelProps } from "../../features/jobModal/types";
 
 export const TabPanel = (props: TabPanelProps) => {
   const { children, value, index, ...other } = props;

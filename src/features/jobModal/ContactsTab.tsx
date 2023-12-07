@@ -5,7 +5,7 @@ import {
   getWidth,
 } from "./helpers";
 import TextField from "@material-ui/core/TextField";
-import { Contact, ContactsTabProps } from "./types";
+import type { Contact, ContactsTabProps } from "./types";
 import { Button } from "@material-ui/core";
 
 import styles from "./JobModal.module.css";

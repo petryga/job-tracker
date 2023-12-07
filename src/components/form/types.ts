@@ -1,4 +1,4 @@
-import { BoardApi } from "features/boardPage/types";
+import type { BoardApi } from "features/boardPage/types";
 
 export interface CreateProps {
   list?: boolean;

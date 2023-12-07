@@ -1,7 +1,7 @@
 import isEqual from "lodash/isEqual";
 import { withCommas } from "utils/stringUtils";
 import { Dispatch } from "react";
-import { Job } from "./types";
+import type { Job } from "./types";
 
 export enum Fields {
   companyName = "companyName",

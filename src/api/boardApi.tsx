@@ -25,7 +25,7 @@ export const boardApi = apiSlice.injectEndpoints({
       providesTags: (result) => providesList(result, BOARD_TAG),
     }),
 
-    getBoardById: builder.query<BoardApi, any>({
+    getBoardById: builder.query<BoardApi, { id: string }>({
       query: ({ id }) => ({
         url: `/api/boards/${id}`,
         method: "GET",

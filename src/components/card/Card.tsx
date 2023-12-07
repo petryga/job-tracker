@@ -4,13 +4,14 @@ import CardContent from "@material-ui/core/CardContent";
 import { Draggable } from "react-beautiful-dnd";
 import Form from "../form/Form";
 import FormButton from "../button/FormButton";
-import { CardProps, EditFormProps, RenderCardProps } from "./types";
+import type { CardProps, EditFormProps, RenderCardProps } from "./types";
 import { IconsComponent } from "./IconsComponent";
 import styles from "./Card.module.css";
 import { useUpdateCardMutation } from "api/boardApi";
 import { useDispatch } from "react-redux";
 import { openModal, setModalProps } from "reducers/modalSlice";
 import { JOB_SEARCH } from "utils/constants";
+import classnames from "classnames";
 
 const RenderCard = ({
   card,
@@ -28,6 +29,8 @@ const RenderCard = ({
     dispatch(setModalProps({ id, listID }));
     dispatch(openModal(name));
   };
+  const isLongTitle = title?.length > 15;
+  const isLongSubtext = position?.length > 20;
 
   return (
     <Draggable draggableId={id} index={index}>
@@ -51,7 +54,13 @@ const RenderCard = ({
               }}
             >
               <div className={styles.group}>
-                <div className={styles.text}>{title}</div>
+                <div
+                  className={classnames(styles.text, {
+                    [styles.longText]: isLongTitle,
+                  })}
+                >
+                  {title}
+                </div>
                 <IconsComponent
                   isJobSearchBoard={isJobSearchBoard}
                   setLiked={setLiked}
@@ -61,7 +70,13 @@ const RenderCard = ({
                 />
               </div>
               {isJobSearchBoard && position && (
-                <div className={styles.subtext}>{position}</div>
+                <div
+                  className={classnames(styles.subtext, {
+                    [styles.longSubtext]: isLongSubtext,
+                  })}
+                >
+                  {position}
+                </div>
               )}
             </CardContent>
           </Card>

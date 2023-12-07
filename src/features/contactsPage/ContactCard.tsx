@@ -1,4 +1,4 @@
-import { Contact } from "features/jobModal/types";
+import type { Contact } from "features/jobModal/types";
 import styles from "./ContactsPage.module.css";
 import { useDispatch } from "react-redux";
 import { openModal, setModalProps } from "reducers/modalSlice";

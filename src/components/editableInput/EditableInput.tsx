@@ -1,8 +1,8 @@
-import { ChangeEvent, Dispatch, useState } from "react";
+import { ChangeEvent, Dispatch, FormEvent, MouseEvent, useState } from "react";
 import styles from "./EditableInput.module.css";
 import Icon from "@material-ui/core/Icon";
 import { useUpdateBoardMutation } from "api/boardApi";
-import { BoardApi } from "features/boardPage/types";
+import type { BoardApi } from "features/boardPage/types";
 
 export const EditableInput = ({
   board,
@@ -20,7 +20,9 @@ export const EditableInput = ({
     setBoardTitle(e.target.value);
   };
 
-  const handleUpdateTitle = (e: any) => {
+  const handleUpdateTitle = (
+    e: MouseEvent<HTMLSpanElement> | FormEvent<HTMLFormElement>
+  ) => {
     e.preventDefault();
     if (id && boardTitle) {
       updateBoard({ id, data: { title: boardTitle } })

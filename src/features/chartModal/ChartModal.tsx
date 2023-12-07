@@ -1,4 +1,3 @@
-// import styles from "./ContactsPage.module.css";
 import type { Board } from "reducers/types";
 import { PieChart } from "./PieChart";
 import { ModalComponent } from "components/modal/Modal";
@@ -16,7 +15,7 @@ export const ChartModal = ({ boardState }: { boardState: Board }) => {
       handleSubmit={() => dispatch(closeModal())}
       stylesWrapper={{
         marginTop: "80px",
-        width: "500px",
+        width: "1000px",
         textAlign: "center",
       }}
       hideSecondaryButton

@@ -2,6 +2,7 @@ import TextField from "@material-ui/core/TextField";
 import {
   ChangeEvent,
   FormEvent,
+  MouseEvent,
   useCallback,
   useEffect,
   useReducer,
@@ -30,7 +31,7 @@ import styles from "./JobModal.module.css";
 import { useParams } from "react-router-dom";
 import { useLazyGetJobQuery, useUpdateJobMutation } from "api/jobsApi";
 import { toast } from "react-hot-toast";
-import { Job } from "./types";
+import type { Job } from "./types";
 import { useDeleteCardMutation } from "api/boardApi";
 import { Button, MenuItem } from "@material-ui/core";
 
@@ -69,9 +70,11 @@ export const JobModal = () => {
     }
   }, [job, modalProps]);
 
-  const handleChange = (e: ChangeEvent<any>) => {
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
-    setFormData({ [name]: value } as Pick<Job, keyof Job>);
+    setFormData({ [name]: value } as unknown as Job);
   };
 
   const handleSubmit = async (e: FormEvent) => {
@@ -240,7 +243,9 @@ export const JobModal = () => {
                               endAdornment: (
                                 <InputAdornment position="end">
                                   <Button
-                                    onClick={(e: any) => {
+                                    onClick={(
+                                      e: MouseEvent<HTMLButtonElement>
+                                    ) => {
                                       e.preventDefault();
                                       openLink(formData[Fields.link]);
                                     }}

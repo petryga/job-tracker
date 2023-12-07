@@ -19,12 +19,21 @@
 .text {
   color: white;
   font-weight: 500;
+  font-size: 15px;
+}
+
+.longText {
+  font-size: 12px;
 }
 
 .subtext {
   color: white;
   margin-top: 5px;
   font-size: 14px;
+}
+
+.longSubtext {
+  font-size: 12px;
 }
 
 .cardContent {

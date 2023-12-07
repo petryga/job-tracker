@@ -3,7 +3,7 @@ import FormCard from "../card/Card";
 import CreateNewEntry from "../form/CreateNewEntry";
 import { Draggable, Droppable } from "react-beautiful-dnd";
 import Icon from "@material-ui/core/Icon";
-import { ListComponentProps } from "./types";
+import type { ListComponentProps } from "./types";
 import { useParams } from "react-router-dom";
 import { EditInput } from "./EditInput";
 import { CONFIRM_DELETE } from "utils/constants";

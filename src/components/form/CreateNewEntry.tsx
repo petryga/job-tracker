@@ -2,7 +2,7 @@ import { ChangeEvent, useState } from "react";
 import FormButton from "../button/FormButton";
 import Form from "./Form";
 import OpenForm from "./OpenForm";
-import { CreateProps } from "./types";
+import type { CreateProps } from "./types";
 import { useParams } from "react-router-dom";
 import { useAddCardMutation, useAddListMutation } from "api/boardApi";
 

@@ -1,5 +1,5 @@
 import { LikeIcon } from "components/card/IconsComponent";
-import { TitleProps } from "./types";
+import type { TitleProps } from "./types";
 import styles from "./JobModal.module.css";
 
 export const JobModalTitle = ({

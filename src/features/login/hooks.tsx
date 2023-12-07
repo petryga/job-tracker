@@ -7,14 +7,14 @@ import {
   getPasswordLengthError,
   loginInitialValues,
 } from "./helpers";
-import { LoginInitialValues } from "./types";
+import type { LoginInitialValues } from "./types";
 
 export const useLoginSignUpForm = (
   tabIndex: number,
   setTabIndex: (tabIndex: number) => void
 ): [
   (e: FormEvent) => void,
-  (e: ChangeEvent<any>) => void,
+  (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void,
   boolean,
   LoginInitialValues
 ] => {
@@ -76,7 +76,9 @@ export const useLoginSignUpForm = (
     }
   };
 
-  const handleChange = (e: ChangeEvent<any>) => {
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     setFormData({ [name]: value } as Pick<
       LoginInitialValues,

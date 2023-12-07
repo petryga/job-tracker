@@ -1,5 +1,5 @@
-import { ChangeEvent } from "react";
-import { EditInputProps } from "./types";
+import { ChangeEvent, KeyboardEvent } from "react";
+import type { EditInputProps } from "./types";
 import { useUpdateListMutation } from "api/boardApi";
 import styles from "./List.module.css";
 import { toast } from "react-hot-toast";
@@ -36,7 +36,7 @@ export const EditInput = ({
     }
   };
 
-  const handleKeyPress = (e: any) => {
+  const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       e.preventDefault();
       handleFinishEditing();

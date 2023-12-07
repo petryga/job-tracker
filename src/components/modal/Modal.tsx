@@ -1,7 +1,7 @@
 import Modal from "@material-ui/core/Modal";
 import { useDispatch, useSelector } from "react-redux";
 import { closeModal, selectModal } from "reducers/modalSlice";
-import { ModalProps } from "./types";
+import type { ModalProps } from "./types";
 import Button from "@material-ui/core/Button";
 import Icon from "@material-ui/core/Icon";
 import styles from "./Modal.module.css";

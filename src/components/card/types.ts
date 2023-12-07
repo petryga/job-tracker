@@ -1,4 +1,4 @@
-import { BoardApi, Card } from "features/boardPage/types";
+import type { BoardApi, Card } from "features/boardPage/types";
 
 export interface CardProps {
   card: Card;

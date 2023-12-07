@@ -1,6 +1,6 @@
 import Icon from "@material-ui/core/Icon";
 import styles from "./Form.module.css";
-import { OpenFormProps } from "./types";
+import type { OpenFormProps } from "./types";
 import { useSelector } from "react-redux";
 import { selectApp } from "reducers/appSlice";
 

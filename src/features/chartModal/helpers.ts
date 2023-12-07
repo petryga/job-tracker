@@ -1,23 +1,22 @@
 import { Board } from "reducers/types";
+import type {
+  DrawPieSliceProps,
+  DrawTextProps,
+  TransformedData,
+  isPointInSliceProps,
+} from "./ChartModal.types";
 
-interface TransformedData {
-  value: number;
-  color: string;
-  title: string;
-  companies: string[];
-}
-
-export const drawPieSlice = (
-  ctx: any,
-  centerX: any,
-  centerY: any,
-  radius: any,
-  startAngle: any,
-  endAngle: any,
-  color: any,
-  borderColor: any,
-  borderWidth: any
-) => {
+export const drawPieSlice = ({
+  ctx,
+  centerX,
+  centerY,
+  radius,
+  startAngle,
+  endAngle,
+  color,
+  borderColor,
+  borderWidth,
+}: DrawPieSliceProps) => {
   ctx.fillStyle = color;
   ctx.beginPath();
   ctx.moveTo(centerX, centerY);
@@ -32,16 +31,16 @@ export const drawPieSlice = (
   }
 };
 
-export const drawText = (
-  ctx: any,
-  centerX: any,
-  centerY: any,
-  radius: any,
-  startAngle: any,
-  endAngle: any,
-  text: any,
-  title: any
-) => {
+export const drawText = ({
+  ctx,
+  centerX,
+  centerY,
+  radius,
+  startAngle,
+  endAngle,
+  text,
+  title,
+}: DrawTextProps) => {
   ctx.fillStyle = "#fff";
   ctx.font = "16px Arial";
   ctx.textAlign = "center";
@@ -61,14 +60,14 @@ export const getTotal = (data: TransformedData[]) => {
   return data.reduce((total, item) => total + item.value, 0);
 };
 
-export const isPointInSlice = (
-  mouseX: any,
-  mouseY: any,
-  sliceStartAngle: any,
-  sliceEndAngle: any,
-  sliceRadius: any,
-  canvas: any
-) => {
+export const isPointInSlice = ({
+  mouseX,
+  mouseY,
+  sliceStartAngle,
+  sliceEndAngle,
+  sliceRadius,
+  canvas,
+}: isPointInSliceProps) => {
   const xFromCenter = mouseX - canvas.width / 2;
   const yFromCenter = mouseY - canvas.height / 2;
   const distanceFromCenter = Math.sqrt(xFromCenter ** 2 + yFromCenter ** 2);

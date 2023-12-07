@@ -6,7 +6,7 @@ import { CHART_MODAL, CONFIRM_DELETE, DELETE_BOARD } from "utils/constants";
 import { useDispatch } from "react-redux";
 import { EditableInput } from "components/editableInput/EditableInput";
 import { useState } from "react";
-import { BoardApi } from "features/boardPage/types";
+import type { BoardApi } from "features/boardPage/types";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 

@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "store/store";
-import { DragPayload } from "./types";
+import type { DragPayload } from "./types";
 import { BoardApi } from "features/boardPage/types";
 import { appInitialState } from "./helpers";
 
