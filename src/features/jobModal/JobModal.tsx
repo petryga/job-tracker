@@ -84,7 +84,6 @@ export const JobModal = () => {
       ...formData,
       isFavorite: liked,
     };
-
     if (cardID && job && boardID) {
       updateJob({
         ...newFormData,
