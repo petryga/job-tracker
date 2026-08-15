@@ -19,7 +19,7 @@ describe("ContactCard", () => {
     const { container } = renderWithProviders(
       <ContactCard contact={{ ...contact, contactName: "" }} />
     );
-    expect(container.querySelector(".card")).not.toBeInTheDocument();
+    expect(container).toBeEmptyDOMElement();
   });
 
   it("renders name, company, position and contact details", () => {

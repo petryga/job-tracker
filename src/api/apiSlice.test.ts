@@ -1,3 +1,4 @@
+import type { Mock } from "vitest";
 import { makeTestStore } from "test-utils/testStore";
 import { apiSlice } from "./apiSlice";
 
@@ -24,27 +25,27 @@ const testApi = apiSlice.injectEndpoints({
 describe("apiSlice", () => {
   afterEach(() => {
     localStorage.clear();
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
   it("attaches a bearer token header when one is stored", async () => {
     localStorage.setItem("token", "abc123");
-    global.fetch = jest.fn(() => jsonResponse({})) as unknown as jest.Mock;
+    global.fetch = vi.fn(() => jsonResponse({})) as unknown as Mock;
 
     const store = makeTestStore();
     await store.dispatch(testApi.endpoints.ping.initiate(undefined));
 
-    const [request] = (global.fetch as jest.Mock).mock.calls[0];
+    const [request] = (global.fetch as Mock).mock.calls[0];
     expect((request as Request).headers.get("authorization")).toBe("Bearer abc123");
   });
 
   it("omits the authorization header when there is no token", async () => {
-    global.fetch = jest.fn(() => jsonResponse({})) as unknown as jest.Mock;
+    global.fetch = vi.fn(() => jsonResponse({})) as unknown as Mock;
 
     const store = makeTestStore();
     await store.dispatch(testApi.endpoints.ping.initiate(undefined));
 
-    const [request] = (global.fetch as jest.Mock).mock.calls[0];
+    const [request] = (global.fetch as Mock).mock.calls[0];
     expect((request as Request).headers.get("authorization")).toBeNull();
   });
 });

@@ -4,7 +4,7 @@ import { renderWithProviders } from "test-utils/render";
 import FormList from "./List";
 import type { BoardApi, List } from "features/boardPage/types";
 
-jest.mock("react-beautiful-dnd", () => require("test-utils/rbdMock"));
+vi.mock("react-beautiful-dnd", () => import("test-utils/rbdMock"));
 
 const board: BoardApi = {
   _id: "board-1",

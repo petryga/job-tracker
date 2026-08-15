@@ -1,3 +1,4 @@
+import type { Mock } from "vitest";
 import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { renderWithProviders } from "test-utils/render";
@@ -28,11 +29,11 @@ const emptyBoard: BoardApi = {
 
 describe("CreateNewEntry", () => {
   beforeEach(() => {
-    global.fetch = jest.fn(() => jsonResponse({ _id: "new" })) as unknown as jest.Mock;
+    global.fetch = vi.fn(() => jsonResponse({ _id: "new" })) as unknown as Mock;
   });
 
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
   it("invites to add the first list when the board is empty", () => {
@@ -65,7 +66,7 @@ describe("CreateNewEntry", () => {
     await user.type(screen.getByPlaceholderText("Enter list title"), "Backlog");
     await user.click(screen.getByText("Add List"));
 
-    const [request] = (global.fetch as jest.Mock).mock.calls[0];
+    const [request] = (global.fetch as Mock).mock.calls[0];
     expect(requestUrl(request)).toContain("/api/boards/lists/createList");
     expect(JSON.parse(await (request as Request).text())).toEqual({
       title: "Backlog",
@@ -89,7 +90,7 @@ describe("CreateNewEntry", () => {
     await user.type(screen.getByPlaceholderText("Enter a title for this card"), "Write tests");
     await user.click(screen.getByText("Add Card"));
 
-    const [request] = (global.fetch as jest.Mock).mock.calls[0];
+    const [request] = (global.fetch as Mock).mock.calls[0];
     expect(requestUrl(request)).toContain("/api/boards/cards/createCard");
     expect(JSON.parse(await (request as Request).text())).toEqual({
       listID: "list-1",

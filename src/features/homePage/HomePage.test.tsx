@@ -1,3 +1,4 @@
+import type { Mock } from "vitest";
 import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { renderWithProviders } from "test-utils/render";
@@ -28,18 +29,18 @@ describe("HomePage", () => {
   });
 
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
     localStorage.clear();
   });
 
   it("shows a loading state before boards arrive", () => {
-    global.fetch = jest.fn(() => new Promise(() => {})) as unknown as jest.Mock;
+    global.fetch = vi.fn(() => new Promise(() => {})) as unknown as Mock;
     renderWithProviders(<HomePage />);
     expect(screen.getByText(/loading/i)).toBeInTheDocument();
   });
 
   it("shows a no-boards message and a create button when there are none", async () => {
-    global.fetch = jest.fn(() => jsonResponse([])) as unknown as jest.Mock;
+    global.fetch = vi.fn(() => jsonResponse([])) as unknown as Mock;
     renderWithProviders(<HomePage />);
 
     expect(await screen.findByText("no boards")).toBeInTheDocument();
@@ -47,9 +48,9 @@ describe("HomePage", () => {
   });
 
   it("renders a thumbnail linking to each board", async () => {
-    global.fetch = jest.fn(() =>
+    global.fetch = vi.fn(() =>
       jsonResponse([board(1), board(2)])
-    ) as unknown as jest.Mock;
+    ) as unknown as Mock;
     renderWithProviders(<HomePage />);
 
     expect(await screen.findByText("Board 1")).toBeInTheDocument();
@@ -61,9 +62,9 @@ describe("HomePage", () => {
   });
 
   it("shows a limit-reached message instead of the create button at 10 boards", async () => {
-    global.fetch = jest.fn(() =>
+    global.fetch = vi.fn(() =>
       jsonResponse(Array.from({ length: 10 }, (_, i) => board(i)))
-    ) as unknown as jest.Mock;
+    ) as unknown as Mock;
     renderWithProviders(<HomePage />);
 
     expect(await screen.findByText("Limit reached")).toBeInTheDocument();
@@ -71,7 +72,7 @@ describe("HomePage", () => {
   });
 
   it("opens the create-board modal when the button is clicked", async () => {
-    global.fetch = jest.fn(() => jsonResponse([])) as unknown as jest.Mock;
+    global.fetch = vi.fn(() => jsonResponse([])) as unknown as Mock;
     const user = userEvent.setup();
     const { store } = renderWithProviders(<HomePage />);
 

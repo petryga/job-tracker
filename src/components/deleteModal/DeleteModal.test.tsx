@@ -1,3 +1,4 @@
+import type { Mock } from "vitest";
 import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { renderWithProviders } from "test-utils/render";
@@ -23,13 +24,13 @@ const jsonResponse = (body: unknown) =>
 
 describe("DeleteModal", () => {
   beforeEach(() => {
-    global.fetch = jest.fn(() =>
+    global.fetch = vi.fn(() =>
       jsonResponse({ message: "Deleted" })
-    ) as unknown as jest.Mock;
+    ) as unknown as Mock;
   });
 
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
   it("titles itself for a board deletion", () => {

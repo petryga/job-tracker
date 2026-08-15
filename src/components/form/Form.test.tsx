@@ -13,7 +13,7 @@ const board: BoardApi = {
 describe("Form", () => {
   it("shows the job-search placeholder for a card on a job board", () => {
     render(
-      <Form text="" onChange={jest.fn()} closeForm={jest.fn()} board={board}>
+      <Form text="" onChange={vi.fn()} closeForm={vi.fn()} board={board}>
         <button>Save</button>
       </Form>
     );
@@ -23,7 +23,7 @@ describe("Form", () => {
 
   it("shows the list placeholder when creating a list", () => {
     render(
-      <Form list text="" onChange={jest.fn()} closeForm={jest.fn()} board={board}>
+      <Form list text="" onChange={vi.fn()} closeForm={vi.fn()} board={board}>
         <button>Save</button>
       </Form>
     );
@@ -32,8 +32,8 @@ describe("Form", () => {
   });
 
   it("closes on blur and calls onChange as the user types", async () => {
-    const onChange = jest.fn();
-    const closeForm = jest.fn();
+    const onChange = vi.fn();
+    const closeForm = vi.fn();
     const user = userEvent.setup();
     render(
       <Form text="" onChange={onChange} closeForm={closeForm} board={board}>
@@ -49,10 +49,10 @@ describe("Form", () => {
   });
 
   it("closes when the close icon is pressed", async () => {
-    const closeForm = jest.fn();
+    const closeForm = vi.fn();
     const user = userEvent.setup();
     render(
-      <Form text="" onChange={jest.fn()} closeForm={closeForm} board={board}>
+      <Form text="" onChange={vi.fn()} closeForm={closeForm} board={board}>
         <button>Save</button>
       </Form>
     );

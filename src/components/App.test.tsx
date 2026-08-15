@@ -1,3 +1,4 @@
+import type { Mock } from "vitest";
 import { screen } from "@testing-library/react";
 import { render } from "@testing-library/react";
 import { Provider } from "react-redux";
@@ -32,15 +33,15 @@ describe("App", () => {
   const originalLocation = window.location;
 
   beforeEach(() => {
-    global.fetch = jest.fn(() => jsonResponse([])) as unknown as jest.Mock;
+    global.fetch = vi.fn(() => jsonResponse([])) as unknown as Mock;
     Object.defineProperty(window, "location", {
       configurable: true,
-      value: { ...originalLocation, replace: jest.fn() },
+      value: { ...originalLocation, replace: vi.fn() },
     });
   });
 
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
     localStorage.clear();
     Object.defineProperty(window, "location", {
       configurable: true,

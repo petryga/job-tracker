@@ -7,9 +7,9 @@ describe("JobModalTitle", () => {
     render(
       <JobModalTitle
         cardTitle="Acme"
-        dispatch={jest.fn()}
+        dispatch={vi.fn()}
         liked={false}
-        setLiked={jest.fn()}
+        setLiked={vi.fn()}
         isFavorite={false}
       />
     );
@@ -20,9 +20,9 @@ describe("JobModalTitle", () => {
     render(
       <JobModalTitle
         cardTitle="Acme"
-        dispatch={jest.fn()}
+        dispatch={vi.fn()}
         liked={false}
-        setLiked={jest.fn()}
+        setLiked={vi.fn()}
         isFavorite={false}
       />
     );
@@ -33,9 +33,9 @@ describe("JobModalTitle", () => {
     render(
       <JobModalTitle
         cardTitle="Acme"
-        dispatch={jest.fn()}
+        dispatch={vi.fn()}
         liked={true}
-        setLiked={jest.fn()}
+        setLiked={vi.fn()}
         isFavorite={false}
       />
     );
@@ -43,12 +43,12 @@ describe("JobModalTitle", () => {
   });
 
   it("toggles liked state when the heart is clicked", async () => {
-    const setLiked = jest.fn();
+    const setLiked = vi.fn();
     const user = userEvent.setup();
     render(
       <JobModalTitle
         cardTitle="Acme"
-        dispatch={jest.fn()}
+        dispatch={vi.fn()}
         liked={false}
         setLiked={setLiked}
         isFavorite={false}

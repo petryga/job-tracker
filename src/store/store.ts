@@ -9,7 +9,7 @@ import {
   PURGE,
   REGISTER,
 } from "redux-persist";
-import storage from "redux-persist/lib/storage";
+import storage from "redux-persist/es/storage";
 import { boardApi } from "../api/boardApi";
 import modalSlice from "../reducers/modalSlice";
 import appSlice from "../reducers/appSlice";

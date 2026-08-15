@@ -6,7 +6,7 @@ import { ModalComponent } from "./Modal";
 describe("ModalComponent", () => {
   it("renders nothing visible when its name isn't the open modal", () => {
     renderWithProviders(
-      <ModalComponent name="thisModal" title="Title" handleSubmit={jest.fn()}>
+      <ModalComponent name="thisModal" title="Title" handleSubmit={vi.fn()}>
         body
       </ModalComponent>,
       { preloadedState: { modal: { openModal: "otherModal" } } }
@@ -18,7 +18,7 @@ describe("ModalComponent", () => {
 
   it("renders title, children and both buttons when open", () => {
     renderWithProviders(
-      <ModalComponent name="thisModal" title="Title" handleSubmit={jest.fn()}>
+      <ModalComponent name="thisModal" title="Title" handleSubmit={vi.fn()}>
         body
       </ModalComponent>,
       { preloadedState: { modal: { openModal: "thisModal" } } }
@@ -31,7 +31,7 @@ describe("ModalComponent", () => {
   });
 
   it("calls handleSubmit when the primary button is clicked", async () => {
-    const handleSubmit = jest.fn();
+    const handleSubmit = vi.fn();
     const user = userEvent.setup();
     renderWithProviders(
       <ModalComponent name="thisModal" title="Title" handleSubmit={handleSubmit}>
@@ -49,7 +49,7 @@ describe("ModalComponent", () => {
       <ModalComponent
         name="thisModal"
         title="Title"
-        handleSubmit={jest.fn()}
+        handleSubmit={vi.fn()}
         isButtonDisabled
       >
         body
@@ -63,7 +63,7 @@ describe("ModalComponent", () => {
   it("closes the modal in the store when Cancel is clicked", async () => {
     const user = userEvent.setup();
     const { store } = renderWithProviders(
-      <ModalComponent name="thisModal" title="Title" handleSubmit={jest.fn()}>
+      <ModalComponent name="thisModal" title="Title" handleSubmit={vi.fn()}>
         body
       </ModalComponent>,
       { preloadedState: { modal: { openModal: "thisModal" } } }
@@ -78,7 +78,7 @@ describe("ModalComponent", () => {
       <ModalComponent
         name="thisModal"
         title="Title"
-        handleSubmit={jest.fn()}
+        handleSubmit={vi.fn()}
         hideSecondaryButton
       >
         body
@@ -90,13 +90,13 @@ describe("ModalComponent", () => {
   });
 
   it("shows a delete icon and fires onSecondaryAction then closes when clicked", async () => {
-    const onSecondaryAction = jest.fn();
+    const onSecondaryAction = vi.fn();
     const user = userEvent.setup();
     const { store } = renderWithProviders(
       <ModalComponent
         name="thisModal"
         title="Title"
-        handleSubmit={jest.fn()}
+        handleSubmit={vi.fn()}
         secondaryAction={{ hide: false, onSecondaryAction }}
       >
         body
@@ -114,7 +114,7 @@ describe("ModalComponent", () => {
       <ModalComponent
         name="thisModal"
         title="Title"
-        handleSubmit={jest.fn()}
+        handleSubmit={vi.fn()}
         primaryButtonText="Close"
       >
         body

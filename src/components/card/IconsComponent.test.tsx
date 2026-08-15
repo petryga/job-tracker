@@ -4,19 +4,19 @@ import { IconsComponent, LikeIcon } from "./IconsComponent";
 
 describe("LikeIcon", () => {
   it("uses the liked prop when inside a modal", () => {
-    render(<LikeIcon liked setLiked={jest.fn()} isFavorite={false} insideModal />);
+    render(<LikeIcon liked setLiked={vi.fn()} isFavorite={false} insideModal />);
     expect(screen.getByText("favorite")).toBeInTheDocument();
   });
 
   it("uses the isFavorite prop when not inside a modal", () => {
     render(
-      <LikeIcon liked={false} setLiked={jest.fn()} isFavorite insideModal={false} />
+      <LikeIcon liked={false} setLiked={vi.fn()} isFavorite insideModal={false} />
     );
     expect(screen.getByText("favorite")).toBeInTheDocument();
   });
 
   it("toggles liked only when inside a modal", async () => {
-    const setLiked = jest.fn();
+    const setLiked = vi.fn();
     const user = userEvent.setup();
     render(
       <LikeIcon liked={false} setLiked={setLiked} isFavorite={false} insideModal={false} />
@@ -32,9 +32,9 @@ describe("IconsComponent", () => {
     render(
       <IconsComponent
         isJobSearchBoard
-        setLiked={jest.fn()}
+        setLiked={vi.fn()}
         liked={false}
-        openDeleteModal={jest.fn()}
+        openDeleteModal={vi.fn()}
         isFavorite
       />
     );
@@ -42,12 +42,12 @@ describe("IconsComponent", () => {
   });
 
   it("shows a delete icon on a plain to-do board and wires it to openDeleteModal", async () => {
-    const openDeleteModal = jest.fn();
+    const openDeleteModal = vi.fn();
     const user = userEvent.setup();
     render(
       <IconsComponent
         isJobSearchBoard={false}
-        setLiked={jest.fn()}
+        setLiked={vi.fn()}
         liked={false}
         openDeleteModal={openDeleteModal}
         isFavorite={false}

@@ -75,7 +75,7 @@ describe("getIsButtonDisabled", () => {
 
 describe("handleFormatSalary", () => {
   it("formats the salary field with thousands separators", () => {
-    const setFormData = jest.fn();
+    const setFormData = vi.fn();
     handleFormatSalary(
       Fields.salary,
       { ...INITIAL_VALUES, salary: "100000" },
@@ -85,7 +85,7 @@ describe("handleFormatSalary", () => {
   });
 
   it("does nothing for a non-salary field", () => {
-    const setFormData = jest.fn();
+    const setFormData = vi.fn();
     handleFormatSalary(
       Fields.position,
       { ...INITIAL_VALUES, salary: "100000" },
@@ -95,7 +95,7 @@ describe("handleFormatSalary", () => {
   });
 
   it("does nothing when salary is empty", () => {
-    const setFormData = jest.fn();
+    const setFormData = vi.fn();
     handleFormatSalary(Fields.salary, { ...INITIAL_VALUES, salary: "" }, setFormData);
     expect(setFormData).not.toHaveBeenCalled();
   });
@@ -103,11 +103,11 @@ describe("handleFormatSalary", () => {
 
 describe("openLink", () => {
   beforeEach(() => {
-    jest.spyOn(window, "open").mockImplementation(() => null);
+    vi.spyOn(window, "open").mockImplementation(() => null);
   });
 
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
   it("opens the link as-is when it already has a protocol", () => {

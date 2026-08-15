@@ -17,20 +17,20 @@ const boardState: Board = {
 
 describe("PieChart", () => {
   beforeEach(() => {
-    HTMLCanvasElement.prototype.getContext = jest.fn(() => ({
+    HTMLCanvasElement.prototype.getContext = vi.fn(() => ({
       fillStyle: "",
       strokeStyle: "",
       lineWidth: 0,
       font: "",
       textAlign: "",
       textBaseline: "",
-      beginPath: jest.fn(),
-      moveTo: jest.fn(),
-      arc: jest.fn(),
-      closePath: jest.fn(),
-      fill: jest.fn(),
-      stroke: jest.fn(),
-      fillText: jest.fn(),
+      beginPath: vi.fn(),
+      moveTo: vi.fn(),
+      arc: vi.fn(),
+      closePath: vi.fn(),
+      fill: vi.fn(),
+      stroke: vi.fn(),
+      fillText: vi.fn(),
     })) as unknown as typeof HTMLCanvasElement.prototype.getContext;
   });
 

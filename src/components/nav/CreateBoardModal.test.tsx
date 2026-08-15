@@ -1,3 +1,4 @@
+import type { Mock } from "vitest";
 import { screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { renderWithProviders } from "test-utils/render";
@@ -19,13 +20,13 @@ const jsonResponse = (body: unknown) =>
 describe("CreateBoardModal", () => {
   beforeEach(() => {
     localStorage.setItem("userId", "user-1");
-    global.fetch = jest.fn(() =>
+    global.fetch = vi.fn(() =>
       jsonResponse({ _id: "board-1", title: "Job Search" })
-    ) as unknown as jest.Mock;
+    ) as unknown as Mock;
   });
 
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
     localStorage.clear();
   });
 
@@ -71,7 +72,7 @@ describe("CreateBoardModal", () => {
     await user.click(screen.getByText("Submit"));
 
     await waitFor(() => expect(store.getState().modal.openModal).toBeNull());
-    const [request] = (global.fetch as jest.Mock).mock.calls[0];
+    const [request] = (global.fetch as Mock).mock.calls[0];
     expect(JSON.parse(await (request as Request).text())).toEqual({
       title: "New Board",
       userId: "user-1",

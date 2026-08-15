@@ -1,3 +1,4 @@
+import type { Mock } from "vitest";
 import { screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { renderWithProviders } from "test-utils/render";
@@ -28,22 +29,22 @@ const board: BoardApi = {
 
 describe("EditableInput", () => {
   beforeEach(() => {
-    global.fetch = jest.fn(() =>
+    global.fetch = vi.fn(() =>
       jsonResponse({ _id: "board-1", title: "Updated" })
-    ) as unknown as jest.Mock;
+    ) as unknown as Mock;
   });
 
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
   it("starts pre-filled with the board's current title", () => {
-    renderWithProviders(<EditableInput board={board} setEditTitle={jest.fn()} />);
+    renderWithProviders(<EditableInput board={board} setEditTitle={vi.fn()} />);
     expect(screen.getByDisplayValue("Job Search")).toBeInTheDocument();
   });
 
   it("saves the new title and exits edit mode when the check icon is clicked", async () => {
-    const setEditTitle = jest.fn();
+    const setEditTitle = vi.fn();
     const user = userEvent.setup();
     renderWithProviders(<EditableInput board={board} setEditTitle={setEditTitle} />);
 
@@ -53,7 +54,7 @@ describe("EditableInput", () => {
     await user.click(screen.getByText("check"));
 
     await waitFor(() => expect(setEditTitle).toHaveBeenCalledWith(false));
-    const [request] = (global.fetch as jest.Mock).mock.calls[0];
+    const [request] = (global.fetch as Mock).mock.calls[0];
     expect(requestUrl(request)).toContain("/api/boards/board-1");
     expect(JSON.parse(await (request as Request).text())).toEqual({
       title: "New Title",
@@ -61,7 +62,7 @@ describe("EditableInput", () => {
   });
 
   it("does nothing when submitted with an empty title", async () => {
-    const setEditTitle = jest.fn();
+    const setEditTitle = vi.fn();
     const user = userEvent.setup();
     renderWithProviders(<EditableInput board={board} setEditTitle={setEditTitle} />);
 

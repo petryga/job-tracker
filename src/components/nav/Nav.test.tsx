@@ -5,7 +5,7 @@ import { Nav } from "./Nav";
 
 describe("Nav", () => {
   const originalLocation = window.location;
-  const reload = jest.fn();
+  const reload = vi.fn();
 
   beforeEach(() => {
     Object.defineProperty(window, "location", {

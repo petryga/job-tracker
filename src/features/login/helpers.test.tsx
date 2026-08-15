@@ -78,7 +78,7 @@ describe("getPasswordLengthError", () => {
 describe("PasswordIcon", () => {
   it("toggles visibility when clicked", async () => {
     const user = userEvent.setup();
-    const setVisible = jest.fn();
+    const setVisible = vi.fn();
     const { endAdornment } = PasswordIcon(false, setVisible);
     render(<>{endAdornment}</>);
 
@@ -88,7 +88,7 @@ describe("PasswordIcon", () => {
   });
 
   it("shows the crossed-out icon when already visible", () => {
-    const { endAdornment } = PasswordIcon(true, jest.fn());
+    const { endAdornment } = PasswordIcon(true, vi.fn());
     render(<>{endAdornment}</>);
     expect(screen.getByText("visibility_off")).toBeInTheDocument();
   });

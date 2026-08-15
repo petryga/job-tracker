@@ -1,10 +1,11 @@
+import type { Mock } from "vitest";
 import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { renderWithProviders } from "test-utils/render";
 import FormCard from "./Card";
 import type { BoardApi, Card as CardType } from "features/boardPage/types";
 
-jest.mock("react-beautiful-dnd", () => require("test-utils/rbdMock"));
+vi.mock("react-beautiful-dnd", () => import("test-utils/rbdMock"));
 
 const jsonResponse = (body: unknown) =>
   Promise.resolve({
@@ -114,9 +115,9 @@ describe("Card", () => {
   });
 
   it("saves an edited to-do card's text and exits edit mode", async () => {
-    global.fetch = jest.fn(() =>
+    global.fetch = vi.fn(() =>
       jsonResponse({ message: "Updated" })
-    ) as unknown as jest.Mock;
+    ) as unknown as Mock;
     const user = userEvent.setup();
     renderWithProviders(
       <FormCard card={card} listID="list-a" index={0} board={todoBoard} />,
@@ -129,7 +130,7 @@ describe("Card", () => {
     await user.type(textarea, "Write more tests");
     await user.click(screen.getByText("Save"));
 
-    const [request] = (global.fetch as jest.Mock).mock.calls[0];
+    const [request] = (global.fetch as Mock).mock.calls[0];
     expect(requestUrl(request)).toContain("/api/boards/cards/updateCard/card-1");
     expect(JSON.parse(await (request as Request).text())).toEqual({
       text: "Write more tests",
@@ -144,7 +145,7 @@ describe("Card", () => {
   });
 
   it("closes the edit form without saving when the close icon is clicked", async () => {
-    global.fetch = jest.fn() as unknown as jest.Mock;
+    global.fetch = vi.fn() as unknown as Mock;
     const user = userEvent.setup();
     renderWithProviders(
       <FormCard card={card} listID="list-a" index={0} board={todoBoard} />,
@@ -159,7 +160,7 @@ describe("Card", () => {
   });
 
   it("does not save when the text is unchanged", async () => {
-    global.fetch = jest.fn() as unknown as jest.Mock;
+    global.fetch = vi.fn() as unknown as Mock;
     const user = userEvent.setup();
     renderWithProviders(
       <FormCard card={card} listID="list-a" index={0} board={todoBoard} />,

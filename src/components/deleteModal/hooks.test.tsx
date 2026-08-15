@@ -1,3 +1,4 @@
+import type { Mock } from "vitest";
 import { act, screen, waitFor } from "@testing-library/react";
 import toast from "react-hot-toast";
 import { renderHookWithProviders } from "test-utils/renderHook";
@@ -19,12 +20,12 @@ const jsonResponse = (body: unknown, init: Partial<Response> = {}) =>
 
 describe("useHandleSubmit", () => {
   const originalLocation = window.location;
-  const reload = jest.fn();
+  const reload = vi.fn();
 
   beforeEach(() => {
     localStorage.setItem("userId", "user-1");
-    jest.spyOn(toast, "success").mockImplementation(() => "");
-    jest.spyOn(toast, "error").mockImplementation(() => "");
+    vi.spyOn(toast, "success").mockImplementation(() => "");
+    vi.spyOn(toast, "error").mockImplementation(() => "");
     Object.defineProperty(window, "location", {
       configurable: true,
       value: { ...originalLocation, reload },
@@ -32,7 +33,7 @@ describe("useHandleSubmit", () => {
   });
 
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
     localStorage.clear();
     reload.mockClear();
     Object.defineProperty(window, "location", {
@@ -42,9 +43,9 @@ describe("useHandleSubmit", () => {
   });
 
   it("deletes the user, logs out and closes the modal", async () => {
-    global.fetch = jest.fn(() =>
+    global.fetch = vi.fn(() =>
       jsonResponse({ message: "User deleted" })
-    ) as unknown as jest.Mock;
+    ) as unknown as Mock;
 
     const { result, store } = renderHookWithProviders(() => useHandleSubmit(), {
       preloadedState: {
@@ -65,9 +66,9 @@ describe("useHandleSubmit", () => {
   });
 
   it("deletes a contact and closes the modal", async () => {
-    global.fetch = jest.fn(() =>
+    global.fetch = vi.fn(() =>
       jsonResponse({ message: "Contact deleted" })
-    ) as unknown as jest.Mock;
+    ) as unknown as Mock;
 
     const { result, store } = renderHookWithProviders(() => useHandleSubmit(), {
       preloadedState: {
@@ -90,9 +91,9 @@ describe("useHandleSubmit", () => {
   });
 
   it("deletes the board, closes the modal and navigates home", async () => {
-    global.fetch = jest.fn(() =>
+    global.fetch = vi.fn(() =>
       jsonResponse({ message: "Board deleted" })
-    ) as unknown as jest.Mock;
+    ) as unknown as Mock;
 
     const { result, store } = renderHookWithProviders(() => useHandleSubmit(), {
       route: "/board-1",
@@ -114,9 +115,9 @@ describe("useHandleSubmit", () => {
   });
 
   it("deletes a card when both cardID and listID are present", async () => {
-    global.fetch = jest.fn(() =>
+    global.fetch = vi.fn(() =>
       jsonResponse({ message: "Card deleted" })
-    ) as unknown as jest.Mock;
+    ) as unknown as Mock;
 
     const { result } = renderHookWithProviders(() => useHandleSubmit(), {
       route: "/board-1",
@@ -140,9 +141,9 @@ describe("useHandleSubmit", () => {
   });
 
   it("deletes a list when only listID is present", async () => {
-    global.fetch = jest.fn(() =>
+    global.fetch = vi.fn(() =>
       jsonResponse({ message: "List deleted" })
-    ) as unknown as jest.Mock;
+    ) as unknown as Mock;
 
     const { result } = renderHookWithProviders(() => useHandleSubmit(), {
       route: "/board-1",
@@ -164,9 +165,9 @@ describe("useHandleSubmit", () => {
   });
 
   it("surfaces a failed deletion as a toast error instead of throwing", async () => {
-    global.fetch = jest.fn(() =>
+    global.fetch = vi.fn(() =>
       jsonResponse({ message: "boom" }, { ok: false, status: 500 })
-    ) as unknown as jest.Mock;
+    ) as unknown as Mock;
 
     const { result } = renderHookWithProviders(() => useHandleSubmit(), {
       route: "/board-1",

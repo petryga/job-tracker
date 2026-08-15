@@ -25,6 +25,6 @@ describe("ContactsPage", () => {
 
   it("renders without error when there are no contacts", () => {
     const { container } = renderWithProviders(<ContactsPage contacts={[]} />);
-    expect(container.querySelector(".root")).toBeInTheDocument();
+    expect(container.firstChild).not.toBeNull();
   });
 });

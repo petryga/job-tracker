@@ -1,3 +1,4 @@
+import type { Mock } from "vitest";
 import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { renderWithProviders } from "test-utils/render";
@@ -22,7 +23,7 @@ const fieldByName = (name: string) =>
 
 describe("LoginPage", () => {
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
     localStorage.clear();
   });
 
@@ -61,9 +62,9 @@ describe("LoginPage", () => {
   });
 
   it("logs in and stores the token on submit", async () => {
-    global.fetch = jest.fn(() =>
+    global.fetch = vi.fn(() =>
       jsonResponse({ token: "tok", _id: "user-1", name: "Ada" })
-    ) as unknown as jest.Mock;
+    ) as unknown as Mock;
     const user = userEvent.setup();
     renderWithProviders(<LoginPage />);
 

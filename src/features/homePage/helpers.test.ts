@@ -4,7 +4,7 @@ describe("handleLogout", () => {
   it("clears auth state from localStorage and reloads the page", () => {
     localStorage.setItem("token", "abc");
     localStorage.setItem("userId", "user-1");
-    const reload = jest.fn();
+    const reload = vi.fn();
     const originalLocation = window.location;
     Object.defineProperty(window, "location", {
       configurable: true,

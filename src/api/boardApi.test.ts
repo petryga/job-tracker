@@ -1,3 +1,4 @@
+import type { Mock } from "vitest";
 import { makeTestStore } from "test-utils/testStore";
 import { boardApi } from "./boardApi";
 
@@ -22,41 +23,41 @@ describe("boardApi", () => {
 
   beforeEach(() => {
     store = makeTestStore();
-    global.fetch = jest.fn();
+    global.fetch = vi.fn();
   });
 
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
   it("fetches boards for a user and hits the expected url", async () => {
     const boards = [{ _id: "board-1", title: "Board", lists: [], isJobSearchBoard: false }];
-    (global.fetch as jest.Mock).mockReturnValue(jsonResponse(boards));
+    (global.fetch as Mock).mockReturnValue(jsonResponse(boards));
 
     const result = await store.dispatch(
       boardApi.endpoints.getBoards.initiate({ userId: "user-1" })
     );
 
     expect(result.data).toEqual(boards);
-    const [request] = (global.fetch as jest.Mock).mock.calls[0];
+    const [request] = (global.fetch as Mock).mock.calls[0];
     expect(requestUrl(request)).toContain("/api/boards/getAll/user-1");
   });
 
   it("fetches a single board by id", async () => {
     const board = { _id: "board-1", title: "Board", lists: [], isJobSearchBoard: false };
-    (global.fetch as jest.Mock).mockReturnValue(jsonResponse(board));
+    (global.fetch as Mock).mockReturnValue(jsonResponse(board));
 
     const result = await store.dispatch(
       boardApi.endpoints.getBoardById.initiate({ id: "board-1" })
     );
 
     expect(result.data).toEqual(board);
-    const [request] = (global.fetch as jest.Mock).mock.calls[0];
+    const [request] = (global.fetch as Mock).mock.calls[0];
     expect(requestUrl(request)).toContain("/api/boards/board-1");
   });
 
   it("posts a new board with the given title and userId", async () => {
-    (global.fetch as jest.Mock).mockReturnValue(
+    (global.fetch as Mock).mockReturnValue(
       jsonResponse({ _id: "new-board" })
     );
 
@@ -64,7 +65,7 @@ describe("boardApi", () => {
       boardApi.endpoints.createBoard.initiate({ title: "New", userId: "user-1" })
     );
 
-    const [request] = (global.fetch as jest.Mock).mock.calls[0];
+    const [request] = (global.fetch as Mock).mock.calls[0];
     expect(requestUrl(request)).toContain("/api/boards/create");
     expect((request as Request).method).toBe("POST");
     expect(JSON.parse(await (request as Request).text())).toEqual({
@@ -74,7 +75,7 @@ describe("boardApi", () => {
   });
 
   it("surfaces a non-2xx response as an error result rather than throwing", async () => {
-    (global.fetch as jest.Mock).mockReturnValue(
+    (global.fetch as Mock).mockReturnValue(
       jsonResponse({ message: "not found" }, { ok: false, status: 404 })
     );
 

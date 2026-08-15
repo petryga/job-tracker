@@ -1,3 +1,4 @@
+import type { Mock } from "vitest";
 import { makeTestStore } from "test-utils/testStore";
 import { userApi } from "./userApi";
 
@@ -24,9 +25,9 @@ describe("userApi", () => {
   });
 
   it("posts registration data", async () => {
-    global.fetch = jest.fn(() =>
+    global.fetch = vi.fn(() =>
       jsonResponse({ message: "Registered" })
-    ) as unknown as jest.Mock;
+    ) as unknown as Mock;
 
     await store.dispatch(
       userApi.endpoints.registerUser.initiate({
@@ -34,15 +35,15 @@ describe("userApi", () => {
       })
     );
 
-    const [request] = (global.fetch as jest.Mock).mock.calls[0];
+    const [request] = (global.fetch as Mock).mock.calls[0];
     expect(requestUrl(request)).toContain("/api/users/register");
     expect((request as Request).method).toBe("POST");
   });
 
   it("posts login credentials", async () => {
-    global.fetch = jest.fn(() =>
+    global.fetch = vi.fn(() =>
       jsonResponse({ token: "tok" })
-    ) as unknown as jest.Mock;
+    ) as unknown as Mock;
 
     await store.dispatch(
       userApi.endpoints.loginUser.initiate({
@@ -50,19 +51,19 @@ describe("userApi", () => {
       })
     );
 
-    const [request] = (global.fetch as jest.Mock).mock.calls[0];
+    const [request] = (global.fetch as Mock).mock.calls[0];
     expect(requestUrl(request)).toContain("/api/users/login");
     expect((request as Request).method).toBe("POST");
   });
 
   it("deletes a user by id", async () => {
-    global.fetch = jest.fn(() =>
+    global.fetch = vi.fn(() =>
       jsonResponse({ message: "Deleted" })
-    ) as unknown as jest.Mock;
+    ) as unknown as Mock;
 
     await store.dispatch(userApi.endpoints.deleteUser.initiate({ userId: "user-1" }));
 
-    const [request] = (global.fetch as jest.Mock).mock.calls[0];
+    const [request] = (global.fetch as Mock).mock.calls[0];
     expect(requestUrl(request)).toContain("/api/users/delete/user-1");
     expect((request as Request).method).toBe("DELETE");
   });

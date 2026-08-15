@@ -8,10 +8,9 @@ export const CONTACT = "Contact";
 
 export const apiSlice = createApi({
   baseQuery: fetchBaseQuery({
-    baseUrl:
-      process.env.NODE_ENV === "development"
-        ? LOCAL_BACKEND_URL
-        : process.env.REACT_APP_BACKEND_URL,
+    baseUrl: import.meta.env.DEV
+      ? LOCAL_BACKEND_URL
+      : import.meta.env.VITE_BACKEND_URL,
     credentials: "include",
     prepareHeaders: async (headers) => {
       const token = await localStorage.getItem("token");

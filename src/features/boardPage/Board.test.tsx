@@ -1,9 +1,10 @@
+import type { Mock } from "vitest";
 import { screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { renderWithProviders } from "test-utils/render";
 import Board from "./Board";
 
-jest.mock("react-beautiful-dnd", () => require("test-utils/rbdMock"));
+vi.mock("react-beautiful-dnd", () => import("test-utils/rbdMock"));
 
 const jsonResponse = (body: unknown) =>
   Promise.resolve({
@@ -34,15 +35,15 @@ const board = {
 
 describe("Board", () => {
   beforeEach(() => {
-    global.fetch = jest.fn((input: RequestInfo | URL) => {
+    global.fetch = vi.fn((input: RequestInfo | URL) => {
       const url = typeof input === "string" ? input : (input as Request).url;
       if (url.includes("/api/contacts")) return jsonResponse([]);
       return jsonResponse(board);
-    }) as jest.Mock;
+    }) as Mock;
   });
 
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
   it("shows a loading state before the board data arrives", async () => {
@@ -61,9 +62,9 @@ describe("Board", () => {
   });
 
   it("shows a not-found state when there is no board for this id", async () => {
-    global.fetch = jest.fn(() =>
+    global.fetch = vi.fn(() =>
       jsonResponse(null)
-    ) as unknown as jest.Mock;
+    ) as unknown as Mock;
 
     renderWithProviders(<Board />, { route: "/missing", path: "/:boardID" });
 
@@ -83,7 +84,7 @@ describe("Board", () => {
   });
 
   it("shows Board/Contacts tabs and switches between them on a job-search board", async () => {
-    global.fetch = jest.fn((input: RequestInfo | URL) => {
+    global.fetch = vi.fn((input: RequestInfo | URL) => {
       const url = typeof input === "string" ? input : (input as Request).url;
       if (url.includes("/api/contacts")) {
         return jsonResponse([
@@ -99,7 +100,7 @@ describe("Board", () => {
         ]);
       }
       return jsonResponse({ ...board, isJobSearchBoard: true });
-    }) as jest.Mock;
+    }) as Mock;
 
     const user = userEvent.setup();
     renderWithProviders(<Board />, { route: "/board-1", path: "/:boardID" });

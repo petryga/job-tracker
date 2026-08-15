@@ -1,3 +1,4 @@
+import type { Mock } from "vitest";
 import { act } from "@testing-library/react";
 import toast from "react-hot-toast";
 import { renderHookWithProviders } from "test-utils/renderHook";
@@ -16,21 +17,21 @@ const jsonResponse = (body: unknown, init: Partial<Response> = {}) =>
     ...init,
   } as Response);
 
-const fakeEvent = () => ({ preventDefault: jest.fn() } as unknown as React.FormEvent);
+const fakeEvent = () => ({ preventDefault: vi.fn() } as unknown as React.FormEvent);
 
 describe("useLoginSignUpForm", () => {
   beforeEach(() => {
-    jest.spyOn(toast, "success").mockImplementation(() => "");
-    jest.spyOn(toast, "error").mockImplementation(() => "");
+    vi.spyOn(toast, "success").mockImplementation(() => "");
+    vi.spyOn(toast, "error").mockImplementation(() => "");
   });
 
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
     localStorage.clear();
   });
 
   it("starts with a disabled button and empty fields", () => {
-    const { result } = renderHookWithProviders(() => useLoginSignUpForm(0, jest.fn()));
+    const { result } = renderHookWithProviders(() => useLoginSignUpForm(0, vi.fn()));
     const [, , buttonDisabled, formData] = result.current;
 
     expect(buttonDisabled).toBe(true);
@@ -38,7 +39,7 @@ describe("useLoginSignUpForm", () => {
   });
 
   it("enables the button once login fields are valid", () => {
-    const { result } = renderHookWithProviders(() => useLoginSignUpForm(0, jest.fn()));
+    const { result } = renderHookWithProviders(() => useLoginSignUpForm(0, vi.fn()));
 
     act(() => {
       const [, handleChange] = result.current;
@@ -57,8 +58,8 @@ describe("useLoginSignUpForm", () => {
   });
 
   it("rejects a short password on submit without calling the API", async () => {
-    global.fetch = jest.fn() as unknown as jest.Mock;
-    const { result } = renderHookWithProviders(() => useLoginSignUpForm(0, jest.fn()));
+    global.fetch = vi.fn() as unknown as Mock;
+    const { result } = renderHookWithProviders(() => useLoginSignUpForm(0, vi.fn()));
 
     act(() => {
       const [, handleChange] = result.current;
@@ -81,11 +82,11 @@ describe("useLoginSignUpForm", () => {
   });
 
   it("logs in, stores the token and navigates home", async () => {
-    global.fetch = jest.fn(() =>
+    global.fetch = vi.fn(() =>
       jsonResponse({ token: "tok", _id: "user-1", name: "Ada" })
-    ) as unknown as jest.Mock;
+    ) as unknown as Mock;
 
-    const { result } = renderHookWithProviders(() => useLoginSignUpForm(0, jest.fn()), {
+    const { result } = renderHookWithProviders(() => useLoginSignUpForm(0, vi.fn()), {
       route: "/",
       path: "/",
     });
@@ -110,10 +111,10 @@ describe("useLoginSignUpForm", () => {
   });
 
   it("registers a new user and switches back to the login tab", async () => {
-    global.fetch = jest.fn(() =>
+    global.fetch = vi.fn(() =>
       jsonResponse({ message: "Registered", data: { email: "a@b.com" } })
-    ) as unknown as jest.Mock;
-    const setTabIndex = jest.fn();
+    ) as unknown as Mock;
+    const setTabIndex = vi.fn();
 
     const { result } = renderHookWithProviders(() => useLoginSignUpForm(1, setTabIndex));
 
@@ -142,11 +143,11 @@ describe("useLoginSignUpForm", () => {
   });
 
   it("surfaces a login failure as a toast error", async () => {
-    global.fetch = jest.fn(() =>
+    global.fetch = vi.fn(() =>
       jsonResponse({ message: "Invalid credentials" }, { ok: false, status: 401 })
-    ) as unknown as jest.Mock;
+    ) as unknown as Mock;
 
-    const { result } = renderHookWithProviders(() => useLoginSignUpForm(0, jest.fn()));
+    const { result } = renderHookWithProviders(() => useLoginSignUpForm(0, vi.fn()));
 
     act(() => {
       const [, handleChange] = result.current;

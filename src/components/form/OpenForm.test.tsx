@@ -5,14 +5,14 @@ import OpenForm from "./OpenForm";
 
 describe("OpenForm", () => {
   it("shows an add icon and the given label when not dragging", () => {
-    renderWithProviders(<OpenForm onClick={jest.fn()}>Add another list</OpenForm>);
+    renderWithProviders(<OpenForm onClick={vi.fn()}>Add another list</OpenForm>);
 
     expect(screen.getByText("add")).toBeInTheDocument();
     expect(screen.getByText("Add another list")).toBeInTheDocument();
   });
 
   it("swaps to a down-arrow icon while a drag is in progress", () => {
-    renderWithProviders(<OpenForm onClick={jest.fn()}>Add another list</OpenForm>, {
+    renderWithProviders(<OpenForm onClick={vi.fn()}>Add another list</OpenForm>, {
       preloadedState: { app: { isDragging: true } },
     });
 
@@ -21,7 +21,7 @@ describe("OpenForm", () => {
   });
 
   it("calls onClick when clicked", async () => {
-    const onClick = jest.fn();
+    const onClick = vi.fn();
     const user = userEvent.setup();
     renderWithProviders(<OpenForm onClick={onClick}>Add list</OpenForm>);
 

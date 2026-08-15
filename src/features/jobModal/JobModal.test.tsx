@@ -1,3 +1,4 @@
+import type { Mock } from "vitest";
 import { screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { renderWithProviders } from "test-utils/render";
@@ -50,15 +51,15 @@ const openState = {
 
 describe("JobModal", () => {
   beforeEach(() => {
-    global.fetch = jest.fn(() => jsonResponse(job)) as unknown as jest.Mock;
+    global.fetch = vi.fn(() => jsonResponse(job)) as unknown as Mock;
   });
 
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
   it("renders nothing until the job has loaded", () => {
-    global.fetch = jest.fn(() => new Promise(() => {})) as unknown as jest.Mock;
+    global.fetch = vi.fn(() => new Promise(() => {})) as unknown as Mock;
     const { container } = renderWithProviders(<JobModal />, {
       preloadedState: openState,
     });
@@ -102,13 +103,13 @@ describe("JobModal", () => {
   });
 
   it("submits the changed job and closes the modal", async () => {
-    global.fetch = jest.fn((input: RequestInfo | URL) => {
+    global.fetch = vi.fn((input: RequestInfo | URL) => {
       const url = typeof input === "string" ? input : (input as Request).url;
       if (url.includes("/api/jobs/job-1")) {
         return jsonResponse({ message: "Updated", boardID: "board-1" });
       }
       return jsonResponse(job);
-    }) as jest.Mock;
+    }) as Mock;
 
     const user = userEvent.setup();
     const { store } = renderWithProviders(<JobModal />, {
@@ -121,7 +122,7 @@ describe("JobModal", () => {
     await user.click(screen.getByText("Submit"));
 
     await waitFor(() => expect(store.getState().modal.openModal).toBeNull());
-    const putCall = (global.fetch as jest.Mock).mock.calls.find(([input]) =>
+    const putCall = (global.fetch as Mock).mock.calls.find(([input]) =>
       (typeof input === "string" ? input : (input as Request).url).includes(
         "/api/jobs/job-1"
       )
@@ -131,13 +132,13 @@ describe("JobModal", () => {
   });
 
   it("deletes the card and job when the delete icon is clicked", async () => {
-    global.fetch = jest.fn((input: RequestInfo | URL) => {
+    global.fetch = vi.fn((input: RequestInfo | URL) => {
       const url = typeof input === "string" ? input : (input as Request).url;
       if (url.includes("/api/boards/cards/deleteCard/card-1")) {
         return jsonResponse({ message: "Deleted" });
       }
       return jsonResponse(job);
-    }) as jest.Mock;
+    }) as Mock;
 
     const user = userEvent.setup();
     renderWithProviders(<JobModal />, {
@@ -150,7 +151,7 @@ describe("JobModal", () => {
     await user.click(screen.getByTitle("DELETE"));
 
     await waitFor(() => {
-      const deleteCall = (global.fetch as jest.Mock).mock.calls.find(([input]) =>
+      const deleteCall = (global.fetch as Mock).mock.calls.find(([input]) =>
         (typeof input === "string" ? input : (input as Request).url).includes(
           "/api/boards/cards/deleteCard/card-1"
         )

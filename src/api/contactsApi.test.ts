@@ -1,3 +1,4 @@
+import type { Mock } from "vitest";
 import { makeTestStore } from "test-utils/testStore";
 import { contactsApi } from "./contactsApi";
 
@@ -25,27 +26,27 @@ describe("contactsApi", () => {
 
   it("fetches contacts for a board", async () => {
     const contacts = [{ _id: "c1", contactName: "Jamie" }];
-    global.fetch = jest.fn(() => jsonResponse(contacts)) as unknown as jest.Mock;
+    global.fetch = vi.fn(() => jsonResponse(contacts)) as unknown as Mock;
 
     const result = await store.dispatch(
       contactsApi.endpoints.getContacts.initiate({ boardID: "board-1" })
     );
 
     expect(result.data).toEqual(contacts);
-    const [request] = (global.fetch as jest.Mock).mock.calls[0];
+    const [request] = (global.fetch as Mock).mock.calls[0];
     expect(requestUrl(request)).toContain("/api/contacts/getAll/board-1");
   });
 
   it("deletes a contact by id", async () => {
-    global.fetch = jest.fn(() =>
+    global.fetch = vi.fn(() =>
       jsonResponse({ message: "Deleted" })
-    ) as unknown as jest.Mock;
+    ) as unknown as Mock;
 
     await store.dispatch(
       contactsApi.endpoints.deleteContact.initiate({ contactID: "c1" })
     );
 
-    const [request] = (global.fetch as jest.Mock).mock.calls[0];
+    const [request] = (global.fetch as Mock).mock.calls[0];
     expect(requestUrl(request)).toContain("/api/contacts/delete/c1");
     expect((request as Request).method).toBe("DELETE");
   });

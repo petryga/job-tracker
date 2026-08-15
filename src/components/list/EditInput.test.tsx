@@ -1,3 +1,4 @@
+import type { Mock } from "vitest";
 import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { renderWithProviders } from "test-utils/render";
@@ -20,21 +21,21 @@ const requestUrl = (input: unknown): string =>
 
 describe("EditInput", () => {
   beforeEach(() => {
-    global.fetch = jest.fn(() =>
+    global.fetch = vi.fn(() =>
       jsonResponse({ message: "Updated" })
-    ) as unknown as jest.Mock;
+    ) as unknown as Mock;
   });
 
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
   it("closes without saving when the title is unchanged on blur", async () => {
-    const setIsEditing = jest.fn();
+    const setIsEditing = vi.fn();
     const user = userEvent.setup();
     renderWithProviders(
       <EditInput
-        setListTitle={jest.fn()}
+        setListTitle={vi.fn()}
         setIsEditing={setIsEditing}
         listID="list-1"
         listTitle="To Do"
@@ -52,11 +53,11 @@ describe("EditInput", () => {
   });
 
   it("saves the new title on blur when it has changed", async () => {
-    const setIsEditing = jest.fn();
+    const setIsEditing = vi.fn();
     const user = userEvent.setup();
     renderWithProviders(
       <EditInput
-        setListTitle={jest.fn()}
+        setListTitle={vi.fn()}
         setIsEditing={setIsEditing}
         listID="list-1"
         listTitle="Backlog"
@@ -69,7 +70,7 @@ describe("EditInput", () => {
     await user.click(screen.getByDisplayValue("Backlog"));
     await user.tab();
 
-    const [request] = (global.fetch as jest.Mock).mock.calls[0];
+    const [request] = (global.fetch as Mock).mock.calls[0];
     expect(requestUrl(request)).toContain("/api/boards/lists/updateList/list-1");
     expect(JSON.parse(await (request as Request).text())).toEqual({
       title: "Backlog",
@@ -81,8 +82,8 @@ describe("EditInput", () => {
     const user = userEvent.setup();
     renderWithProviders(
       <EditInput
-        setListTitle={jest.fn()}
-        setIsEditing={jest.fn()}
+        setListTitle={vi.fn()}
+        setIsEditing={vi.fn()}
         listID="list-1"
         listTitle="Backlog"
         boardID="board-1"
@@ -96,12 +97,12 @@ describe("EditInput", () => {
   });
 
   it("calls setListTitle as the user types", async () => {
-    const setListTitle = jest.fn();
+    const setListTitle = vi.fn();
     const user = userEvent.setup();
     renderWithProviders(
       <EditInput
         setListTitle={setListTitle}
-        setIsEditing={jest.fn()}
+        setIsEditing={vi.fn()}
         listID="list-1"
         listTitle=""
         boardID="board-1"
