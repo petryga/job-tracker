@@ -62,7 +62,7 @@ export const ContactsTab = ({ formData, setFormData }: ContactsTabProps) => {
     <>
       <div className={styles.contactsContainer}>
         {formData.contacts.map((contact, index) => (
-          <div key={contact._id}>
+          <div key={index}>
             {CONTACTS_FIELDS.map(
               ({ name, label, type = "text", required }, i) => {
                 const isTextArea = type === "textarea";

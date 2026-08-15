@@ -30,6 +30,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "typecheck": "tsc --noEmit",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -45,6 +46,11 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/jest-dom": "^7.0.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.4",
+    "@types/jest": "^30.0.0",
     "@types/lodash": "^4.14.191",
     "@types/node": "^16.11.9",
     "@types/react": "^18.0.28",
