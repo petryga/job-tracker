@@ -12,6 +12,17 @@ import { ToastBar, Toaster } from "react-hot-toast";
 import store, { persistor } from "./store/store";
 import { disableReactDevTools } from "@fvilers/disable-react-devtools";
 import Icon from "@mui/material/Icon";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+
+// MUI v4's default palette (this app never set its own theme, so v9's
+// default palette swap from indigo to blue would otherwise be a visual
+// regression). Pinned here to keep the original look.
+const theme = createTheme({
+  palette: {
+    primary: { main: "#3f51b5" },
+    secondary: { main: "#f50057" },
+  },
+});
 
 window.React = React;
 
@@ -59,17 +70,21 @@ if (import.meta.env.PROD) {
 
 root.render(
   <Provider store={store}>
-    <PersistGate loading={null} persistor={persistor}>
-      <Router>
-        <Toaster position="bottom-left" toastOptions={TOAST_OPTIONS}>
-          {(toast) => <ToastBar toast={toast} style={{ maxWidth: "530px" }} />}
-        </Toaster>
+    <ThemeProvider theme={theme}>
+      <PersistGate loading={null} persistor={persistor}>
+        <Router>
+          <Toaster position="bottom-left" toastOptions={TOAST_OPTIONS}>
+            {(toast) => (
+              <ToastBar toast={toast} style={{ maxWidth: "530px" }} />
+            )}
+          </Toaster>
 
-        <Routes>
-          <Route path="/" element={<LoginPage />} />
-          <Route path="*" element={<App />} />
-        </Routes>
-      </Router>
-    </PersistGate>
+          <Routes>
+            <Route path="/" element={<LoginPage />} />
+            <Route path="*" element={<App />} />
+          </Routes>
+        </Router>
+      </PersistGate>
+    </ThemeProvider>
   </Provider>
 );
