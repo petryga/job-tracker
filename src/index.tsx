@@ -17,10 +17,31 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 // MUI v4's default palette (this app never set its own theme, so v9's
 // default palette swap from indigo to blue would otherwise be a visual
 // regression). Pinned here to keep the original look.
+//
+// This also restores Button's and Tabs' old default look: v4's Button
+// defaulted to color="default" (neutral grey), and v4's Tabs defaulted to
+// textColor="inherit" (selected tab stayed plain text, only the indicator
+// line showed selection). v5+ dropped color="default" and switched Tabs'
+// default textColor to "primary" - neither component in this app sets
+// those props explicitly, so both quietly started rendering in the theme's
+// primary color instead of staying neutral. Re-defaulting both back to
+// "inherit" restores the original appearance everywhere at once.
 const theme = createTheme({
   palette: {
     primary: { main: "#3f51b5" },
     secondary: { main: "#f50057" },
+  },
+  components: {
+    MuiButton: {
+      defaultProps: {
+        color: "inherit",
+      },
+    },
+    MuiTabs: {
+      defaultProps: {
+        textColor: "inherit",
+      },
+    },
   },
 });
 
