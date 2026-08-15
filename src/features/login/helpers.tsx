@@ -1,5 +1,5 @@
-import Icon from "@material-ui/core/Icon";
-import InputAdornment from "@material-ui/core/InputAdornment";
+import Icon from "@mui/material/Icon";
+import InputAdornment from "@mui/material/InputAdornment";
 import { Dispatch } from "react";
 import type { LoginInitialValues } from "./types";
 

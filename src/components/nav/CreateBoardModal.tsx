@@ -4,11 +4,11 @@ import { useDispatch } from "react-redux";
 import { CREATE_BOARD } from "utils/constants";
 import toast from "react-hot-toast";
 import { useCreateBoardMutation } from "api/boardApi";
-import Button from "@material-ui/core/Button";
+import Button from "@mui/material/Button";
 import styles from "./Nav.module.css";
-import TextField from "@material-ui/core/TextField";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import Icon from "@material-ui/core/Icon";
+import TextField from "@mui/material/TextField";
+import InputAdornment from "@mui/material/InputAdornment";
+import Icon from "@mui/material/Icon";
 import { SUGGESTIONS } from "features/homePage/helpers";
 import { closeModal } from "reducers/modalSlice";
 
@@ -55,7 +55,6 @@ export const CreateBoardModal = () => {
           <TextField
             name="boardTitle"
             margin="dense"
-            InputLabelProps={{ shrink: true }}
             className={styles.createInput}
             onChange={handleChange}
             value={boardTitle}
@@ -63,8 +62,9 @@ export const CreateBoardModal = () => {
             variant="outlined"
             label="Board name"
             autoFocus
-            InputProps={
-              boardTitle
+            slotProps={{
+              inputLabel: { shrink: true },
+              input: boardTitle
                 ? {
                     startAdornment: (
                       <InputAdornment
@@ -76,8 +76,8 @@ export const CreateBoardModal = () => {
                       </InputAdornment>
                     ),
                   }
-                : undefined
-            }
+                : undefined,
+            }}
           />
         </form>
 

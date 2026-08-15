@@ -1,7 +1,7 @@
 import { memo } from "react";
-import Icon from "@material-ui/core/Icon";
+import Icon from "@mui/material/Icon";
 import Textarea from "react-textarea-autosize";
-import Card from "@material-ui/core/Card";
+import Card from "@mui/material/Card";
 import styles from "./Form.module.css";
 import type { FormProps } from "./types";
 import { getPlaceholder } from "./helpers";

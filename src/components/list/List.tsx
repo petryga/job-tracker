@@ -2,15 +2,15 @@ import { useState } from "react";
 import FormCard from "../card/Card";
 import CreateNewEntry from "../form/CreateNewEntry";
 import { Draggable, Droppable } from "react-beautiful-dnd";
-import Icon from "@material-ui/core/Icon";
+import Icon from "@mui/material/Icon";
 import type { ListComponentProps } from "./types";
 import { useParams } from "react-router-dom";
 import { EditInput } from "./EditInput";
 import { CONFIRM_DELETE } from "utils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { openModal, setModalProps } from "reducers/modalSlice";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 import { selectApp } from "reducers/appSlice";
 
 import styles from "./List.module.css";

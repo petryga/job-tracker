@@ -1,6 +1,6 @@
 import { ChangeEvent, Dispatch, FormEvent, MouseEvent, useState } from "react";
 import styles from "./EditableInput.module.css";
-import Icon from "@material-ui/core/Icon";
+import Icon from "@mui/material/Icon";
 import { useUpdateBoardMutation } from "api/boardApi";
 import type { BoardApi } from "features/boardPage/types";
 

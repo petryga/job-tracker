@@ -1,12 +1,12 @@
-import Icon from "@material-ui/core/Icon";
+import Icon from "@mui/material/Icon";
 import styles from "./Nav.module.css";
 import { CreateBoardModal } from "./CreateBoardModal";
 import { CONFIRM_DELETE, DELETE_USER } from "utils/constants";
 import { useDispatch } from "react-redux";
 import { openModal, setModalProps } from "reducers/modalSlice";
 import { useState } from "react";
-import MenuItem from "@material-ui/core/MenuItem";
-import Menu from "@material-ui/core/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import Menu from "@mui/material/Menu";
 import { DeleteModal } from "components/deleteModal/DeleteModal";
 import { handleLogout } from "features/homePage/helpers";
 

@@ -5,8 +5,8 @@ import {
   getAutocompleteProps,
   tabProps,
 } from "./helpers";
-import TextField from "@material-ui/core/TextField";
-import { Button, Tab, Tabs } from "@material-ui/core";
+import TextField from "@mui/material/TextField";
+import { Button, Tab, Tabs } from "@mui/material";
 import { TabPanel } from "components/tabPanel/TabPanel";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -32,7 +32,7 @@ export const LoginPage = () => {
   return (
     <div className={styles.root}>
       <form onSubmit={handleSubmit}>
-        <Tabs variant="fullWidth" value={tabIndex} TabIndicatorProps={tabProps}>
+        <Tabs variant="fullWidth" value={tabIndex} slotProps={{ indicator: tabProps }}>
           <Tab label="Login" onClick={() => setTabIndex(0)} />
           <Tab label="Sign up" onClick={() => setTabIndex(1)} />
         </Tabs>
@@ -48,7 +48,6 @@ export const LoginPage = () => {
 
               return (
                 <TextField
-                  InputLabelProps={{ shrink: true }}
                   margin="dense"
                   variant="outlined"
                   autoComplete={autocomplete}
@@ -60,11 +59,12 @@ export const LoginPage = () => {
                   required={required}
                   onChange={handleChange}
                   value={formData[name as keyof typeof formData]}
-                  InputProps={
-                    isPasswordWithData
+                  slotProps={{
+                    inputLabel: { shrink: true },
+                    input: isPasswordWithData
                       ? PasswordIcon(visible, setVisible)
-                      : undefined
-                  }
+                      : undefined,
+                  }}
                 />
               );
             })}

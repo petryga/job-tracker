@@ -1,14 +1,14 @@
 import { Link } from "react-router-dom";
 import styles from "./Header.module.css";
-import Icon from "@material-ui/core/Icon";
+import Icon from "@mui/material/Icon";
 import { openModal, setModalProps } from "reducers/modalSlice";
 import { CHART_MODAL, CONFIRM_DELETE, DELETE_BOARD } from "utils/constants";
 import { useDispatch } from "react-redux";
 import { EditableInput } from "components/editableInput/EditableInput";
 import { useState } from "react";
 import type { BoardApi } from "features/boardPage/types";
-import MenuItem from "@material-ui/core/MenuItem";
-import Menu from "@material-ui/core/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import Menu from "@mui/material/Menu";
 
 export const Header = ({
   title,

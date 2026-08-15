@@ -4,14 +4,14 @@ import CreateNewEntry from "components/form/CreateNewEntry";
 import { DragDropContext, DropResult, Droppable } from "react-beautiful-dnd";
 import { Link, useParams } from "react-router-dom";
 import { JobModal } from "../jobModal/JobModal";
-import Button from "@material-ui/core/Button";
+import Button from "@mui/material/Button";
 import { useGetBoardByIdQuery, useUpdateBoardMutation } from "api/boardApi";
 import { DeleteModal } from "components/deleteModal/DeleteModal";
 import { useDispatch, useSelector } from "react-redux";
 import { dragHappened, selectApp, updateState } from "reducers/appSlice";
 import { Header } from "components/header/Header";
 import { tabProps } from "./helpers";
-import { Tab, Tabs } from "@material-ui/core";
+import { Tab, Tabs } from "@mui/material";
 import { TabPanel } from "components/tabPanel/TabPanel";
 import { useState } from "react";
 import { ContactsPage } from "features/contactsPage/ContactsPage";
@@ -83,7 +83,7 @@ export const Board = (): JSX.Element => {
           <Tabs
             variant="fullWidth"
             value={tabIndex}
-            TabIndicatorProps={tabProps}
+            slotProps={{ indicator: tabProps }}
           >
             <Tab label="Board" onClick={() => setTabIndex(0)} />
             <Tab label="Contacts" onClick={() => setTabIndex(1)} />

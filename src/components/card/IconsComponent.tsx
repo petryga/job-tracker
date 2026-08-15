@@ -1,4 +1,4 @@
-import Icon from "@material-ui/core/Icon";
+import Icon from "@mui/material/Icon";
 import styles from "./Card.module.css";
 import type { IconsComponentProps, LikedIconComponentProps } from "./types";
 import { CONFIRM_DELETE } from "utils/constants";

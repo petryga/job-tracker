@@ -1,4 +1,4 @@
-import TextField from "@material-ui/core/TextField";
+import TextField from "@mui/material/TextField";
 import {
   ChangeEvent,
   FormEvent,
@@ -20,11 +20,11 @@ import {
   openLink,
 } from "./helpers";
 import { closeModal, selectModal } from "reducers/modalSlice";
-import InputAdornment from "@material-ui/core/InputAdornment";
+import InputAdornment from "@mui/material/InputAdornment";
 import { JOB_SEARCH } from "utils/constants";
 import { JobModalTitle } from "./JobModalTitle";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
 import { TabPanel } from "../../components/tabPanel/TabPanel";
 import { ContactsTab } from "./ContactsTab";
 import styles from "./JobModal.module.css";
@@ -33,7 +33,7 @@ import { useLazyGetJobQuery, useUpdateJobMutation } from "api/jobsApi";
 import { toast } from "react-hot-toast";
 import type { Job } from "./types";
 import { useDeleteCardMutation } from "api/boardApi";
-import { Button, MenuItem } from "@material-ui/core";
+import { Button, MenuItem } from "@mui/material";
 
 export const JobModal = () => {
   const dispatch = useDispatch();
@@ -168,7 +168,7 @@ export const JobModal = () => {
                   if (options) {
                     return (
                       <TextField
-                        InputLabelProps={{ shrink: true }}
+                        slotProps={{ inputLabel: { shrink: true } }}
                         key={name}
                         style={style}
                         name={name}
@@ -191,7 +191,6 @@ export const JobModal = () => {
                   if (name !== Fields.link) {
                     return (
                       <TextField
-                        InputLabelProps={{ shrink: true }}
                         key={name}
                         style={style}
                         name={name}
@@ -207,8 +206,9 @@ export const JobModal = () => {
                         onBlur={() =>
                           handleFormatSalary(name, formData, setFormData)
                         }
-                        InputProps={
-                          icon
+                        slotProps={{
+                          inputLabel: { shrink: true },
+                          input: icon
                             ? {
                                 startAdornment: (
                                   <InputAdornment position="start">
@@ -216,15 +216,14 @@ export const JobModal = () => {
                                   </InputAdornment>
                                 ),
                               }
-                            : undefined
-                        }
+                            : undefined,
+                        }}
                       />
                     );
                   }
 
                   return (
                     <TextField
-                      InputLabelProps={{ shrink: true }}
                       key={name}
                       className={styles.linkInput}
                       style={style}
@@ -236,8 +235,9 @@ export const JobModal = () => {
                       value={formData[name as keyof typeof formData]}
                       onChange={handleChange}
                       error={isError}
-                      InputProps={
-                        !!formData[Fields.link]
+                      slotProps={{
+                        inputLabel: { shrink: true },
+                        input: !!formData[Fields.link]
                           ? {
                               endAdornment: (
                                 <InputAdornment position="end">
@@ -254,8 +254,8 @@ export const JobModal = () => {
                                 </InputAdornment>
                               ),
                             }
-                          : undefined
-                      }
+                          : undefined,
+                      }}
                     />
                   );
                 }

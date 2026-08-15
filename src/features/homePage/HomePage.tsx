@@ -1,7 +1,7 @@
 import { Nav } from "components/nav/Nav";
 import { useGetBoardsQuery } from "api/boardApi";
 import styles from "./HomePage.module.css";
-import Button from "@material-ui/core/Button";
+import Button from "@mui/material/Button";
 import { openModal } from "reducers/modalSlice";
 import { CREATE_BOARD } from "utils/constants";
 import { useDispatch } from "react-redux";

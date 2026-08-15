@@ -3,7 +3,7 @@ import styles from "./ContactsPage.module.css";
 import { useDispatch } from "react-redux";
 import { openModal, setModalProps } from "reducers/modalSlice";
 import { CONFIRM_DELETE, DELETE_CONTACT } from "utils/constants";
-import { Icon, Menu, MenuItem } from "@material-ui/core";
+import { Icon, Menu, MenuItem } from "@mui/material";
 import { useState } from "react";
 
 const ContactCard = ({ contact }: { contact: Contact }) => {

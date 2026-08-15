@@ -4,9 +4,9 @@ import {
   CONTACTS_FIELDS_INITIAL_VALUES,
   getWidth,
 } from "./helpers";
-import TextField from "@material-ui/core/TextField";
+import TextField from "@mui/material/TextField";
 import type { Contact, ContactsTabProps } from "./types";
-import { Button } from "@material-ui/core";
+import { Button } from "@mui/material";
 
 import styles from "./JobModal.module.css";
 
@@ -70,7 +70,7 @@ export const ContactsTab = ({ formData, setFormData }: ContactsTabProps) => {
 
                 return (
                   <TextField
-                    InputLabelProps={{ shrink: true }}
+                    slotProps={{ inputLabel: { shrink: true } }}
                     key={i}
                     style={{ width }}
                     className={styles.contactsInput}
