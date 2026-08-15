@@ -20,7 +20,7 @@ import { isDragging } from "reducers/appSlice";
 import { ChartModal } from "features/chartModal/ChartModal";
 import styles from "./Board.module.css";
 
-export const Board = (): JSX.Element => {
+export const Board = () => {
   const { boardID = "" } = useParams();
   const { boards, isDragFinished } = useSelector(selectApp);
   const boardState = boards[boardID];
