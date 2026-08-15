@@ -69,22 +69,24 @@ if (import.meta.env.PROD) {
 }
 
 root.render(
-  <Provider store={store}>
-    <ThemeProvider theme={theme}>
-      <PersistGate loading={null} persistor={persistor}>
-        <Router>
-          <Toaster position="bottom-left" toastOptions={TOAST_OPTIONS}>
-            {(toast) => (
-              <ToastBar toast={toast} style={{ maxWidth: "530px" }} />
-            )}
-          </Toaster>
+  <React.StrictMode>
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <PersistGate loading={null} persistor={persistor}>
+          <Router>
+            <Toaster position="bottom-left" toastOptions={TOAST_OPTIONS}>
+              {(toast) => (
+                <ToastBar toast={toast} style={{ maxWidth: "530px" }} />
+              )}
+            </Toaster>
 
-          <Routes>
-            <Route path="/" element={<LoginPage />} />
-            <Route path="*" element={<App />} />
-          </Routes>
-        </Router>
-      </PersistGate>
-    </ThemeProvider>
-  </Provider>
+            <Routes>
+              <Route path="/" element={<LoginPage />} />
+              <Route path="*" element={<App />} />
+            </Routes>
+          </Router>
+        </PersistGate>
+      </ThemeProvider>
+    </Provider>
+  </React.StrictMode>
 );

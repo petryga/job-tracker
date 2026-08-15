@@ -1,4 +1,4 @@
-import { DraggableLocation, TypeId } from "react-beautiful-dnd";
+import { DraggableLocation, TypeId } from "@hello-pangea/dnd";
 
 export interface DragPayload {
   source: DraggableLocation;

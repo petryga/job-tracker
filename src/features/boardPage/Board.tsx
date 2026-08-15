@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import FormList from "components/list/List";
 import CreateNewEntry from "components/form/CreateNewEntry";
-import { DragDropContext, DropResult, Droppable } from "react-beautiful-dnd";
+import { DragDropContext, DropResult, Droppable } from "@hello-pangea/dnd";
 import { Link, useParams } from "react-router-dom";
 import { JobModal } from "../jobModal/JobModal";
 import Button from "@mui/material/Button";

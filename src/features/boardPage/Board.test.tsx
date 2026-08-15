@@ -4,7 +4,7 @@ import userEvent from "@testing-library/user-event";
 import { renderWithProviders } from "test-utils/render";
 import Board from "./Board";
 
-vi.mock("react-beautiful-dnd", () => import("test-utils/rbdMock"));
+vi.mock("@hello-pangea/dnd", () => import("test-utils/rbdMock"));
 
 const jsonResponse = (body: unknown) =>
   Promise.resolve({

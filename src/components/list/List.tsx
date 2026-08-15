@@ -1,7 +1,7 @@
 import { useState } from "react";
 import FormCard from "../card/Card";
 import CreateNewEntry from "../form/CreateNewEntry";
-import { Draggable, Droppable } from "react-beautiful-dnd";
+import { Draggable, Droppable } from "@hello-pangea/dnd";
 import Icon from "@mui/material/Icon";
 import type { ListComponentProps } from "./types";
 import { useParams } from "react-router-dom";

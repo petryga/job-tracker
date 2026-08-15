@@ -5,7 +5,7 @@ import { renderWithProviders } from "test-utils/render";
 import FormCard from "./Card";
 import type { BoardApi, Card as CardType } from "features/boardPage/types";
 
-vi.mock("react-beautiful-dnd", () => import("test-utils/rbdMock"));
+vi.mock("@hello-pangea/dnd", () => import("test-utils/rbdMock"));
 
 const jsonResponse = (body: unknown) =>
   Promise.resolve({
