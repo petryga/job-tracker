@@ -4,14 +4,12 @@ import {
   useDeleteListMutation,
 } from "api/boardApi";
 import { useDeleteContactMutation } from "api/contactsApi";
-import { useDeleteUserMutation } from "api/userApi";
-import { handleLogout } from "features/homePage/helpers";
 import { useCallback } from "react";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { closeModal, selectModal } from "reducers/modalSlice";
-import { DELETE_BOARD, DELETE_CONTACT, DELETE_USER } from "utils/constants";
+import { DELETE_BOARD, DELETE_CONTACT } from "utils/constants";
 
 const useHandleSubmit = () => {
   const { boardID = "" } = useParams();
@@ -20,26 +18,12 @@ const useHandleSubmit = () => {
   const [deleteCard] = useDeleteCardMutation();
   const [deleteBoard] = useDeleteBoardMutation();
   const [deleteList] = useDeleteListMutation();
-  const [deleteUser] = useDeleteUserMutation();
   const [deleteContact] = useDeleteContactMutation();
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleSubmit = useCallback(() => {
-    if (name === DELETE_USER) {
-      return deleteUser()
-        .unwrap()
-        .then(() => {
-          dispatch(closeModal());
-          handleLogout();
-          toast.success("User deleted successfully");
-        })
-        .catch((err) => {
-          toast.error(err.data.message);
-        });
-    }
-
     if (name === DELETE_CONTACT && contactID) {
       return deleteContact({ contactID })
         .unwrap()
@@ -98,7 +82,6 @@ const useHandleSubmit = () => {
     deleteCard,
     deleteContact,
     deleteList,
-    deleteUser,
     dispatch,
     listID,
     name,

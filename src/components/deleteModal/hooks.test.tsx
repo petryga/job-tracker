@@ -3,8 +3,7 @@ import { act, screen, waitFor } from "@testing-library/react";
 import toast from "react-hot-toast";
 import { renderHookWithProviders } from "test-utils/renderHook";
 import useHandleSubmit from "./hooks";
-import { supabase } from "lib/supabaseClient";
-import { DELETE_BOARD, DELETE_CONTACT, DELETE_USER } from "utils/constants";
+import { DELETE_BOARD, DELETE_CONTACT } from "utils/constants";
 
 const jsonResponse = (body: unknown, init: Partial<Response> = {}) =>
   Promise.resolve({
@@ -20,50 +19,13 @@ const jsonResponse = (body: unknown, init: Partial<Response> = {}) =>
   } as Response);
 
 describe("useHandleSubmit", () => {
-  const originalLocation = window.location;
-  const reload = vi.fn();
-
   beforeEach(() => {
-    localStorage.setItem("userId", "user-1");
     vi.spyOn(toast, "success").mockImplementation(() => "");
     vi.spyOn(toast, "error").mockImplementation(() => "");
-    Object.defineProperty(window, "location", {
-      configurable: true,
-      value: { ...originalLocation, reload },
-    });
   });
 
   afterEach(() => {
     vi.restoreAllMocks();
-    localStorage.clear();
-    reload.mockClear();
-    Object.defineProperty(window, "location", {
-      configurable: true,
-      value: originalLocation,
-    });
-  });
-
-  it("deletes the user, logs out and closes the modal", async () => {
-    global.fetch = vi.fn(() =>
-      jsonResponse({ message: "User deleted" })
-    ) as unknown as Mock;
-
-    const { result, store } = renderHookWithProviders(() => useHandleSubmit(), {
-      preloadedState: {
-        modal: { modalProps: { id: "", listID: "", name: DELETE_USER, contactID: "" } },
-      },
-    });
-
-    await act(async () => {
-      await result.current();
-    });
-
-    expect(global.fetch).toHaveBeenCalledWith(
-      expect.objectContaining({ url: expect.stringContaining("/api/users/me") })
-    );
-    expect(store.getState().modal.openModal).toBeNull();
-    expect(supabase!.auth.signOut).toHaveBeenCalled();
-    expect(reload).toHaveBeenCalled();
   });
 
   it("deletes a contact and closes the modal", async () => {

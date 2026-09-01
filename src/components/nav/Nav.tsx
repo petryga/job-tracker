@@ -1,9 +1,6 @@
 import Icon from "@mui/material/Icon";
 import styles from "./Nav.module.css";
 import { CreateBoardModal } from "./CreateBoardModal";
-import { CONFIRM_DELETE, DELETE_USER } from "utils/constants";
-import { useDispatch } from "react-redux";
-import { openModal, setModalProps } from "reducers/modalSlice";
 import { useState } from "react";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
@@ -11,7 +8,6 @@ import { DeleteModal } from "components/deleteModal/DeleteModal";
 import { handleLogout } from "features/homePage/helpers";
 
 export const Nav = () => {
-  const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
@@ -21,12 +17,6 @@ export const Nav = () => {
 
   const handleClose = () => {
     setAnchorEl(null);
-  };
-
-  const openDeleteModal = () => {
-    handleClose();
-    dispatch(openModal(CONFIRM_DELETE));
-    dispatch(setModalProps({ name: DELETE_USER }));
   };
 
   return (
@@ -43,7 +33,6 @@ export const Nav = () => {
           open={open}
           onClose={handleClose}
         >
-          <MenuItem onClick={openDeleteModal}>Delete User</MenuItem>
           <MenuItem onClick={handleLogout}>Logout</MenuItem>
         </Menu>
       </div>

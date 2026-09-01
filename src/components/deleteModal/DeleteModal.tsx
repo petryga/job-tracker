@@ -1,12 +1,7 @@
 import { ModalComponent } from "components/modal/Modal";
 import { useSelector } from "react-redux";
 import { selectModal } from "reducers/modalSlice";
-import {
-  CONFIRM_DELETE,
-  DELETE_BOARD,
-  DELETE_CONTACT,
-  DELETE_USER,
-} from "utils/constants";
+import { CONFIRM_DELETE, DELETE_BOARD, DELETE_CONTACT } from "utils/constants";
 import useHandleSubmit from "./hooks";
 import { useState } from "react";
 import styles from "./DeleteModal.module.css";
@@ -24,8 +19,6 @@ export const DeleteModal = () => {
       ? "Delete Board?"
       : name === DELETE_CONTACT
       ? "Delete Contact?"
-      : name === DELETE_USER
-      ? "Delete User?"
       : cardID
       ? "Delete Card?"
       : "Delete List?";

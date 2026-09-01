@@ -3,12 +3,7 @@ import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { renderWithProviders } from "test-utils/render";
 import { DeleteModal } from "./DeleteModal";
-import {
-  CONFIRM_DELETE,
-  DELETE_BOARD,
-  DELETE_CONTACT,
-  DELETE_USER,
-} from "utils/constants";
+import { CONFIRM_DELETE, DELETE_BOARD, DELETE_CONTACT } from "utils/constants";
 
 const jsonResponse = (body: unknown) =>
   Promise.resolve({
@@ -56,18 +51,6 @@ describe("DeleteModal", () => {
     });
     expect(screen.getByText("Delete Contact?")).toBeInTheDocument();
     expect(screen.getByText("This won't delete the contact from the job")).toBeInTheDocument();
-  });
-
-  it("titles itself for a user deletion", () => {
-    renderWithProviders(<DeleteModal />, {
-      preloadedState: {
-        modal: {
-          openModal: CONFIRM_DELETE,
-          modalProps: { id: "", listID: "", name: DELETE_USER, contactID: "" },
-        },
-      },
-    });
-    expect(screen.getByText("Delete User?")).toBeInTheDocument();
   });
 
   it("titles itself for a card deletion when a card id is set", () => {

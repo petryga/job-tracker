@@ -15,7 +15,6 @@ API: **[job-tracker-api](https://github.com/petryga/job-tracker-api)**
   status, link with a "visit" action, free-text description
 - **Contacts** — a tab on each job card plus a per-board contacts view
 - **Pie chart** of applications by column, per board
-- **Account** — self-service "delete everything I own"
 - Auth via Supabase; runs in a no-auth local mode when Supabase isn't configured
 
 ## Stack
@@ -27,7 +26,7 @@ API: **[job-tracker-api](https://github.com/petryga/job-tracker-api)**
 | UI | MUI, Emotion, `@hello-pangea/dnd` for drag-and-drop |
 | Auth | `@supabase/supabase-js` |
 | Notifications | `react-hot-toast` |
-| Tests | Vitest + Testing Library (jsdom) — ~200 tests |
+| Tests | Vitest + Testing Library (jsdom) — ~210 tests |
 | CI | GitHub Actions — lint, typecheck, tests, production build |
 
 ## Architecture
@@ -38,7 +37,7 @@ src/
                    contactsPage, chartModal, login, auth) — component + helpers + tests
   components/      shared UI (nav, header, card, list, form, modal, tab panel)
   api/             RTK Query — apiSlice (base query + auth header) plus
-                   boardApi / jobsApi / contactsApi / userApi injected onto it
+                   boardApi / jobsApi / contactsApi injected onto it
   reducers/        local UI slices (modal, drag state)
   lib/             supabaseClient
   store/store.ts   Redux store: API slice + UI slices, persisted
@@ -54,7 +53,7 @@ large vendors (Supabase, MUI, React) are split into cacheable chunks.
 
 ```mermaid
 flowchart TD
-  UI["feature pages<br/>boards · job modal · contacts · chart"] --> RTK["RTK Query — apiSlice + boardApi/jobsApi/contactsApi/userApi"]
+  UI["feature pages<br/>boards · job modal · contacts · chart"] --> RTK["RTK Query — apiSlice + boardApi/jobsApi/contactsApi"]
   RTK --> STORE[("Redux store (persisted)")]
   STORE --> UI
   RTK -->|"fetch + Bearer token"| API["job-tracker-api"]

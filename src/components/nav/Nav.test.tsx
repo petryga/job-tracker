@@ -28,25 +28,14 @@ describe("Nav", () => {
     expect(screen.getByText("Job Application Tracker")).toBeInTheDocument();
   });
 
-  it("opens the menu with delete-user and logout options", async () => {
+  it("opens the menu with a logout option", async () => {
     const user = userEvent.setup();
     renderWithProviders(<Nav />);
 
     await user.click(screen.getByText("power_settings_new"));
 
-    expect(screen.getByText("Delete User")).toBeInTheDocument();
     expect(screen.getByText("Logout")).toBeInTheDocument();
-  });
-
-  it("opens the delete-user confirmation from the menu", async () => {
-    const user = userEvent.setup();
-    const { store } = renderWithProviders(<Nav />);
-
-    await user.click(screen.getByText("power_settings_new"));
-    await user.click(screen.getByText("Delete User"));
-
-    expect(store.getState().modal.openModal).toBe("confirmDelete");
-    expect(store.getState().modal.modalProps.name).toBe(" deleteUser");
+    expect(screen.queryByText("Delete User")).not.toBeInTheDocument();
   });
 
   it("logs out and reloads when Logout is clicked", async () => {
