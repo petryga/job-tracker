@@ -4,6 +4,7 @@ import Form from "./Form";
 import OpenForm from "./OpenForm";
 import type { CreateProps } from "./types";
 import { useParams } from "react-router-dom";
+import toast from "react-hot-toast";
 import { useAddCardMutation, useAddListMutation } from "api/boardApi";
 
 export const CreateNewEntry = ({ list, listID, board }: CreateProps) => {
@@ -29,11 +30,12 @@ export const CreateNewEntry = ({ list, listID, board }: CreateProps) => {
   const handleAddList = () => {
     if (boardID && text) {
       addList({ title: text, boardID })
+        .unwrap()
         .then(() => {
           setText("");
         })
         .catch((err) => {
-          console.log(err);
+          toast.error(err?.data?.message || "Couldn't add the list");
         });
     }
   };
@@ -46,7 +48,7 @@ export const CreateNewEntry = ({ list, listID, board }: CreateProps) => {
           setText("");
         })
         .catch((err) => {
-          console.log(err);
+          toast.error(err?.data?.message || "Couldn't add the card");
         });
     }
   };

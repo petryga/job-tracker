@@ -11,7 +11,6 @@ import { LoginPage } from "features/login/LoginPage";
 import { AuthProvider } from "features/auth/AuthContext";
 import { ToastBar, Toaster } from "react-hot-toast";
 import store, { persistor } from "./store/store";
-import { disableReactDevTools } from "@fvilers/disable-react-devtools";
 import Icon from "@mui/material/Icon";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 
@@ -45,8 +44,6 @@ const theme = createTheme({
     },
   },
 });
-
-window.React = React;
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -87,10 +84,6 @@ const TOAST_OPTIONS = {
     },
   },
 };
-
-if (import.meta.env.PROD) {
-  disableReactDevTools();
-}
 
 root.render(
   <React.StrictMode>

@@ -12,27 +12,6 @@ export const contactsApi = apiSlice.injectEndpoints({
       providesTags: (result) => providesList(result, CONTACT),
     }),
 
-    // getContact: builder.query<Contact, { id: string }>({
-    //   query: ({ id }) => ({
-    //     url: `/api/contacts/getOne/${id}`,
-    //     method: "GET",
-    //   }),
-    //   providesTags: (_result, _error, id) => [{ type: CONTACT, id }],
-    // }),
-
-    // updateContact: builder.mutation({
-    //   query: (data) => ({
-    //     url: `/api/contacts/update/${data.id}`,
-    //     method: "PUT",
-    //     body: data,
-    //   }),
-    //   invalidatesTags: (result, _err, arg) => [
-    //     { type: CONTACT, id: result._id },
-    //     { type: CONTACT, id: LIST },
-    //     { type: JOB_TAG, id: arg.contact.jobID },
-    //   ],
-    // }),
-
     deleteContact: builder.mutation({
       query: ({ contactID }) => ({
         url: `/api/contacts/delete/${contactID}`,
@@ -43,9 +22,4 @@ export const contactsApi = apiSlice.injectEndpoints({
   }),
 });
 
-export const {
-  useGetContactsQuery,
-  // useGetContactQuery,
-  // useUpdateContactMutation,
-  useDeleteContactMutation,
-} = contactsApi;
+export const { useGetContactsQuery, useDeleteContactMutation } = contactsApi;

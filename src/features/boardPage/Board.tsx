@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import FormList from "components/list/List";
 import CreateNewEntry from "components/form/CreateNewEntry";
 import { DragDropContext, DropResult, Droppable } from "@hello-pangea/dnd";
@@ -8,15 +8,18 @@ import Button from "@mui/material/Button";
 import { useGetBoardByIdQuery, useUpdateBoardMutation } from "api/boardApi";
 import { DeleteModal } from "components/deleteModal/DeleteModal";
 import { useDispatch, useSelector } from "react-redux";
-import { dragHappened, selectApp, updateState } from "reducers/appSlice";
+import {
+  dragHappened,
+  isDragging,
+  selectApp,
+  updateState,
+} from "reducers/appSlice";
 import { Header } from "components/header/Header";
 import { tabProps } from "./helpers";
 import { Tab, Tabs } from "@mui/material";
 import { TabPanel } from "components/tabPanel/TabPanel";
-import { useState } from "react";
 import { ContactsPage } from "features/contactsPage/ContactsPage";
 import { useGetContactsQuery } from "api/contactsApi";
-import { isDragging } from "reducers/appSlice";
 import { ChartModal } from "features/chartModal/ChartModal";
 import styles from "./Board.module.css";
 

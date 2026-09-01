@@ -1,4 +1,5 @@
 import { ChangeEvent, Dispatch, FormEvent, MouseEvent, useState } from "react";
+import toast from "react-hot-toast";
 import styles from "./EditableInput.module.css";
 import Icon from "@mui/material/Icon";
 import { useUpdateBoardMutation } from "api/boardApi";
@@ -26,10 +27,13 @@ export const EditableInput = ({
     e.preventDefault();
     if (id && boardTitle) {
       updateBoard({ id, data: { title: boardTitle } })
+        .unwrap()
         .then(() => {
           setEditTitle(false);
         })
-        .catch((error) => console.log(error));
+        .catch((err) => {
+          toast.error(err?.data?.message || "Couldn't rename the board");
+        });
     }
   };
 
