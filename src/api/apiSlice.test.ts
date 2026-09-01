@@ -1,5 +1,6 @@
 import type { Mock } from "vitest";
 import { makeTestStore } from "test-utils/testStore";
+import { getAccessToken } from "lib/supabaseClient";
 import { apiSlice } from "./apiSlice";
 
 const jsonResponse = (body: unknown) =>
@@ -24,12 +25,12 @@ const testApi = apiSlice.injectEndpoints({
 
 describe("apiSlice", () => {
   afterEach(() => {
-    localStorage.clear();
+    vi.mocked(getAccessToken).mockReset();
     vi.restoreAllMocks();
   });
 
-  it("attaches a bearer token header when one is stored", async () => {
-    localStorage.setItem("token", "abc123");
+  it("attaches a bearer token header from the Supabase session", async () => {
+    vi.mocked(getAccessToken).mockResolvedValue("abc123");
     global.fetch = vi.fn(() => jsonResponse({})) as unknown as Mock;
 
     const store = makeTestStore();
@@ -39,7 +40,8 @@ describe("apiSlice", () => {
     expect((request as Request).headers.get("authorization")).toBe("Bearer abc123");
   });
 
-  it("omits the authorization header when there is no token", async () => {
+  it("omits the authorization header when there is no session", async () => {
+    vi.mocked(getAccessToken).mockResolvedValue(null);
     global.fetch = vi.fn(() => jsonResponse({})) as unknown as Mock;
 
     const store = makeTestStore();

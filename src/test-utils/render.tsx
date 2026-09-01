@@ -6,6 +6,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import modalSlice from "reducers/modalSlice";
 import appSlice from "reducers/appSlice";
 import { apiSlice } from "api/apiSlice";
+import { AuthProvider } from "features/auth/AuthContext";
 import type { InitialState, ModalState } from "reducers/types";
 import { appInitialState, modalInitialState } from "reducers/helpers";
 
@@ -41,11 +42,13 @@ export const renderWithProviders = (
 
   const utils = render(
     <Provider store={store}>
-      <MemoryRouter initialEntries={[route]}>
-        <Routes>
-          <Route path={path} element={ui} />
-        </Routes>
-      </MemoryRouter>
+      <AuthProvider>
+        <MemoryRouter initialEntries={[route]}>
+          <Routes>
+            <Route path={path} element={ui} />
+          </Routes>
+        </MemoryRouter>
+      </AuthProvider>
     </Provider>
   );
 

@@ -76,7 +76,6 @@ describe("CreateNewEntry", () => {
 
   it("opens the form and submits a new card for a given list", async () => {
     const user = userEvent.setup();
-    localStorage.setItem("userId", "user-1");
     const boardWithList: BoardApi = {
       ...emptyBoard,
       lists: [{ _id: "list-1", title: "To Do", cards: [] }],
@@ -97,7 +96,6 @@ describe("CreateNewEntry", () => {
       boardID: "board-1",
       text: "Write tests",
       isJobSearchBoard: false,
-      userId: "user-1",
     });
   });
 

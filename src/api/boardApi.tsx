@@ -2,24 +2,22 @@ import { BoardApi } from "features/boardPage/types";
 import { providesList } from "./helpers";
 import { BOARD_TAG, LIST, apiSlice } from "./apiSlice";
 
-interface GetBoardsQueryArgs {
-  userId: string;
-}
-
 export const boardApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     createBoard: builder.mutation({
-      query: ({ title, userId }) => ({
+      query: ({ title }) => ({
         url: "/api/boards/create",
         method: "POST",
-        body: { title, userId },
+        body: { title },
       }),
       invalidatesTags: [{ type: BOARD_TAG, id: LIST }],
     }),
 
-    getBoards: builder.query<BoardApi[], GetBoardsQueryArgs>({
-      query: ({ userId }) => ({
-        url: `/api/boards/getAll/${userId}`,
+    // The API scopes boards to the authenticated user (Supabase JWT); no id in
+    // the URL.
+    getBoards: builder.query<BoardApi[], void>({
+      query: () => ({
+        url: `/api/boards/getAll`,
         method: "GET",
       }),
       providesTags: (result) => providesList(result, BOARD_TAG),

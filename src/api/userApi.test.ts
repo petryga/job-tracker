@@ -24,47 +24,15 @@ describe("userApi", () => {
     store = makeTestStore();
   });
 
-  it("posts registration data", async () => {
+  it("deletes the caller's account data via DELETE /api/users/me", async () => {
     global.fetch = vi.fn(() =>
-      jsonResponse({ message: "Registered" })
+      jsonResponse({ message: "Account data deleted" })
     ) as unknown as Mock;
 
-    await store.dispatch(
-      userApi.endpoints.registerUser.initiate({
-        data: { email: "a@b.com", password: "secret", name: "Ada" },
-      })
-    );
+    await store.dispatch(userApi.endpoints.deleteUser.initiate());
 
     const [request] = (global.fetch as Mock).mock.calls[0];
-    expect(requestUrl(request)).toContain("/api/users/register");
-    expect((request as Request).method).toBe("POST");
-  });
-
-  it("posts login credentials", async () => {
-    global.fetch = vi.fn(() =>
-      jsonResponse({ token: "tok" })
-    ) as unknown as Mock;
-
-    await store.dispatch(
-      userApi.endpoints.loginUser.initiate({
-        data: { email: "a@b.com", password: "secret" },
-      })
-    );
-
-    const [request] = (global.fetch as Mock).mock.calls[0];
-    expect(requestUrl(request)).toContain("/api/users/login");
-    expect((request as Request).method).toBe("POST");
-  });
-
-  it("deletes a user by id", async () => {
-    global.fetch = vi.fn(() =>
-      jsonResponse({ message: "Deleted" })
-    ) as unknown as Mock;
-
-    await store.dispatch(userApi.endpoints.deleteUser.initiate({ userId: "user-1" }));
-
-    const [request] = (global.fetch as Mock).mock.calls[0];
-    expect(requestUrl(request)).toContain("/api/users/delete/user-1");
+    expect(requestUrl(request)).toContain("/api/users/me");
     expect((request as Request).method).toBe("DELETE");
   });
 });

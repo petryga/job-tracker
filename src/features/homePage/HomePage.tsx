@@ -8,14 +8,9 @@ import { useDispatch } from "react-redux";
 import BoardThumbnail from "./BoardThumbnail";
 
 const HomePage = () => {
-  const userId = localStorage.getItem("userId") || "";
   const dispatch = useDispatch();
 
-  const {
-    data: boards,
-    isFetching,
-    isLoading,
-  } = useGetBoardsQuery({ userId }, { skip: !userId });
+  const { data: boards, isFetching, isLoading } = useGetBoardsQuery();
 
   const isCreateAllowed = boards ? Object.keys(boards).length <= 9 : true;
 
@@ -40,7 +35,7 @@ const HomePage = () => {
         )}
       </div>
 
-      {!!boards?.length ? (
+      {boards?.length ? (
         boards.map((board) => (
           <div className={styles.thumbnails} key={board._id}>
             <BoardThumbnail title={board.title} id={board._id} />

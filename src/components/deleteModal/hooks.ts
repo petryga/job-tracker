@@ -14,7 +14,6 @@ import { closeModal, selectModal } from "reducers/modalSlice";
 import { DELETE_BOARD, DELETE_CONTACT, DELETE_USER } from "utils/constants";
 
 const useHandleSubmit = () => {
-  const userId = localStorage.getItem("userId") || "";
   const { boardID = "" } = useParams();
   const { modalProps } = useSelector(selectModal);
   const { id: cardID, listID, name, contactID } = modalProps || {};
@@ -28,8 +27,8 @@ const useHandleSubmit = () => {
   const navigate = useNavigate();
 
   const handleSubmit = useCallback(() => {
-    if (name === DELETE_USER && userId) {
-      return deleteUser({ userId })
+    if (name === DELETE_USER) {
+      return deleteUser()
         .unwrap()
         .then(() => {
           dispatch(closeModal());
@@ -104,7 +103,6 @@ const useHandleSubmit = () => {
     listID,
     name,
     navigate,
-    userId,
   ]);
 
   return handleSubmit;

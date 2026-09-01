@@ -8,6 +8,7 @@ import "@fontsource/roboto/500.css";
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { LoginPage } from "features/login/LoginPage";
+import { AuthProvider } from "features/auth/AuthContext";
 import { ToastBar, Toaster } from "react-hot-toast";
 import store, { persistor } from "./store/store";
 import { disableReactDevTools } from "@fvilers/disable-react-devtools";
@@ -47,7 +48,9 @@ const theme = createTheme({
 
 window.React = React;
 
-let root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
+const root = ReactDOM.createRoot(
+  document.getElementById("root") as HTMLElement
+);
 
 const TOAST_OPTIONS = {
   duration: 100000,
@@ -94,18 +97,20 @@ root.render(
     <Provider store={store}>
       <ThemeProvider theme={theme}>
         <PersistGate loading={null} persistor={persistor}>
-          <Router>
-            <Toaster position="bottom-left" toastOptions={TOAST_OPTIONS}>
-              {(toast) => (
-                <ToastBar toast={toast} style={{ maxWidth: "530px" }} />
-              )}
-            </Toaster>
+          <AuthProvider>
+            <Router>
+              <Toaster position="bottom-left" toastOptions={TOAST_OPTIONS}>
+                {(toast) => (
+                  <ToastBar toast={toast} style={{ maxWidth: "530px" }} />
+                )}
+              </Toaster>
 
-            <Routes>
-              <Route path="/" element={<LoginPage />} />
-              <Route path="*" element={<App />} />
-            </Routes>
-          </Router>
+              <Routes>
+                <Route path="/" element={<LoginPage />} />
+                <Route path="*" element={<App />} />
+              </Routes>
+            </Router>
+          </AuthProvider>
         </PersistGate>
       </ThemeProvider>
     </Provider>

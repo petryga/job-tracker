@@ -11,11 +11,12 @@ import { TabPanel } from "components/tabPanel/TabPanel";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLoginSignUpForm } from "./hooks";
+import { useAuth } from "features/auth/useAuth";
 
 import styles from "./LoginPage.module.css";
 
 export const LoginPage = () => {
-  const user = localStorage.getItem("token");
+  const { session } = useAuth();
   const navigate = useNavigate();
   const [tabIndex, setTabIndex] = useState(0);
   const [visible, setVisible] = useState(false);
@@ -24,10 +25,10 @@ export const LoginPage = () => {
     useLoginSignUpForm(tabIndex, setTabIndex);
 
   useEffect(() => {
-    if (user && window.location.pathname === "/") {
+    if (session && window.location.pathname === "/") {
       navigate("/home");
     }
-  }, [navigate, user]);
+  }, [navigate, session]);
 
   return (
     <div className={styles.root}>

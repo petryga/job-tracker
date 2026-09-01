@@ -1,7 +1,6 @@
 export function withCommas(value?: string | number): string {
   if (!value) return "";
   if (typeof value === "number") {
-    // eslint-disable-next-line no-param-reassign
     value = value.toString();
   }
   const num = parseFloat(value.replace(/,/g, ""));

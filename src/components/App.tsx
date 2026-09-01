@@ -1,18 +1,32 @@
+import { lazy, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
-import Board from "../features/boardPage/Board";
-import HomePage from "../features/homePage/HomePage";
+import { RequireAuth } from "features/auth/RequireAuth";
+
+const HomePage = lazy(() => import("../features/homePage/HomePage"));
+const Board = lazy(() => import("../features/boardPage/Board"));
 
 function App() {
-  const user = localStorage.getItem("token");
-  if (!user) {
-    window.location.replace("/");
-  }
-
   return (
-    <Routes>
-      {user && <Route path="/home" element={<HomePage />} />}
-      {user && <Route path="/:boardID" element={<Board />} />}
-    </Routes>
+    <Suspense fallback={null}>
+      <Routes>
+        <Route
+          path="/home"
+          element={
+            <RequireAuth>
+              <HomePage />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/:boardID"
+          element={
+            <RequireAuth>
+              <Board />
+            </RequireAuth>
+          }
+        />
+      </Routes>
+    </Suspense>
   );
 }
 

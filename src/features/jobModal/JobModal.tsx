@@ -3,6 +3,7 @@ import {
   ChangeEvent,
   FormEvent,
   MouseEvent,
+  SyntheticEvent,
   useCallback,
   useEffect,
   useReducer,
@@ -37,7 +38,6 @@ import { Button, MenuItem } from "@mui/material";
 
 export const JobModal = () => {
   const dispatch = useDispatch();
-  const userId = localStorage.getItem("userId") || "";
   const { boardID = "" } = useParams();
   const { modalProps } = useSelector(selectModal);
   const { id: cardID, listID } = modalProps || {};
@@ -91,7 +91,6 @@ export const JobModal = () => {
         boardID,
         cardID,
         listID,
-        userId,
       })
         .unwrap()
         .then((res) => {
@@ -114,7 +113,7 @@ export const JobModal = () => {
     }
   }, [boardID, cardID, deleteCard, listID]);
 
-  const handleChangeTab = (_event: ChangeEvent<{}>, newValue: number) => {
+  const handleChangeTab = (_event: SyntheticEvent, newValue: number) => {
     setTabIndex(newValue);
   };
 
@@ -237,7 +236,7 @@ export const JobModal = () => {
                       error={isError}
                       slotProps={{
                         inputLabel: { shrink: true },
-                        input: !!formData[Fields.link]
+                        input: formData[Fields.link]
                           ? {
                               endAdornment: (
                                 <InputAdornment position="end">

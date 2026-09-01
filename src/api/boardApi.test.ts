@@ -30,17 +30,15 @@ describe("boardApi", () => {
     vi.restoreAllMocks();
   });
 
-  it("fetches boards for a user and hits the expected url", async () => {
+  it("fetches the caller's boards from the token-scoped url", async () => {
     const boards = [{ _id: "board-1", title: "Board", lists: [], isJobSearchBoard: false }];
     (global.fetch as Mock).mockReturnValue(jsonResponse(boards));
 
-    const result = await store.dispatch(
-      boardApi.endpoints.getBoards.initiate({ userId: "user-1" })
-    );
+    const result = await store.dispatch(boardApi.endpoints.getBoards.initiate());
 
     expect(result.data).toEqual(boards);
     const [request] = (global.fetch as Mock).mock.calls[0];
-    expect(requestUrl(request)).toContain("/api/boards/getAll/user-1");
+    expect(requestUrl(request)).toContain("/api/boards/getAll");
   });
 
   it("fetches a single board by id", async () => {
@@ -56,13 +54,13 @@ describe("boardApi", () => {
     expect(requestUrl(request)).toContain("/api/boards/board-1");
   });
 
-  it("posts a new board with the given title and userId", async () => {
+  it("posts a new board with just the given title", async () => {
     (global.fetch as Mock).mockReturnValue(
       jsonResponse({ _id: "new-board" })
     );
 
     await store.dispatch(
-      boardApi.endpoints.createBoard.initiate({ title: "New", userId: "user-1" })
+      boardApi.endpoints.createBoard.initiate({ title: "New" })
     );
 
     const [request] = (global.fetch as Mock).mock.calls[0];
@@ -70,7 +68,6 @@ describe("boardApi", () => {
     expect((request as Request).method).toBe("POST");
     expect(JSON.parse(await (request as Request).text())).toEqual({
       title: "New",
-      userId: "user-1",
     });
   });
 

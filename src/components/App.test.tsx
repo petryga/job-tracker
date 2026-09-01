@@ -4,6 +4,8 @@ import { render } from "@testing-library/react";
 import { Provider } from "react-redux";
 import { MemoryRouter } from "react-router-dom";
 import { makeStore } from "test-utils/render";
+import { AuthProvider } from "features/auth/AuthContext";
+import { supabase } from "lib/supabaseClient";
 import App from "./App";
 
 const jsonResponse = (body: unknown) =>
@@ -18,50 +20,51 @@ const jsonResponse = (body: unknown) =>
     },
   } as Response);
 
+const session = { user: { id: "user-1" }, access_token: "tok" } as never;
+
 const renderApp = (route: string) => {
   const store = makeStore();
   return render(
     <Provider store={store}>
-      <MemoryRouter initialEntries={[route]}>
-        <App />
-      </MemoryRouter>
+      <AuthProvider>
+        <MemoryRouter initialEntries={[route]}>
+          <App />
+        </MemoryRouter>
+      </AuthProvider>
     </Provider>
   );
 };
 
 describe("App", () => {
-  const originalLocation = window.location;
-
   beforeEach(() => {
     global.fetch = vi.fn(() => jsonResponse([])) as unknown as Mock;
-    Object.defineProperty(window, "location", {
-      configurable: true,
-      value: { ...originalLocation, replace: vi.fn() },
-    });
+    vi.mocked(supabase!.auth.getSession).mockResolvedValue({
+      data: { session: null },
+    } as never);
   });
 
   afterEach(() => {
     vi.restoreAllMocks();
-    localStorage.clear();
-    Object.defineProperty(window, "location", {
-      configurable: true,
-      value: originalLocation,
-    });
   });
 
-  it("redirects to the root when there is no logged-in user", () => {
+  it("keeps protected content hidden when there is no session", async () => {
     renderApp("/home");
-    expect(window.location.replace).toHaveBeenCalledWith("/");
+    // give the auth check a tick to resolve
+    await Promise.resolve();
+    expect(
+      screen.queryByText("Job Application Tracker")
+    ).not.toBeInTheDocument();
   });
 
-  it("renders the home route when a user token exists", () => {
-    localStorage.setItem("token", "abc");
-    renderApp("/home");
-    expect(screen.getByText("Job Application Tracker")).toBeInTheDocument();
-  });
+  it("renders the home route once a session is present", async () => {
+    vi.mocked(supabase!.auth.getSession).mockResolvedValue({
+      data: { session },
+    } as never);
 
-  it("does not register any route without a logged-in user", () => {
     renderApp("/home");
-    expect(screen.queryByText("Job Application Tracker")).not.toBeInTheDocument();
+
+    expect(
+      await screen.findByText("Job Application Tracker")
+    ).toBeInTheDocument();
   });
 });

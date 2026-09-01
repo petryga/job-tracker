@@ -6,8 +6,9 @@ export const SUGGESTIONS = [
   },
 ];
 
-export const handleLogout = () => {
-  localStorage.removeItem("token");
-  localStorage.removeItem("userId");
+import { supabase } from "lib/supabaseClient";
+
+export const handleLogout = async () => {
+  await supabase?.auth.signOut();
   window.location.reload();
 };

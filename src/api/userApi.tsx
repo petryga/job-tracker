@@ -1,34 +1,17 @@
 import { apiSlice } from "./apiSlice";
 
+// Sign-up / login / sessions are handled by Supabase Auth (see
+// features/auth). The only account endpoint the API exposes is a self-service
+// "delete everything I own", scoped to the caller's token.
 export const userApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    registerUser: builder.mutation({
-      query: ({ data }) => ({
-        url: "/api/users/register",
-        method: "POST",
-        body: data,
-      }),
-    }),
-
-    loginUser: builder.mutation({
-      query: ({ data }) => ({
-        url: "/api/users/login",
-        method: "POST",
-        body: data,
-      }),
-    }),
-
-    deleteUser: builder.mutation({
-      query: ({ userId }) => ({
-        url: `/api/users/delete/${userId}`,
+    deleteUser: builder.mutation<{ message: string }, void>({
+      query: () => ({
+        url: "/api/users/me",
         method: "DELETE",
       }),
     }),
   }),
 });
 
-export const {
-  useRegisterUserMutation,
-  useLoginUserMutation,
-  useDeleteUserMutation,
-} = userApi;
+export const { useDeleteUserMutation } = userApi;

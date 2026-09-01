@@ -1,9 +1,8 @@
 import { handleLogout } from "./helpers";
+import { supabase } from "lib/supabaseClient";
 
 describe("handleLogout", () => {
-  it("clears auth state from localStorage and reloads the page", () => {
-    localStorage.setItem("token", "abc");
-    localStorage.setItem("userId", "user-1");
+  it("signs out of Supabase and reloads the page", async () => {
     const reload = vi.fn();
     const originalLocation = window.location;
     Object.defineProperty(window, "location", {
@@ -11,10 +10,9 @@ describe("handleLogout", () => {
       value: { ...originalLocation, reload },
     });
 
-    handleLogout();
+    await handleLogout();
 
-    expect(localStorage.getItem("token")).toBeNull();
-    expect(localStorage.getItem("userId")).toBeNull();
+    expect(supabase!.auth.signOut).toHaveBeenCalled();
     expect(reload).toHaveBeenCalled();
 
     Object.defineProperty(window, "location", {

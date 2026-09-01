@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build-and-test:
+    name: Lint, typecheck, test, build
+    runs-on: ubuntu-latest
+
+    # VITE_SUPABASE_* are deliberately unset so the build runs in no-auth mode
+    # (see src/lib/supabaseClient.ts). VITE_BACKEND_URL is only read at runtime
+    # by the deployed app, but the production build wants it defined.
+    env:
+      VITE_BACKEND_URL: https://example.com
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24 # matches .node-version; jsdom 30 needs >=22.22.2
+          cache: npm
+
+      - run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Tests
+        run: npm test
+
+      - name: Build
+        run: npm run build

@@ -24,13 +24,8 @@ const board = (i: number) => ({
 });
 
 describe("HomePage", () => {
-  beforeEach(() => {
-    localStorage.setItem("userId", "user-1");
-  });
-
   afterEach(() => {
     vi.restoreAllMocks();
-    localStorage.clear();
   });
 
   it("shows a loading state before boards arrive", () => {

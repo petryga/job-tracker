@@ -19,7 +19,6 @@ const jsonResponse = (body: unknown) =>
 
 describe("CreateBoardModal", () => {
   beforeEach(() => {
-    localStorage.setItem("userId", "user-1");
     global.fetch = vi.fn(() =>
       jsonResponse({ _id: "board-1", title: "Job Search" })
     ) as unknown as Mock;
@@ -27,7 +26,6 @@ describe("CreateBoardModal", () => {
 
   afterEach(() => {
     vi.restoreAllMocks();
-    localStorage.clear();
   });
 
   it("disables submit until a title is entered", () => {
@@ -75,7 +73,6 @@ describe("CreateBoardModal", () => {
     const [request] = (global.fetch as Mock).mock.calls[0];
     expect(JSON.parse(await (request as Request).text())).toEqual({
       title: "New Board",
-      userId: "user-1",
     });
   });
 });

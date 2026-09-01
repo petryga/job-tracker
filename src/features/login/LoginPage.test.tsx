@@ -1,30 +1,26 @@
-import type { Mock } from "vitest";
 import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { renderWithProviders } from "test-utils/render";
+import { supabase } from "lib/supabaseClient";
 import { LoginPage } from "./LoginPage";
 
-const jsonResponse = (body: unknown) =>
-  Promise.resolve({
-    ok: true,
-    status: 200,
-    headers: new Headers({ "content-type": "application/json" }),
-    json: () => Promise.resolve(body),
-    text: () => Promise.resolve(JSON.stringify(body)),
-    clone() {
-      return this as unknown as Response;
-    },
-  } as Response);
+const auth = supabase!.auth as unknown as {
+  signInWithPassword: ReturnType<typeof vi.fn>;
+};
 
-// MUI v4 TextField in this setup doesn't wire label -> input via for/id,
+// MUI TextField in this setup doesn't wire label -> input via for/id,
 // so fields are located by their `name` attribute instead of getByLabelText.
 const fieldByName = (name: string) =>
   document.querySelector(`input[name="${name}"]`) as HTMLInputElement;
 
 describe("LoginPage", () => {
+  beforeEach(() => {
+    auth.signInWithPassword.mockResolvedValue({ data: {}, error: null });
+  });
+
   afterEach(() => {
     vi.restoreAllMocks();
-    localStorage.clear();
+    auth.signInWithPassword.mockReset();
   });
 
   it("shows only email and password on the Login tab", () => {
@@ -61,10 +57,7 @@ describe("LoginPage", () => {
     expect(submit).not.toBeDisabled();
   });
 
-  it("logs in and stores the token on submit", async () => {
-    global.fetch = vi.fn(() =>
-      jsonResponse({ token: "tok", _id: "user-1", name: "Ada" })
-    ) as unknown as Mock;
+  it("signs in through Supabase on submit", async () => {
     const user = userEvent.setup();
     renderWithProviders(<LoginPage />);
 
@@ -72,6 +65,9 @@ describe("LoginPage", () => {
     await user.type(fieldByName("password"), "longenough");
     await user.click(screen.getByRole("button", { name: "Login" }));
 
-    expect(global.fetch).toHaveBeenCalled();
+    expect(auth.signInWithPassword).toHaveBeenCalledWith({
+      email: "a@b.com",
+      password: "longenough",
+    });
   });
 });

@@ -30,7 +30,7 @@ const makeBoard = (): BoardApi =>
 const stateWithBoard = (): InitialState => ({
   isDragFinished: false,
   isDragging: false,
-  boards: { "board-1": makeBoard() as any },
+  boards: { "board-1": makeBoard() },
 });
 
 describe("appSlice", () => {

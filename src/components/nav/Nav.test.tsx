@@ -1,4 +1,4 @@
-import { screen } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { renderWithProviders } from "test-utils/render";
 import { Nav } from "./Nav";
@@ -50,14 +50,12 @@ describe("Nav", () => {
   });
 
   it("logs out and reloads when Logout is clicked", async () => {
-    localStorage.setItem("token", "abc");
     const user = userEvent.setup();
     renderWithProviders(<Nav />);
 
     await user.click(screen.getByText("power_settings_new"));
     await user.click(screen.getByText("Logout"));
 
-    expect(localStorage.getItem("token")).toBeNull();
-    expect(reload).toHaveBeenCalled();
+    await waitFor(() => expect(reload).toHaveBeenCalled());
   });
 });

@@ -11,6 +11,28 @@ export default defineConfig({
     // 3000 is taken by the BE (see BE/server.js) — see apiSlice.ts.
     port: 3001,
   },
+  build: {
+    rollupOptions: {
+      output: {
+        // Split the big, rarely-changing vendors out of the entry chunk so the
+        // initial download stays small and these stay cached across deploys.
+        manualChunks: (id) => {
+          if (id.includes("node_modules/@supabase/")) return "supabase";
+          if (
+            id.includes("node_modules/@mui/") ||
+            id.includes("node_modules/@emotion/")
+          )
+            return "mui";
+          if (
+            /node_modules\/(react|react-dom|react-router|react-router-dom|scheduler)\//.test(
+              id
+            )
+          )
+            return "react-vendor";
+        },
+      },
+    },
+  },
   test: {
     environment: "jsdom",
     globals: true,

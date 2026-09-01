@@ -3,6 +3,7 @@ import { renderHook as rtlRenderHook } from "@testing-library/react";
 import { Provider } from "react-redux";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { makeStore } from "./render";
+import { AuthProvider } from "features/auth/AuthContext";
 import type { InitialState, ModalState } from "reducers/types";
 
 interface RenderHookOptions {
@@ -22,12 +23,14 @@ export const renderHookWithProviders = <Result,>(
 
   const wrapper = ({ children }: { children: ReactNode }) => (
     <Provider store={store}>
-      <MemoryRouter initialEntries={[route]}>
-        <Routes>
-          <Route path={path} element={children as ReactElement} />
-          <Route path="/home" element={<div>HOME</div>} />
-        </Routes>
-      </MemoryRouter>
+      <AuthProvider>
+        <MemoryRouter initialEntries={[route]}>
+          <Routes>
+            <Route path={path} element={children as ReactElement} />
+            <Route path="/home" element={<div>HOME</div>} />
+          </Routes>
+        </MemoryRouter>
+      </AuthProvider>
     </Provider>
   );
 

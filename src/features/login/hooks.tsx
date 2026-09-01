@@ -1,7 +1,6 @@
-import { useLoginUserMutation, useRegisterUserMutation } from "api/userApi";
 import { ChangeEvent, FormEvent, useEffect, useReducer } from "react";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { supabase } from "lib/supabaseClient";
 import {
   getErrorState,
   getPasswordLengthError,
@@ -25,9 +24,6 @@ export const useLoginSignUpForm = (
     }),
     loginInitialValues
   );
-  const [registerUser] = useRegisterUserMutation();
-  const [loginUser] = useLoginUserMutation();
-  const navigate = useNavigate();
   const passwordLengthError = getPasswordLengthError(formData, tabIndex);
   const error = getErrorState(formData, tabIndex);
   const buttonDisabled = tabIndex === 0 ? error : error || formData.name === "";
@@ -41,38 +37,37 @@ export const useLoginSignUpForm = (
     if (passwordLengthError) {
       return toast.error("Password must be at least 9 characters long");
     }
+    if (!supabase) {
+      return toast.error("Authentication is not configured");
+    }
+
+    const { email, password } = formData;
+
     if (tabIndex === 0) {
-      return loginUser({ data: formData })
-        .unwrap()
-        .then((res) => {
-          if (res) {
-            localStorage.setItem("token", res.token);
-            localStorage.setItem("userId", res._id);
-            navigate("/home");
-            toast.success(`Hi ${res.name}`);
-          }
-        })
-        .catch((error) => {
-          toast.error(error.data.message);
-        });
-    } else {
-      return registerUser({ data: formData })
-        .unwrap()
-        .then((res) => {
-          toast.success(res.message);
-          setTabIndex(0);
-          if (res) {
-            setFormData({
-              email: res.data.email,
-              password: "",
-              confirm_password: "",
-              name: "",
-            });
-          }
-        })
-        .catch((error) => {
-          toast.error(error.data.message);
-        });
+      const { error: signInError } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+      // On success the auth listener updates the session and LoginPage
+      // redirects to /home.
+      if (signInError) {
+        toast.error(signInError.message);
+      }
+      return;
+    }
+
+    const { data, error: signUpError } = await supabase.auth.signUp({
+      email,
+      password,
+    });
+    if (signUpError) {
+      toast.error(signUpError.message);
+      return;
+    }
+    setTabIndex(0);
+    setFormData({ ...loginInitialValues, email });
+    if (!data.session) {
+      toast.success("Check your email to confirm your account, then log in.");
     }
   };
 

@@ -15,7 +15,6 @@ import { closeModal } from "reducers/modalSlice";
 const style = { height: "450px", marginTop: "150px", width: "550px" };
 
 export const CreateBoardModal = () => {
-  const userId = localStorage.getItem("userId");
   const [boardTitle, setBoardTitle] = useState("");
   const [createBoard] = useCreateBoardMutation();
   const dispatch = useDispatch();
@@ -27,8 +26,8 @@ export const CreateBoardModal = () => {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    if (boardTitle && userId) {
-      createBoard({ title: boardTitle, userId })
+    if (boardTitle) {
+      createBoard({ title: boardTitle })
         .unwrap()
         .then(() => {
           setBoardTitle("");

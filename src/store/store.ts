@@ -40,7 +40,7 @@ const store = configureStore({
   devTools: false,
 });
 
-export let persistor = persistStore(store);
+export const persistor = persistStore(store);
 export default store;
 
 export type RootState = ReturnType<typeof store.getState>;

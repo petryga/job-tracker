@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { getAccessToken } from "../lib/supabaseClient";
 
 export const LOCAL_BACKEND_URL = "http://localhost:3000";
 export const BOARD_TAG = "Board";
@@ -13,8 +14,7 @@ export const apiSlice = createApi({
       : import.meta.env.VITE_BACKEND_URL,
     credentials: "include",
     prepareHeaders: async (headers) => {
-      const token = await localStorage.getItem("token");
-
+      const token = await getAccessToken();
       if (token) {
         headers.set("authorization", `Bearer ${token}`);
       }

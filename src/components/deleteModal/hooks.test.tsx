@@ -3,6 +3,7 @@ import { act, screen, waitFor } from "@testing-library/react";
 import toast from "react-hot-toast";
 import { renderHookWithProviders } from "test-utils/renderHook";
 import useHandleSubmit from "./hooks";
+import { supabase } from "lib/supabaseClient";
 import { DELETE_BOARD, DELETE_CONTACT, DELETE_USER } from "utils/constants";
 
 const jsonResponse = (body: unknown, init: Partial<Response> = {}) =>
@@ -58,10 +59,10 @@ describe("useHandleSubmit", () => {
     });
 
     expect(global.fetch).toHaveBeenCalledWith(
-      expect.objectContaining({ url: expect.stringContaining("/api/users/delete/user-1") })
+      expect.objectContaining({ url: expect.stringContaining("/api/users/me") })
     );
     expect(store.getState().modal.openModal).toBeNull();
-    expect(localStorage.getItem("token")).toBeNull();
+    expect(supabase!.auth.signOut).toHaveBeenCalled();
     expect(reload).toHaveBeenCalled();
   });
 

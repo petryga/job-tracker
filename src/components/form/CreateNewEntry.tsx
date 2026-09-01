@@ -8,7 +8,6 @@ import { useAddCardMutation, useAddListMutation } from "api/boardApi";
 
 export const CreateNewEntry = ({ list, listID, board }: CreateProps) => {
   const { isJobSearchBoard } = board;
-  const userId = localStorage.getItem("userId") || "";
   const { boardID = "" } = useParams();
   const [formOpen, setFormOpen] = useState(false);
   const [text, setText] = useState("");
@@ -41,7 +40,7 @@ export const CreateNewEntry = ({ list, listID, board }: CreateProps) => {
 
   const handleAddCard = () => {
     if (listID && text && boardID) {
-      addCard({ listID, boardID, text, isJobSearchBoard, userId })
+      addCard({ listID, boardID, text, isJobSearchBoard })
         .unwrap()
         .then(() => {
           setText("");
