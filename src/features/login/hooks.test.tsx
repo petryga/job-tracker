@@ -136,10 +136,13 @@ describe("useLoginSignUpForm", () => {
       await result.current[0](fakeEvent());
     });
 
-    expect(auth.signUp).toHaveBeenCalledWith({
-      email: "a@b.com",
-      password: "longenough",
-    });
+    expect(auth.signUp).toHaveBeenCalledWith(
+      expect.objectContaining({
+        email: "a@b.com",
+        password: "longenough",
+        options: { emailRedirectTo: expect.stringMatching(/^https?:\/\/.+\/$/) },
+      })
+    );
     expect(setTabIndex).toHaveBeenCalledWith(0);
     expect(toast.success).toHaveBeenCalledWith(
       "Check your email to confirm your account, then log in."

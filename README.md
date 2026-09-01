@@ -96,3 +96,8 @@ Both Supabase vars must be set for login to be enabled; with neither, the app
 runs in no-auth mode. Deployed on Render as a static site (`npm run build`,
 publish `dist/`); the API ([job-tracker-api](https://github.com/petryga/job-tracker-api))
 runs on Northflank.
+
+The Supabase project is shared with expense-tracker, so its Auth **Site URL**
+points there. Sign-up passes `emailRedirectTo` so confirmation links come back
+here — add this app's origins (the Render URL and `http://localhost:3001/`) to
+the project's **Redirect URLs** allowlist, or the override is ignored.

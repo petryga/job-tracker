@@ -59,6 +59,9 @@ export const useLoginSignUpForm = (
     const { data, error: signUpError } = await supabase.auth.signUp({
       email,
       password,
+      // The Supabase project is shared with expense-tracker, so its Site URL
+      // points there. Send the confirmation link back to this app instead.
+      options: { emailRedirectTo: `${window.location.origin}/` },
     });
     if (signUpError) {
       toast.error(signUpError.message);
